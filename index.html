@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 98 Desktop Preview</title>
+    <link rel="stylesheet" href="98.css-main/style.css">
+    <style>
+        @font-face {
+            font-family: 'MS Sans Serif';
+            src: url('fonts/converted/ms_sans_serif.woff2') format('woff2'),
+                 url('fonts/converted/ms_sans_serif.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'MS Sans Serif Bold';
+            src: url('fonts/converted/ms_sans_serif_bold.woff2') format('woff2'),
+                 url('fonts/converted/ms_sans_serif_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        body {
+            background-image: url('images/hill.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .desktop-icon {
+            position: absolute;
+            text-align: center;
+            cursor: pointer;
+            width: 60px; /* Adjust icon area width */
+        }
+
+        .desktop-icon img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .desktop-icon p {
+            margin: 0;
+            color: white;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px black;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .window {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 400px;
+            height: 300px;
+            display: none;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #c0c0c0;
+            display: flex;
+            align-items: center;
+            box-shadow: inset 1px 1px 5px #fff, inset -1px -1px 5px #000;
+            padding: 2px;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .start-button {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border: 2px outset #fff;
+            background-color: #c0c0c0;
+            cursor: pointer;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .start-button:active {
+            border: 2px inset #fff;
+        }
+
+        .start-button img {
+            margin-right: 5px;
+        }
+
+        .taskbar-items {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop-icon" onclick="openWindow('about-me')" style="top: 20px; left: 20px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="About Me">
+        <p>About Me</p>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('ml-projects')" style="top: 100px; left: 20px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="ML Projects">
+        <p>ML Projects</p>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('ui-projects')" style="top: 180px; left: 20px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="UI Projects">
+        <p>UI Projects</p>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('contact')" style="top: 260px; left: 20px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="Contact">
+        <p>Contact</p>
+    </div>
+
+    <div class="window" id="about-me">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">About Me</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('about-me')"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Information about me...</p>
+        </div>
+    </div>
+
+    <div class="window" id="ml-projects">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">ML Projects</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('ml-projects')"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Machine Learning projects...</p>
+        </div>
+    </div>
+
+    <div class="window" id="ui-projects">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">UI Projects</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('ui-projects')"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>User Interface projects...</p>
+        </div>
+    </div>
+
+    <div class="window" id="contact">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Contact</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('contact')"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Contact information...</p>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <div class="start-button" onclick="toggleStartMenu()">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Windows_9x_Start_button.svg/1024px-Windows_9x_Start_button.svg.png" alt="Start" width="20" height="20">
+            <span>Start</span>
+        </div>
+        <div class="taskbar-items">
+            <!-- Open windows will be listed here -->
+        </div>
+    </div>
+
+    <script>
+        function openWindow(id) {
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function closeWindow(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function toggleStartMenu() {
+            alert('Start Menu clicked!');
+        }
+
+        function dragElement(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            elmnt.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+    </script>
+</body>
+</html>
