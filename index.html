@@ -6,6 +6,7 @@
     <title>Windows 98 Desktop Preview</title>
     <link rel="stylesheet" href="98.css-main/style.css">
     <style>
+        /* Font Definitions */
         @font-face {
             font-family: 'MS Sans Serif';
             src: url('fonts/converted/ms_sans_serif.woff2') format('woff2'),
@@ -22,6 +23,7 @@
             font-style: normal;
         }
 
+        /* Basic Body Styling */
         body {
             background-image: url('images/hill.jpg');
             background-size: cover;
@@ -30,18 +32,80 @@
             height: 100vh;
             overflow: hidden;
             font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
-        .desktop-icon {
-            position: absolute;
-            text-align: center;
+        /* Login Overlay Styling */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/login-background.png'); /* Background image for the login page */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999; /* Ensure it covers everything */
+        }
+
+        .login-text {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .login-button {
+            padding: 10px 30px;
+            background-color: #004e98;
+            color: white;
+            border: 2px outset #fff;
             cursor: pointer;
-            width: 60px; /* Adjust icon area width */
+            font-size: 16px;
+        }
+
+        .login-button:active {
+            border: 2px inset #fff;
+        }
+
+        .desktop-icon-container {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 20px; /* Adjust this value to move the icons down */
+            left: 20px; /* Adjust this value to move the icons right or left */
+            gap: 20px; /* Adjust the spacing between the icons */
         }
 
         .desktop-icon img {
-            width: 32px;
-            height: 32px;
+            width: 72px;
+        }
+
+        /* Positioning for Resume and Waste Bin */
+        .resume-icon, .waste-bin-icon, .cv-icon{
+            position: fixed;
+        }
+
+        .cv-icon {
+            right: 20px; /* Positioning the resume icon from the right */
+            bottom: 310px; /* Positioning the resume icon from the bottom */
+        }
+
+        .resume-icon {
+            right: 20px; /* Positioning the resume icon from the right */
+            bottom: 200px; /* Positioning the resume icon from the bottom */
+        }
+
+        .waste-bin-icon {
+            right: 20px; /* Positioning the waste bin icon from the right */
+            bottom: 80px; /* Positioning the waste bin icon from the bottom */
         }
 
         .desktop-icon p {
@@ -49,9 +113,9 @@
             color: white;
             font-size: 14px;
             text-shadow: 1px 1px 2px black;
-            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Window Styling */
         .window {
             position: absolute;
             top: 100px;
@@ -62,6 +126,11 @@
             font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        .title-bar-text {
+            font-family: 'MS Sans Serif Bold', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Taskbar Styling */
         .taskbar {
             position: fixed;
             bottom: 0;
@@ -71,11 +140,16 @@
             background-color: #c0c0c0;
             display: flex;
             align-items: center;
-            box-shadow: inset 1px 1px 5px #fff, inset -1px -1px 5px #000;
             padding: 2px;
+            box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #000;
+            border-right: 2px solid #000;
             font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Start Button Styling */
         .start-button {
             display: flex;
             align-items: center;
@@ -83,7 +157,22 @@
             border: 2px outset #fff;
             background-color: #c0c0c0;
             cursor: pointer;
+        }
+
+        .taskbar-time {
+            color: black;
+            padding: 6px 15px;
             font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: 8px;
+            margin-left: auto; /* Ensures the time is on the far right */
+            background-color: #c0c0c0;
+            border: 2px inset #fff; /* Creates the depressed effect */
+            box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff;
+            display: inline-block;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .start-button:active {
@@ -94,34 +183,132 @@
             margin-right: 5px;
         }
 
-        .taskbar-items {
+        /* Drop-Up Menu Styling */
+        .drop-up-menu {
+            position: fixed;
+            top: calc(100% - 252px); /* Adjust this value to align with the taskbar */
+            left: 0;
+            display: none;
+            width: 260px; /* Increase width to match the buttons */
+            height: auto; /* Allow the height to adjust automatically */
+            box-sizing: border-box;
+            padding: 0; /* Remove extra padding */
+            margin: 0;
+            overflow: hidden; /* Ensure no content overflows */
+        }
+
+        .menu-container {
             display: flex;
-            flex-grow: 1;
-            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        /* Windows Label Styling */
+        .windows-label {
+            background-color: #004e98;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            border-right: 2px solid #c0c0c0;
+            border-top: 2px solid #fff; /* Top border to create a 3D effect */
+            border-left: 2px solid #fff; /* Left border to create a 3D effect */
+            border-bottom: 2px solid #000; /* Bottom border to create a shadow effect */
+            border-right: 2px solid #000; /* Right border to create a shadow effect */
+            box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff; /* Inner shadow to add depth */
+        }
+
+        /* Start Menu Buttons Styling */
+        #start-menu .button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 8px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+        #start-menu .button img {
+        width: 16px;  /* Adjust the width as needed */
+        height: 16px; /* Adjust the height as needed */
+        margin-right: 10px; /* Ensure there's some space between the image and text */
+    }
+        
+
+        #start-menu .window-body {
+            padding: 10px;
+            background-color: #c0c0c0;
+            width: 250px;
+        }
+
+        #start-menu ul {
+            list-style-type: none; /* Removes bullet points */
+            padding: 0; /* Removes default padding */
+            margin: 0; /* Removes default margin */
+        }
+
+        #start-menu ul li {
+            margin-bottom: 10px;
+        }
+
+        #start-menu .arrow {
+            margin-left: auto;
+            font-size: 12px;
+            color: #000;
         }
     </style>
 </head>
 <body>
-    <div class="desktop-icon" onclick="openWindow('about-me')" style="top: 20px; left: 20px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="About Me">
-        <p>About Me</p>
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="login-overlay">
+        <div class="login-text">Welcome to Horchata OS</div>
+        <button class="login-button" onclick="login()">Log In</button>
     </div>
 
-    <div class="desktop-icon" onclick="openWindow('ml-projects')" style="top: 100px; left: 20px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="ML Projects">
-        <p>ML Projects</p>
+    <!-- Desktop Icons -->
+    <div class="desktop-icon-container">
+        <div class="desktop-icon" onclick="openWindow('about-me')">
+            <img src="images/about-me.png" alt="About Me">
+            <p>About Me</p>
+        </div>
+
+        <div class="desktop-icon" onclick="openWindow('ml-projects')">
+            <img src="images/data.png" alt="ML Projects">
+            <p>Data Projects</p>
+        </div>
+
+        <div class="desktop-icon" onclick="openWindow('ui-projects')">
+            <img src="images/ui.png" alt="UI Projects">
+            <p>UI Projects</p>
+        </div>
+
+        <div class="desktop-icon" onclick="openWindow('contact')">
+            <img src="images/contact.png" alt="Contact">
+            <p>Contact Me</p>
+        </div>
+
+        <!-- Additional Desktop Icons -->
+        <div class="desktop-icon resume-icon" onclick="openWindow('resume')">
+            <img src="images/pdf.png" alt="Resume">
+            <p>resume.pdf</p>
+        </div>
+
+        <div class="desktop-icon cv-icon" onclick="openWindow('resume')">
+            <img src="images/pdf.png" alt="Resume">
+            <p>c_vitae.pdf</p>
+        </div>
+
+        <div class="desktop-icon waste-bin-icon">
+            <img src="images/wastebins.png" alt="Waste Bin">
+            <p>Waste Bin</p>
+        </div>
+
     </div>
 
-    <div class="desktop-icon" onclick="openWindow('ui-projects')" style="top: 180px; left: 20px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="UI Projects">
-        <p>UI Projects</p>
-    </div>
-
-    <div class="desktop-icon" onclick="openWindow('contact')" style="top: 260px; left: 20px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/My_computer_icon.png" alt="Contact">
-        <p>Contact</p>
-    </div>
-
+    <!-- Windows for Desktop Icons -->
     <div class="window" id="about-me">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">About Me</div>
@@ -170,28 +357,113 @@
         </div>
     </div>
 
+    <!-- Taskbar -->
     <div class="taskbar">
-        <div class="start-button" onclick="toggleStartMenu()">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Windows_9x_Start_button.svg/1024px-Windows_9x_Start_button.svg.png" alt="Start" width="20" height="20">
+        <div class="start-button" onclick="toggleDropUp()">
+            <img src="images/start_button.png" alt="Start" width="20" height="20">
             <span>Start</span>
         </div>
-        <div class="taskbar-items">
-            <!-- Open windows will be listed here -->
+        <div class="taskbar-time" id="taskbar-time"></div>
+    </div>
+
+    
+
+    <!-- Start Menu -->
+    <div id="start-menu" class="window drop-up-menu">
+        <div class="menu-container">
+            <div class="windows-label">
+                <span>Horchata OS</span>
+            </div>
+            <div class="window-body">
+                <ul>
+                    <li>
+                        <button class="button">
+                            <img src="images/doc.png" alt="Documents">
+                            Documents
+                            <span class="arrow">▶</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button">
+                            <img src="images/settings.png" alt="Settings">
+                            Settings
+                            <span class="arrow">▶</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button">
+                            <img src="images/help.png" alt="Help">
+                            Help and Support
+                            <span class="arrow">▶</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button">
+                            <img src="images/onoff.png" alt="Log Off">
+                            Log Off
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
+    <!-- JavaScript for Window Functionality -->
     <script>
-        function openWindow(id) {
-            document.getElementById(id).style.display = 'block';
+        function login() {
+            document.getElementById('login-overlay').style.display = 'none';
         }
+
+        function openWindow(id) {
+            const windowElement = document.getElementById(id);
+
+            // Get the dimensions of the viewport (browser window)
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            // Calculate random positions for the window
+            const maxLeft = viewportWidth - windowElement.offsetWidth;
+            const maxTop = viewportHeight - windowElement.offsetHeight;
+            const randomLeft = Math.floor(Math.random() * maxLeft);
+            const randomTop = Math.floor(Math.random() * maxTop);
+
+            // Apply the random positions
+            windowElement.style.left = randomLeft + 'px';
+            windowElement.style.top = randomTop + 'px';
+
+            // Display the window
+            windowElement.style.display = 'block';
+        }
+
 
         function closeWindow(id) {
             document.getElementById(id).style.display = 'none';
         }
 
-        function toggleStartMenu() {
-            alert('Start Menu clicked!');
+        function toggleDropUp() {
+            const menu = document.getElementById('start-menu');
+            menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
         }
+
+        function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const year = now.getFullYear();
+
+        // Format time and date
+        const timeString = `${hours}:${minutes}`;
+        const dateString = `${month}/${day}/${year}`;
+
+        // Display time and date
+        document.getElementById('taskbar-time').textContent = `${dateString} ${timeString} `;
+    }
+
+    // Update time and date every minute
+    setInterval(updateTime, 1000);
+    updateTime(); // Initial call to display time and date immediately
 
         function dragElement(elmnt) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -225,3 +497,4 @@
     </script>
 </body>
 </html>
+
