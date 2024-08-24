@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 98 Desktop Preview</title>
+    <title>Horchata OS</title>
     <link rel="stylesheet" href="98.css-main/style.css">
     <style>
         /* Font Definitions */
@@ -115,16 +115,55 @@
             text-shadow: 1px 1px 2px black;
         }
 
+        .desktop-icon.selected {
+            border: 2px dashed black; /* Adds a dashed border around the selected icon */
+            padding: 2px; /* Adjust padding to ensure the border doesn't overlap with the icon */
+            background-color: #c0c0c0; /* Optional: Change background color on selection */
+        }
+
+
         /* Window Styling */
         .window {
-            position: absolute;
-            top: 100px;
-            left: 100px;
-            width: 400px;
-            height: 300px;
+            position:fixed;
+            width: 650px;
+            height: 460px;
             display: none;
             font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        .window-body {
+            display: flex;
+            justify-content: space-between; /* Ensures content and GIF are spaced out */
+            align-items: flex-start; /* Aligns the items at the top of the container */
+            gap: 20px; /* Adds some space between the text and the GIF */
+            padding: 15px;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .text-content {
+            flex: 1; /* Allows the text content to take up as much space as needed */
+        }
+
+        .gif-content {
+            flex-shrink: 0; /* Prevents the GIF from shrinking */
+            margin-left: 20px; /* Adds some space between the text and the GIF */
+        }
+
+        .about-me-gif {
+            max-width: 200px; /* Adjust this size based on your preference */
+            height: auto;
+        }
+
+
+        h1, h2, h3, h4, p {
+            margin: 5px 0; /* Adjust as necessary */
+            padding: 0;
+        }
+
+        .container {
+            padding: 10px; /* Adjust as needed to reduce spacing */
+        }
+
 
         .title-bar-text {
             font-family: 'MS Sans Serif Bold', Tahoma, Geneva, Verdana, sans-serif;
@@ -174,6 +213,16 @@
             text-align: center;
             white-space: nowrap;
         }
+
+        .about-me-photo {
+            position: absolute; /* Allows manual positioning */
+            top: 105px;          /* Adjust this value to move the image up or down */
+            right: 40px;        /* Adjust this value to move the image left or right */
+            width: 320px;       /* Adjust the width as necessary */
+            height: auto;       /* Maintains the aspect ratio */
+            border: 2px solid #000; /* Optional: Adds a border around the photo */
+        }
+
 
         .start-button:active {
             border: 2px inset #fff;
@@ -308,24 +357,45 @@
 
     </div>
 
-    <!-- Windows for Desktop Icons -->
     <div class="window" id="about-me">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">About Me</div>
             <div class="title-bar-controls">
-                <button aria-label="Close" onclick="closeWindow('about-me')"></button>
+                <button aria-label="Close" onclick="closeWindow('about-me')">x</button>
             </div>
         </div>
         <div class="window-body">
-            <p>Information about me...</p>
+            <div class="about-me-content">
+                <img src="images/me.jpeg" alt="Your Photo" class="about-me-photo">
+                <div class="text-content">
+                    <h4>Education</h4>
+                        Bachelor's, Double Major: Neuroscience <br>and Psychology
+                        <li>University of Colorado, 2020 - 2024</li>
+                        <br>Minor in Computer Science
+                        <li>University of Colorado, 2020 - 2024</li>
+    
+                    <h4><br>Work Experience</h4>
+                    <p>Maier-Watkins-Baratta Lab, <i>Undergraduate <br>Researcher</i><br>
+                       <li>2022 - Present</li>
+                       <li>Recipient of UROP funding, $1500</li></p>
+    
+                    <h4><br>Volunteering</h4>
+                    <p>Digital Nexus Project, <i>Founder</i>
+                       <li>2024 - Present</li>
+                    <br>Habitat for Humanity, <i>Volunteer</i>
+                       <li>2024 - Present</li></p>
+                </div>
+            </div>
         </div>
     </div>
+    
+    
 
     <div class="window" id="ml-projects">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">ML Projects</div>
             <div class="title-bar-controls">
-                <button aria-label="Close" onclick="closeWindow('ml-projects')"></button>
+                <button aria-label="Close" onclick="closeWindow('ml-projects')">x</button>
             </div>
         </div>
         <div class="window-body">
@@ -337,7 +407,7 @@
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">UI Projects</div>
             <div class="title-bar-controls">
-                <button aria-label="Close" onclick="closeWindow('ui-projects')"></button>
+                <button aria-label="Close" onclick="closeWindow('ui-projects')">x</button>
             </div>
         </div>
         <div class="window-body">
@@ -349,7 +419,7 @@
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">Contact</div>
             <div class="title-bar-controls">
-                <button aria-label="Close" onclick="closeWindow('contact')"></button>
+                <button aria-label="Close" onclick="closeWindow('contact')">x</button>
             </div>
         </div>
         <div class="window-body">
@@ -414,26 +484,54 @@
             document.getElementById('login-overlay').style.display = 'none';
         }
 
+        let highestZIndex = 1; // Start with a base z-index
+
         function openWindow(id) {
+            // Run the core logic twice
+            runOpenWindowLogic(id);
+            runOpenWindowLogic(id);
+        }
+
+        function runOpenWindowLogic(id) {
             const windowElement = document.getElementById(id);
 
             // Get the dimensions of the viewport (browser window)
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
 
-            // Calculate random positions for the window
-            const maxLeft = viewportWidth - windowElement.offsetWidth;
-            const maxTop = viewportHeight - windowElement.offsetHeight;
-            const randomLeft = Math.floor(Math.random() * maxLeft);
-            const randomTop = Math.floor(Math.random() * maxTop);
+            // Define individual margins
+            const leftMargin = 100;   // More stringent left margin
+            const rightMargin = 100;  // More stringent right margin
+            const topMargin = 20;     // More relaxed top margin
+            const bottomMargin = 50;  // Custom bottom margin
 
-            // Apply the random positions
-            windowElement.style.left = randomLeft + 'px';
-            windowElement.style.top = randomTop + 'px';
+            // Calculate constrained positions
+            const maxLeft = viewportWidth - windowElement.offsetWidth - rightMargin;
+            const maxTop = viewportHeight - windowElement.offsetHeight - bottomMargin;
+
+            // Generate random positions ensuring they stay within the viewport with individual margins
+            const randomLeft = Math.floor(Math.random() * (maxLeft - leftMargin + 1)) + leftMargin;
+            const randomTop = Math.floor(Math.random() * (maxTop - topMargin + 1)) + topMargin;
+
+            // Apply the positions
+            windowElement.style.left = `${randomLeft}px`;
+            windowElement.style.top = `${randomTop}px`;
+
+            // Set the window's z-index to be higher than any other window
+            highestZIndex++;
+            windowElement.style.zIndex = highestZIndex;
 
             // Display the window
             windowElement.style.display = 'block';
+
+            // Add an event listener to bring the window to the top when clicked
+            windowElement.addEventListener('mousedown', () => {
+                highestZIndex++;
+                windowElement.style.zIndex = highestZIndex;
+            });
         }
+
+
 
 
         function closeWindow(id) {
@@ -446,24 +544,24 @@
         }
 
         function updateTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-        const year = now.getFullYear();
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const year = now.getFullYear();
 
-        // Format time and date
-        const timeString = `${hours}:${minutes}`;
-        const dateString = `${month}/${day}/${year}`;
+            // Format time and date
+            const timeString = `${hours}:${minutes}`;
+            const dateString = `${month}/${day}/${year}`;
 
-        // Display time and date
-        document.getElementById('taskbar-time').textContent = `${dateString} ${timeString} `;
-    }
+            // Display time and date
+            document.getElementById('taskbar-time').textContent = `${dateString} ${timeString} `;
+        }
 
-    // Update time and date every minute
-    setInterval(updateTime, 1000);
-    updateTime(); // Initial call to display time and date immediately
+        // Update time and date every minute
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call to display time and date immediately
 
         function dragElement(elmnt) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -494,7 +592,31 @@
                 document.onmousemove = null;
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const icons = document.querySelectorAll('.desktop-icon');
+            const desktop = document.body; // Treat the entire body as the desktop
+
+            icons.forEach(icon => {
+                icon.addEventListener('click', function (event) {
+                    // Prevent the desktop click from firing
+                    event.stopPropagation();
+
+                    // Remove the 'selected' class from all icons
+                    icons.forEach(i => i.classList.remove('selected'));
+
+                    // Add the 'selected' class to the clicked icon
+                    icon.classList.add('selected');
+                });
+            });
+
+            // Unselect all icons when clicking on the desktop
+            desktop.addEventListener('click', function () {
+                icons.forEach(i => i.classList.remove('selected'));
+            });
+        });
+
+
     </script>
 </body>
 </html>
-
