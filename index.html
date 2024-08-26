@@ -15,14 +15,6 @@
             font-style: normal;
         }
 
-        @font-face {
-            font-family: 'MS Sans Serif Bold';
-            src: url('fonts/converted/ms_sans_serif_bold.woff2') format('woff2'),
-                 url('fonts/converted/ms_sans_serif_bold.woff') format('woff');
-            font-weight: bold;
-            font-style: normal;
-        }
-
         /* Basic Body Styling */
         body {
             background-image: url('images/hill.jpg');
@@ -149,11 +141,6 @@
             margin-left: 20px; /* Adds some space between the text and the GIF */
         }
 
-        .about-me-gif {
-            max-width: 200px; /* Adjust this size based on your preference */
-            height: auto;
-        }
-
 
         h1, h2, h3, h4, p {
             margin: 5px 0; /* Adjust as necessary */
@@ -214,6 +201,27 @@
             white-space: nowrap;
         }
 
+        .raised-bar {
+            width: 2px;
+            height: 30px; /* Adjust this height as necessary */
+            background: linear-gradient(to bottom, #f0f0f0, #c0c0c0);
+            border-left: 1px solid #fff;
+            border-right: 1px solid #808080;
+            margin: 0 4px; /* Adjust spacing between bars */
+        }
+
+        .indented-bar {
+            width: 1.5px;
+            height: 37px; /* Adjust this height as necessary */
+            background-color: #808080; /* A medium gray color for the bar */
+            box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #000; /* Creates the indented effect */
+            margin-left: 7px; /* Small space after the Start button */
+            margin-right: .2px; /* Larger space before the raised bars */
+        }
+
+
+
+
         .about-me-photo {
             position: absolute; /* Allows manual positioning */
             top: 105px;          /* Adjust this value to move the image up or down */
@@ -223,6 +231,44 @@
             border: 2px solid #000; /* Optional: Adds a border around the photo */
         }
 
+        .contact-link {
+            font-size: 18px; /* Makes the text larger */
+            color: #0066cc; /* Link color */
+            text-decoration: none; /* Removes underline */
+        }
+
+        .contact-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .phone-photo {
+            position: absolute; /* Allows manual positioning */
+            bottom: 180px;          /* Adjust this value to move the image up or down */
+            right: 470px;        /* Adjust this value to move the image left or right */
+            width: 60px;       /* Adjust the width as necessary */
+            height: auto;       /* Maintains the aspect ratio */
+        }
+
+        .email-photo {
+            position: absolute; /* Allows manual positioning */
+            bottom: 197px;          /* Adjust this value to move the image up or down */
+            right: 140px;        /* Adjust this value to move the image left or right */
+            width: 90px;       /* Adjust the width as necessary */
+            height: auto;       /* Maintains the aspect ratio */
+        }
+
+        .phone-text {
+            position: absolute;
+            top: 330px; /* Adjust based on where you want the text */
+            left: 95px; /* Adjust based on where you want the text */
+        }
+
+        /* Specific positioning for the email text field */
+        .email-text {
+            position: absolute;
+            top: 330px; /* Adjust based on where you want the text */
+            left: 370px; /* Adjust based on where you want the text */
+        }
 
         .start-button:active {
             border: 2px inset #fff;
@@ -238,8 +284,8 @@
             top: calc(100% - 252px); /* Adjust this value to align with the taskbar */
             left: 0;
             display: none;
-            width: 260px; /* Increase width to match the buttons */
-            height: auto; /* Allow the height to adjust automatically */
+            width: 260px;
+            height: auto;
             box-sizing: border-box;
             padding: 0; /* Remove extra padding */
             margin: 0;
@@ -281,10 +327,10 @@
             box-sizing: border-box;
         }
         #start-menu .button img {
-        width: 16px;  /* Adjust the width as needed */
-        height: 16px; /* Adjust the height as needed */
-        margin-right: 10px; /* Ensure there's some space between the image and text */
-    }
+            width: 16px;  /* Adjust the width as needed */
+            height: 16px; /* Adjust the height as needed */
+            margin-right: 10px; /* Ensure there's some space between the image and text */
+        }
         
 
         #start-menu .window-body {
@@ -308,6 +354,30 @@
             font-size: 12px;
             color: #000;
         }
+
+        .contact-info {
+            display: flex;
+            flex-direction: row; /* Stays in a row */
+            justify-content: center; /* Centers horizontally */
+            align-items: center; /* Centers vertically */
+            gap: 40px; /* Keeps space between contact items */
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column; /* Stacks the image on top of the text */
+            align-items: center; /* Centers the content horizontally */
+            text-align: center;
+        }
+
+        .contact-icon {
+            width: 40px; /* Adjust the size of the icon */
+            height: auto;
+            margin-bottom: 5px; /* Adds space between the icon and the text */
+        }
+
+
+        
     </style>
 </head>
 <body>
@@ -395,11 +465,14 @@
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">ML Projects</div>
             <div class="title-bar-controls">
+                <button class="nav-button" id="back-button" onclick="navigateProjects('back')"><</button>
+                <button class="nav-button" id="forward-button" onclick="navigateProjects('forward')">></button>
                 <button aria-label="Close" onclick="closeWindow('ml-projects')">x</button>
+                
             </div>
         </div>
         <div class="window-body">
-            <p>Machine Learning projects...</p>
+            
         </div>
     </div>
 
@@ -407,11 +480,12 @@
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">UI Projects</div>
             <div class="title-bar-controls">
+                <button class="nav-button" id="back-button" onclick="navigateProjects('back')"><</button>
+                <button class="nav-button" id="forward-button" onclick="navigateProjects('forward')">></button>
                 <button aria-label="Close" onclick="closeWindow('ui-projects')">x</button>
             </div>
         </div>
         <div class="window-body">
-            <p>User Interface projects...</p>
         </div>
     </div>
 
@@ -423,22 +497,24 @@
             </div>
         </div>
         <div class="window-body">
-            <p>Contact information...</p>
+            <h4>Contact Information</h4>
+            <img src="images/phoney.png" alt="phone" class="phone-photo">
+            <a href="tel:+13039055526" class="contact-link phone-text">(303)905-5526</a>
+            <img src="images/mail.png" alt="mail" class="email-photo">
+            <a href="mailto:your.email@example.com" class="contact-link email-text">your.email@example.com</a>
         </div>
     </div>
-
-    <!-- Taskbar -->
+    
     <div class="taskbar">
         <div class="start-button" onclick="toggleDropUp()">
             <img src="images/start_button.png" alt="Start" width="20" height="20">
             <span>Start</span>
         </div>
+        <div class="indented-bar"></div>
+        <div class="raised-bar"></div>
         <div class="taskbar-time" id="taskbar-time"></div>
     </div>
 
-    
-
-    <!-- Start Menu -->
     <div id="start-menu" class="window drop-up-menu">
         <div class="menu-container">
             <div class="windows-label">
