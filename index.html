@@ -175,6 +175,13 @@
             font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        .taskbar-app {
+            margin-left: 9px; /* Spacing between icons */
+            cursor: pointer;
+        }
+
+
+
         /* Start Button Styling */
         .start-button {
             display: flex;
@@ -201,13 +208,19 @@
             white-space: nowrap;
         }
 
+        .taskbar-spacer {
+            flex-grow: 1; /* This makes the spacer take up any remaining space */
+        }
+
+
         .raised-bar {
             width: 2px;
             height: 30px; /* Adjust this height as necessary */
             background: linear-gradient(to bottom, #f0f0f0, #c0c0c0);
             border-left: 1px solid #fff;
             border-right: 1px solid #808080;
-            margin: 0 4px; /* Adjust spacing between bars */
+            margin-left: 4px; /* Small space after the Start button */
+            margin-right: 2px; /* Larger space before the raised bars */
         }
 
         .indented-bar {
@@ -512,7 +525,21 @@
         </div>
         <div class="indented-bar"></div>
         <div class="raised-bar"></div>
+        <!-- Apps Icons -->
+        <div class="taskbar-app">
+            <img src="images/explorer.png" alt="browser" width="20" height="20">
+        </div>
+        <div class="taskbar-app">
+            <img src="images/note.png" alt="music player" width="20" height="20">
+        </div>
+        <div class="taskbar-app">
+            <img src="images/tree-0.png" alt="tree" width="20" height="20">
+        </div>
+        <div class="taskbar-spacer"></div>
+        <div class="indented-bar"></div>
+        <div class="raised-bar"></div>
         <div class="taskbar-time" id="taskbar-time"></div>
+        
     </div>
 
     <div id="start-menu" class="window drop-up-menu">
