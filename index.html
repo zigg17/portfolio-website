@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Favicon for most browsers -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horchata OS</title>
     <link rel="stylesheet" href="98.css-main/style.css">
@@ -66,6 +69,53 @@
         .login-button:active {
             border: 2px inset #fff;
         }
+
+        #tree-window-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    height: 100%; /* Ensure the content takes up the full height of the window */
+    padding: 20px; /* Optional: Add some padding around the content */
+    box-sizing: border-box;
+}
+
+#tree-image {
+    width: 400px; /* Fixed width */
+    height: 300px; /* Fixed height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    margin-bottom: 80px; /* Space between the image and the quote */
+}
+
+#quote-container {
+    max-width: 100%; /* Ensure the text doesn't overflow horizontally */
+    text-align: center; /* Center the text */
+    word-wrap: break-word; /* Break long words if necessary */
+    overflow-y: auto; /* Add a scrollbar if the text is too long */
+}
+
+
+        #quote-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            max-height: 60px; /* Adjust based on the height you want for the quote section */
+            padding: 0 60px; /* Adds padding to the sides */
+            box-sizing: border-box; /* Ensures padding is included in the width */
+            overflow-y: auto; /* Adds a scrollbar if the text overflows */
+            text-align: center; /* Center the text horizontally */
+        }
+
+        #tree-content {
+            margin: 0;
+            padding: 0;
+            word-wrap: break-word; /* Allows long words to wrap to the next line */
+            overflow: hidden; /* Hides overflowing text */
+            text-overflow: ellipsis; /* Adds ellipsis (...) if the text is too long */
+            white-space: normal; /* Allows the text to wrap normally */
+        }
+
+
 
         .desktop-icon-container {
             display: flex;
@@ -517,6 +567,86 @@
             <a href="mailto:your.email@example.com" class="contact-link email-text">your.email@example.com</a>
         </div>
     </div>
+
+    <!-- C Vitae Window -->
+    <div class="window" id="c-vitae">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">C Vitae</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('c-vitae')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <!-- Embed or link to your C Vitae PDF -->
+            <iframe src="c_vitae.pdf" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+
+    <!-- Resume Window -->
+    <div class="window" id="resume">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Resume</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('resume')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <!-- Embed or link to your resume -->
+            <iframe src="resume.pdf" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+
+    <!-- Explorer Window -->
+    <div class="window" id="explorer-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Explorer</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('explorer-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <!-- Content related to your Explorer functionality -->
+            <p>File Explorer would go here.</p>
+        </div>
+    </div>
+
+    <!-- Music Player Window -->
+    <div class="window" id="music-player-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Music Player</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('music-player-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <!-- Content related to your Music Player -->
+            <p>Music Player interface would go here.</p>
+        </div>
+    </div>
+
+    <div class="window" id="tree-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Tree</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('tree-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body" id="tree-window-body">
+            <!-- Image with fixed dimensions -->
+            <img id="tree-image" src="image-bank/forest.jpg" alt="Forest Image" style="width: 400px; height: 300px; object-fit: cover;">
+            
+            <!-- Quote section -->
+            <div id="quote-container">
+                <p id="tree-content">
+                    Your random forest message will appear here.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
     
     <div class="taskbar">
         <div class="start-button" onclick="toggleDropUp()">
@@ -525,16 +655,16 @@
         </div>
         <div class="indented-bar"></div>
         <div class="raised-bar"></div>
-        <!-- Apps Icons -->
-        <div class="taskbar-app">
-            <img src="images/explorer.png" alt="browser" width="20" height="20">
+        <div class="taskbar-app" onclick="openWindow('explorer-window')">
+            <img src="images/explorer.png" alt="Explorer" width="20" height="20">
         </div>
-        <div class="taskbar-app">
-            <img src="images/note.png" alt="music player" width="20" height="20">
+        <div class="taskbar-app" onclick="openWindow('music-player-window')">
+            <img src="images/note.png" alt="Music Player" width="20" height="20">
         </div>
-        <div class="taskbar-app">
-            <img src="images/tree-0.png" alt="tree" width="20" height="20">
+        <div class="taskbar-app" onclick="openWindow('tree-window')">
+            <img src="images/tree-0.png" alt="Tree" width="20" height="20">
         </div>
+        
         <div class="taskbar-spacer"></div>
         <div class="indented-bar"></div>
         <div class="raised-bar"></div>
@@ -590,10 +720,38 @@
         let highestZIndex = 1; // Start with a base z-index
 
         function openWindow(id) {
-            // Run the core logic twice
-            runOpenWindowLogic(id);
-            runOpenWindowLogic(id);
+            if (id === 'tree-window') {
+                openTreeWindow();
+            } else {
+                runOpenWindowLogic(id);
+                runOpenWindowLogic(id);
+            }
         }
+
+        function openTreeWindow() {
+    // Run the core logic twice
+    runOpenWindowLogic('tree-window');
+    runOpenWindowLogic('tree-window');
+    
+    // Fetch the text file and display a random line
+    fetch('quotes.txt')
+        .then(response => response.text())
+        .then(data => {
+            const lines = data.split('\n');
+            const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
+            document.getElementById('tree-content').textContent = randomLine;
+        })
+        .catch(error => console.error('Error fetching the quotes:', error));
+
+    // Display a random image from the image bank
+    const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    document.getElementById('tree-image').src = `image-bank/${randomImage}`;
+}
+
+
+
+
 
         function runOpenWindowLogic(id) {
             const windowElement = document.getElementById(id);
