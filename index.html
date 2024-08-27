@@ -450,7 +450,6 @@
             margin-right: 10px; /* Ensure there's some space between the image and text */
         }
         
-
         #start-menu .window-body {
             padding: 10px;
             background-color: #c0c0c0;
@@ -493,6 +492,13 @@
             height: auto;
             margin-bottom: 5px; /* Adds space between the icon and the text */
         }
+
+        .song-button.pressed {
+            background-color: #004e98;
+            color: white;
+            border: 2px inset #fff; /* Creates a pressed-in effect */
+        }
+
 
 
         
@@ -670,8 +676,7 @@
                 <button aria-label="Close" onclick="closeWindow('music-player-window')">x</button>
             </div>
         </div>
-        <div id="current-song" style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); color: white; text-shadow: 1px 1px 2px black;">No Song</div>
-    
+       
         <div class="window-body music-player-body">
             <!-- Play-Pause Button -->
             <div class="play-pause-container">
@@ -681,10 +686,15 @@
             
             
             <!-- Corner Buttons -->
-            <button class="song-button top-left">CLOUDS</button>
-            <button class="song-button top-right">DARK BEACH</button>
-            <button class="song-button bottom-left">HOME</button>
-            <button class="song-button bottom-right">EMBRACE</button>
+            <button class="song-button top-left" id="song-clouds">CLOUDS</button>
+            <button class="song-button top-right" id="song-dark-beach">DARK BEACH</button>
+            <button class="song-button bottom-left" id="song-home">HOME</button>
+            <button class="song-button bottom-right" id="song-embrace">EMBRACE</button>
+            <!-- Audio Element -->
+            <audio id="audio-player">
+                <source id="audio-source" src="" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
         </div>
     </div>
     
@@ -982,6 +992,107 @@
                 icons.forEach(i => i.classList.remove('selected'));
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.getElementById('play-button');
+            const pauseButton = document.getElementById('pause-button');
+            const audioPlayer = document.getElementById('audio-player');
+            const audioSource = document.getElementById('audio-source');
+            let currentSongButton = null;
+
+            const songs = {
+                'song-clouds': {
+                    name: 'CLOUDS',
+                    src: 'music/CLOUDS.mp3',
+                    button: document.getElementById('song-clouds')
+                },
+                'song-dark-beach': {
+                    name: 'DARK BEACH',
+                    src: 'music/DARKBEACH.mp3',
+                    button: document.getElementById('song-dark-beach')
+                },
+                'song-home': {
+                    name: 'HOME',
+                    src: 'music/HOME.mp3',
+                    button: document.getElementById('song-home')
+                },
+                'song-embrace': {
+                    name: 'EMBRACE',
+                    src: 'music/EMBRACE.mp3',
+                    button: document.getElementById('song-embrace')
+                }
+            };
+
+            function loadSong(songId) {
+                const song = songs[songId];
+                if (audioSource.getAttribute('data-src') !== song.src) {
+                    audioSource.setAttribute('data-src', song.src);
+                    audioSource.src = song.src;
+                    audioPlayer.load(); // Load the new audio source
+                }
+
+                if (currentSongButton) {
+                    currentSongButton.classList.remove('pressed');
+                }
+
+                currentSongButton = song.button;
+                currentSongButton.classList.add('pressed');
+            }
+
+            function playAudio() {
+                audioPlayer.play();
+                playButton.style.display = 'none';
+                pauseButton.style.display = 'block';
+
+                if (currentSongButton) {
+                    currentSongButton.classList.add('pressed'); // Keep the button pressed
+                }
+            }
+
+            function pauseAudio() {
+                audioPlayer.pause();
+                pauseButton.style.display = 'none';
+                playButton.style.display = 'block';
+
+                if (currentSongButton) {
+                    currentSongButton.classList.add('pressed'); // Keep the button pressed
+                }
+            }
+
+            document.getElementById('song-clouds').addEventListener('click', function() {
+                loadSong('song-clouds');
+                playAudio();
+            });
+
+            document.getElementById('song-dark-beach').addEventListener('click', function() {
+                loadSong('song-dark-beach');
+                playAudio();
+            });
+
+            document.getElementById('song-home').addEventListener('click', function() {
+                loadSong('song-home');
+                playAudio();
+            });
+
+            document.getElementById('song-embrace').addEventListener('click', function() {
+                loadSong('song-embrace');
+                playAudio();
+            });
+
+            // Unhighlight the song button when the audio finishes playing
+            audioPlayer.addEventListener('ended', function() {
+                if (currentSongButton) {
+                    currentSongButton.classList.remove('pressed');
+                }
+        playButton.style.display = 'block';
+        pauseButton.style.display = 'none';
+    });
+
+            playButton.addEventListener('click', playAudio);
+            pauseButton.addEventListener('click', pauseAudio);
+        });
+
+
 
 
     </script>
