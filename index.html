@@ -71,28 +71,28 @@
         }
 
         #tree-window-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
-    height: 100%; /* Ensure the content takes up the full height of the window */
-    padding: 20px; /* Optional: Add some padding around the content */
-    box-sizing: border-box;
-}
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            height: 100%; /* Ensure the content takes up the full height of the window */
+            padding: 20px; /* Optional: Add some padding around the content */
+            box-sizing: border-box;
+        }
 
-#tree-image {
-    width: 400px; /* Fixed width */
-    height: 300px; /* Fixed height */
-    object-fit: cover; /* Ensure the image covers the area without distortion */
-    margin-bottom: 80px; /* Space between the image and the quote */
-}
+        #tree-image {
+            width: 400px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            object-fit: cover; /* Ensure the image covers the area without distortion */
+            margin-bottom: 80px; /* Space between the image and the quote */
+        }
 
-#quote-container {
-    max-width: 100%; /* Ensure the text doesn't overflow horizontally */
-    text-align: center; /* Center the text */
-    word-wrap: break-word; /* Break long words if necessary */
-    overflow-y: auto; /* Add a scrollbar if the text is too long */
-}
+        #quote-container {
+            max-width: 100%; /* Ensure the text doesn't overflow horizontally */
+            text-align: center; /* Center the text */
+            word-wrap: break-word; /* Break long words if necessary */
+            overflow-y: auto; /* Add a scrollbar if the text is too long */
+        }
 
 
         #quote-container {
@@ -520,9 +520,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    
+    </div> 
 
     <div class="window" id="ml-projects">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
@@ -626,7 +624,7 @@
 
     <div class="window" id="tree-window">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
-            <div class="title-bar-text">Tree</div>
+            <div class="title-bar-text">A Moment...</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('tree-window')">x</button>
             </div>
@@ -643,10 +641,6 @@
             </div>
         </div>
     </div>
-    
-    
-    
-    
     
     <div class="taskbar">
         <div class="start-button" onclick="toggleDropUp()">
@@ -701,7 +695,7 @@
                         </button>
                     </li>
                     <li>
-                        <button class="button">
+                        <button class="button" onclick="logOut()">
                             <img src="images/onoff.png" alt="Log Off">
                             Log Off
                         </button>
@@ -716,6 +710,17 @@
         function login() {
             document.getElementById('login-overlay').style.display = 'none';
         }
+        function logOut() {
+            // Hide all windows
+            const windows = document.querySelectorAll('.window');
+            windows.forEach(window => {
+                window.style.display = 'none';
+            });
+
+            // Show the login overlay
+            document.getElementById('login-overlay').style.display = 'flex';
+        }
+
 
         let highestZIndex = 1; // Start with a base z-index
 
@@ -729,29 +734,25 @@
         }
 
         function openTreeWindow() {
-    // Run the core logic twice
-    runOpenWindowLogic('tree-window');
-    runOpenWindowLogic('tree-window');
-    
-    // Fetch the text file and display a random line
-    fetch('quotes.txt')
-        .then(response => response.text())
-        .then(data => {
-            const lines = data.split('\n');
-            const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
-            document.getElementById('tree-content').textContent = randomLine;
-        })
-        .catch(error => console.error('Error fetching the quotes:', error));
+            // Run the core logic twice
+            runOpenWindowLogic('tree-window');
+            runOpenWindowLogic('tree-window');
+            
+            // Fetch the text file and display a random line
+            fetch('quotes.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.split('\n');
+                    const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
+                    document.getElementById('tree-content').textContent = randomLine;
+                })
+                .catch(error => console.error('Error fetching the quotes:', error));
 
-    // Display a random image from the image bank
-    const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    document.getElementById('tree-image').src = `image-bank/${randomImage}`;
-}
-
-
-
-
+            // Display a random image from the image bank
+            const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
+            const randomImage = images[Math.floor(Math.random() * images.length)];
+            document.getElementById('tree-image').src = `image-bank/${randomImage}`;
+        }
 
         function runOpenWindowLogic(id) {
             const windowElement = document.getElementById(id);
@@ -792,16 +793,41 @@
             });
         }
 
-
-
-
         function closeWindow(id) {
             document.getElementById(id).style.display = 'none';
         }
 
         function toggleDropUp() {
             const menu = document.getElementById('start-menu');
-            menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+            
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                // Open the start menu
+                menu.style.display = 'block';
+
+                // Bring the start menu and taskbar to the highest layer
+                highestZIndex++;
+                menu.style.zIndex = highestZIndex;
+                document.querySelector('.taskbar').style.zIndex = highestZIndex;
+
+                // Add an event listener to close the start menu if clicked outside
+                document.addEventListener('click', closeStartMenuOnClickOutside);
+            } else {
+                // Close the start menu
+                menu.style.display = 'none';
+
+                // Remove the event listener
+                document.removeEventListener('click', closeStartMenuOnClickOutside);
+            }
+        }
+
+        function closeStartMenuOnClickOutside(event) {
+            const menu = document.getElementById('start-menu');
+            const startButton = document.querySelector('.start-button');
+            
+            if (!menu.contains(event.target) && !startButton.contains(event.target)) {
+                menu.style.display = 'none';
+                document.removeEventListener('click', closeStartMenuOnClickOutside);
+            }
         }
 
         function updateTime() {
