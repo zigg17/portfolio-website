@@ -502,7 +502,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; /* Aligns items to the start of the row */
-    align-items: center;
+    align-items: flex-start; /* Ensures all icons align at the top */
     padding: 10px;
 }
 
@@ -515,6 +515,7 @@
     margin-right: 25px; /* Adjust the right margin for horizontal spacing */
     cursor: pointer;
 }
+
 
 .ml-icon img, .ui-icon img {
     width: 64px;
@@ -529,51 +530,56 @@
     text-align: center;
 }
 
-/* Centering the content inside the project detail window */
-#ml-project-detail,
-#ui-project-detail {
+#ui-project-detail,
+#ml-project-detail {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%; /* Make sure the container takes up the full height of the window */
-    text-align: center; /* Center the text */
-}
-
-#ml-project-detail img,
-#ui-project-detail img {
-    max-width: 200px; /* Adjust the size to fit well within the window */
-    height: 300px;
-    margin-bottom: 20px;
-}
-
-#ml-project-detail h2,
-#ui-project-detail h2 {
-    font-size: 17px; /* Adjust the title size */
-    margin-bottom: 10px; /* Space between the title and the description */
-}
-
-#ml-project-detail p,
-#ui-project-detail p {
-    font-size: 13px; /* Adjust the paragraph text size */
-    margin-bottom: 20px; /* Space between the paragraph and the button */
-}
-
-#ml-project-detail a button,
-#ui-project-detail a button {
-    padding: 10px 20px; /* Adjust the button padding */
-    font-size: 13px;
-    cursor: pointer;
+    height: 100%; /* Ensure the container takes up the full height */
+    text-align: center; /* Center text inside the container */
+    margin: 0 auto; /* Center the container itself horizontally */
 }
 
 #ui-project-detail .window-body,
-#ml-project-detail .window-body{
+#ml-project-detail .window-body {
     display: flex;
+    flex-direction: column;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     height: 100%; /* Take up the full height */
     box-sizing: border-box; /* Ensure padding doesn't affect sizing */
 }
+
+/* Image styling specific to UI and ML project detail windows */
+#ui-project-detail img,
+#ml-project-detail img {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 70px;
+}
+
+/* Title and paragraph styling */
+#ui-project-detail h2,
+#ml-project-detail h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#ui-project-detail .window-body p,
+#ml-project-detail .window-body p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Button styling */
+#ui-project-detail .window-body a button,
+#ml-project-detail .window-body a button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 
 
         
@@ -670,31 +676,31 @@
         <div class="window-body">
             <!-- Icon Container -->
             <div class="ml-icon-container" id="ml-icons-page">
-                <div class="ml-icon" onclick="showProjectDetail('SkinMNIST')">
-                    <img src="images/ml_icon1.png" alt="SkinMNIST">
+                <div class="ml-icon" onclick="showProjectDetail('SkinMNIST', 'ml')">
+                    <img src="images/skinMNIST.png" alt="SkinMNIST">
                     <p>SkinMNIST</p>
                 </div>
-                <div class="ml-icon" onclick="showProjectDetail('ML Project 2')">
-                    <img src="images/ml_icon2.png" alt="ML Project 2">
-                    <p>ML Project 2</p>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 2', 'ml')">
+                    <img src="images/peru_housing.png" alt="ML Project 2">
+                    <p>Peruvian<br>Housing</p>
                 </div>
-                <div class="ml-icon" onclick="showProjectDetail('ML Project 3')">
-                    <img src="images/ml_icon3.png" alt="ML Project 3">
-                    <p>ML Project 3</p>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 3', 'ml')">
+                    <img src="images/lung.png" alt="ML Project 3">
+                    <p>Pneumonia<br>Classification</p>
                 </div>
-                <div class="ml-icon" onclick="showProjectDetail('ML Project 4')">
-                    <img src="images/ml_icon4.png" alt="ML Project 4">
-                    <p>ML Project 4</p>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 4', 'ml')">
+                    <img src="images/pipeline.png" alt="ML Project 4">
+                    <p>Image<br>Classification<br>Pipeline</p>
                 </div>
-                <div class="ml-icon" onclick="showProjectDetail('ML Project 5')">
-                    <img src="images/ml_icon5.png" alt="ML Project 5">
-                    <p>ML Project 5</p>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 5', 'ml')">
+                    <img src="images/housing.png" alt="ML Project 5">
+                    <p>Housing<br>Inequality</p>
                 </div>
-                <div class="ml-icon" onclick="showProjectDetail('ML Project 6')">
-                    <img src="images/ml_icon6.png" alt="ML Project 6">
-                    <p>ML Project 6</p>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 6', 'ml')">
+                    <img src="images/sprague_vision.png" alt="ML Project 6">
+                    <p>Sprague Eye</p>
                 </div>
-                <div class="ml-icon" onclick="showProjectDetail('ML Project 7')">
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 7', 'ml')">
                     <img src="images/ml_icon7.png" alt="ML Project 7">
                     <p>ML Project 7</p>
                 </div>
@@ -726,23 +732,23 @@
         <div class="window-body">
             <!-- Icon Container -->
             <div class="ui-icon-container" id="ui-icons-page">
-                <div class="ui-icon" onclick="showProjectDetail('Weave')">
+                <div class="ui-icon" onclick="showProjectDetail('Weave', 'ui')">
                     <img src="images/weave.png" alt="Weave">
                     <p>Weave</p>
                 </div>
-                <div class="ui-icon" onclick="showProjectDetail('JakeLingo')">
+                <div class="ui-icon" onclick="showProjectDetail('JakeLingo', 'ui')">
                     <img src="images/jakelingo.png" alt="JakeLingo">
                     <p>JakeLingo</p>
                 </div>
-                <div class="ui-icon" onclick="showProjectDetail('Sprague Eye')">
+                <div class="ui-icon" onclick="showProjectDetail('Sprague Eye', 'ui')">
                     <img src="images/raticon.png" alt="Sprague Eye">
                     <p>Sprague Eye</p>
                 </div>
-                <div class="ui-icon" onclick="showProjectDetail('Baratta Lab Website')">
+                <div class="ui-icon" onclick="showProjectDetail('Baratta Lab Website', 'ui')">
                     <img src="images/buff.png" alt="Baratta Lab Website">
                     <p>Baratta Lab<br>Website</p>
                 </div>
-                <div class="ui-icon" onclick="showProjectDetail('Horchata OS')">
+                <div class="ui-icon" onclick="showProjectDetail('Horchata OS', 'ui')">
                     <img src="images/start_button.png" alt="Horchata OS">
                     <p>Horchata OS</p>
                 </div>
@@ -1235,103 +1241,68 @@
                 // Add functionality to open corresponding project details
             });
         });
-    
-        function showProjectDetail(projectName) {
-            const projectDetails = {
-                'SkinMNIST': {
-                    title: 'SkinMNIST',
-                    image: 'images/ml_icon1.png',
-                    info: 'This project is about classifying skin lesions using deep learning.',
-                    repo: 'https://github.com/your-repo/skinmnist'
-                },
-                'ML Project 2': {
-                    title: 'ML Project 2',
-                    image: 'images/ml_icon2.png',
-                    info: 'Description of ML Project 2.',
-                    repo: 'https://github.com/your-repo/ml-project-2'
-                },
-                'ML Project 3': {
-                    title: 'ML Project 3',
-                    image: 'images/ml_icon3.png',
-                    info: 'Description of ML Project 3.',
-                    repo: 'https://github.com/your-repo/ml-project-3'
-                },
-                'ML Project 4': {
-                    title: 'ML Project 4',
-                    image: 'images/ml_icon4.png',
-                    info: 'Description of ML Project 4.',
-                    repo: 'https://github.com/your-repo/ml-project-4'
-                },
-                'ML Project 5': {
-                    title: 'ML Project 5',
-                    image: 'images/ml_icon5.png',
-                    info: 'Description of ML Project 5.',
-                    repo: 'https://github.com/your-repo/ml-project-5'
-                },
-                'ML Project 6': {
-                    title: 'ML Project 6',
-                    image: 'images/ml_icon6.png',
-                    info: 'Description of ML Project 6.',
-                    repo: 'https://github.com/your-repo/ml-project-6'
-                },
-                'ML Project 7': {
-                    title: 'ML Project 7',
-                    image: 'images/ml_icon7.png',
-                    info: 'Description of ML Project 7.',
-                    repo: 'https://github.com/your-repo/ml-project-7'
-                },
-                'Weave': {
-                    title: 'Weave',
-                    image: 'images/weave.png',
-                    info: 'A project focused on a UI design for weaving complex patterns.',
-                    repo: 'https://github.com/your-repo/weave'
-                },
-                'JakeLingo': {
-                    title: 'JakeLingo',
-                    image: 'images/jakelingo.png',
-                    info: 'A language learning application with flashcards and verb practice.',
-                    repo: 'https://github.com/your-repo/jakelingo'
-                },
-                'Sprague Eye': {
-                    title: 'Sprague Eye',
-                    image: 'images/raticon.png',
-                    info: 'A UI project for a laboratory experiment analysis tool.',
-                    repo: 'https://github.com/your-repo/sprague-eye'
-                },
-                'Baratta Lab Website': {
-                    title: 'Baratta Lab Website',
-                    image: 'images/buff.png',
-                    info: 'A website project for the Baratta Lab at the University of Colorado.',
-                    repo: 'https://github.com/your-repo/baratta-lab'
-                },
-                'Horchata OS': {
-                    title: 'Horchata OS',
-                    image: 'images/start_button.png',
-                    info: 'An operating system with a retro user interface.',
-                    repo: 'https://github.com/your-repo/horchata-os'
-                }
-            };
-    
-            const detail = projectDetails[projectName];
-    
-            if (detail) {
-                if (projectName.startsWith('ML')) {
-                    document.getElementById('ml-icons-page').style.display = 'none';
-                    document.getElementById('ml-project-detail').style.display = 'block';
-                    document.getElementById('ml-project-title').textContent = detail.title;
-                    document.getElementById('ml-project-image').src = detail.image;
-                    document.getElementById('ml-project-info').textContent = detail.info;
-                    document.getElementById('ml-project-repo').href = detail.repo;
-                } else {
-                    document.getElementById('ui-icons-page').style.display = 'none';
-                    document.getElementById('ui-project-detail').style.display = 'block';
-                    document.getElementById('ui-project-title').textContent = detail.title;
-                    document.getElementById('ui-project-image').src = detail.image;
-                    document.getElementById('ui-project-info').textContent = detail.info;
-                    document.getElementById('ui-project-repo').href = detail.repo;
-                }
-            }
+
+        function showProjectDetail(projectName, projectType) {
+    const projectDetails = {
+        'SkinMNIST': {
+            title: 'SkinMNIST',
+            image: 'images/skinMNIST-pic.png',
+            info: 'This project is about classifying skin lesions using deep learning.',
+            repo: 'https://github.com/your-repo/skinmnist'
+        },
+        'ML Project 2': {
+            title: 'ML Project 2',
+            image: 'images/ml_icon2.png',
+            info: 'Description of ML Project 2.',
+            repo: 'https://github.com/your-repo/ml-project-2'
+        },
+        'Weave': {
+            title: 'Weave',
+            image: 'images/weave.png',
+            info: 'A project focused on a UI design for weaving complex patterns.',
+            repo: 'https://github.com/your-repo/weave'
+        },
+        'Sprague Eye': {
+            title: 'Sprague Eye',
+            image: 'images/jakelingo.png',
+            info: '',
+            repo: 'https://github.com/your-repo/jakelingo'
+        },
+        'JakeLingo': {
+            title: 'JakeLingo',
+            image: 'images/jakelingo.png',
+            info: 'A language learning application with flashcards and verb practice.',
+            repo: 'https://github.com/your-repo/jakelingo'
+        },
+        'JakeLingo': {
+            title: 'JakeLingo',
+            image: 'images/jakelingo.png',
+            info: 'A language learning application with flashcards and verb practice.',
+            repo: 'https://github.com/your-repo/jakelingo'
         }
+    };
+
+    const detail = projectDetails[projectName];
+
+    if (detail) {
+        if (projectType === 'ml') {
+            document.getElementById('ml-icons-page').style.display = 'none';
+            document.getElementById('ml-project-detail').style.display = 'block';
+            document.getElementById('ml-project-title').textContent = detail.title;
+            document.getElementById('ml-project-image').src = detail.image;
+            document.getElementById('ml-project-info').textContent = detail.info;
+            document.getElementById('ml-project-repo').href = detail.repo;
+        } else if (projectType === 'ui') {
+            document.getElementById('ui-icons-page').style.display = 'none';
+            document.getElementById('ui-project-detail').style.display = 'block';
+            document.getElementById('ui-project-title').textContent = detail.title;
+            document.getElementById('ui-project-image').src = detail.image;
+            document.getElementById('ui-project-info').textContent = detail.info;
+            document.getElementById('ui-project-repo').href = detail.repo;
+        }
+    }
+}
+
     
         function showIconsPage(pageId) {
             if (pageId === 'ml-projects') {
