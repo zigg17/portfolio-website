@@ -498,7 +498,82 @@
             color: white;
             border: 2px inset #fff; /* Creates a pressed-in effect */
         }
+        .ml-icon-container, .ui-icon-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Aligns items to the start of the row */
+    align-items: center;
+    padding: 10px;
+}
 
+.ml-icon, .ui-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px; /* Adjust the vertical margin */
+    margin-left: 25px;  /* Adjust the left margin for horizontal spacing */
+    margin-right: 25px; /* Adjust the right margin for horizontal spacing */
+    cursor: pointer;
+}
+
+.ml-icon img, .ui-icon img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 5px;
+}
+
+.ml-icon p, .ui-icon p {
+    margin: 0;
+    color: black;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Centering the content inside the project detail window */
+#ml-project-detail,
+#ui-project-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Make sure the container takes up the full height of the window */
+    text-align: center; /* Center the text */
+}
+
+#ml-project-detail img,
+#ui-project-detail img {
+    max-width: 200px; /* Adjust the size to fit well within the window */
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+#ml-project-detail h2,
+#ui-project-detail h2 {
+    font-size: 17px; /* Adjust the title size */
+    margin-bottom: 10px; /* Space between the title and the description */
+}
+
+#ml-project-detail p,
+#ui-project-detail p {
+    font-size: 13px; /* Adjust the paragraph text size */
+    margin-bottom: 20px; /* Space between the paragraph and the button */
+}
+
+#ml-project-detail a button,
+#ui-project-detail a button {
+    padding: 10px 20px; /* Adjust the button padding */
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#ui-project-detail .window-body,
+#ml-project-detail .window-body{
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Take up the full height */
+    box-sizing: border-box; /* Ensure padding doesn't affect sizing */
+}
 
 
         
@@ -587,29 +662,104 @@
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">ML Projects</div>
             <div class="title-bar-controls">
-                <button class="nav-button" id="back-button" onclick="navigateProjects('back')"><</button>
+                <button class="nav-button" id="back-button" onclick="showIconsPage('ml-projects')"><</button>
                 <button class="nav-button" id="forward-button" onclick="navigateProjects('forward')">></button>
                 <button aria-label="Close" onclick="closeWindow('ml-projects')">x</button>
-                
             </div>
         </div>
         <div class="window-body">
+            <!-- Icon Container -->
+            <div class="ml-icon-container" id="ml-icons-page">
+                <div class="ml-icon" onclick="showProjectDetail('SkinMNIST')">
+                    <img src="images/ml_icon1.png" alt="SkinMNIST">
+                    <p>SkinMNIST</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 2')">
+                    <img src="images/ml_icon2.png" alt="ML Project 2">
+                    <p>ML Project 2</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 3')">
+                    <img src="images/ml_icon3.png" alt="ML Project 3">
+                    <p>ML Project 3</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 4')">
+                    <img src="images/ml_icon4.png" alt="ML Project 4">
+                    <p>ML Project 4</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 5')">
+                    <img src="images/ml_icon5.png" alt="ML Project 5">
+                    <p>ML Project 5</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 6')">
+                    <img src="images/ml_icon6.png" alt="ML Project 6">
+                    <p>ML Project 6</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 7')">
+                    <img src="images/ml_icon7.png" alt="ML Project 7">
+                    <p>ML Project 7</p>
+                </div>
+            </div>
             
+            <!-- Project Detail Container (Initially Hidden) -->
+            <div id="ml-project-detail" style="display: none;">
+                <img src="" alt="Project Image" id="ml-project-image" style="width: 100%; height: auto;">
+                <h2 id="ml-project-title">Project Title</h2>
+                <p id="ml-project-info">Project information will go here.</p>
+                <a href="" id="ml-project-repo" target="_blank">
+                    <button>Go to Repository</button>
+                </a>
+            </div>
         </div>
     </div>
+    
+    
 
     <div class="window" id="ui-projects">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">UI Projects</div>
             <div class="title-bar-controls">
-                <button class="nav-button" id="back-button" onclick="navigateProjects('back')"><</button>
+                <button class="nav-button" id="back-button" onclick="showIconsPage('ui-projects')"><</button>
                 <button class="nav-button" id="forward-button" onclick="navigateProjects('forward')">></button>
                 <button aria-label="Close" onclick="closeWindow('ui-projects')">x</button>
             </div>
         </div>
         <div class="window-body">
+            <!-- Icon Container -->
+            <div class="ui-icon-container" id="ui-icons-page">
+                <div class="ui-icon" onclick="showProjectDetail('Weave')">
+                    <img src="images/weave.png" alt="Weave">
+                    <p>Weave</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('JakeLingo')">
+                    <img src="images/jakelingo.png" alt="JakeLingo">
+                    <p>JakeLingo</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('Sprague Eye')">
+                    <img src="images/raticon.png" alt="Sprague Eye">
+                    <p>Sprague Eye</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('Baratta Lab Website')">
+                    <img src="images/buff.png" alt="Baratta Lab Website">
+                    <p>Baratta Lab<br>Website</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('Horchata OS')">
+                    <img src="images/start_button.png" alt="Horchata OS">
+                    <p>Horchata OS</p>
+                </div>
+            </div>
+            
+            <!-- Project Detail Container (Initially Hidden) -->
+            <div id="ui-project-detail" style="display: none;">
+                <img src="" alt="Project Image" id="ui-project-image" style="width: 100%; height: auto;">
+                <h2 id="ui-project-title">Project Title</h2>
+                <p id="ui-project-info">Project information will go here.</p>
+                <a href="" id="ui-project-repo" target="_blank">
+                    <button>Go to Repository</button>
+                </a>
+            </div>
         </div>
     </div>
+    
 
     <div class="window" id="contact">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
@@ -718,6 +868,45 @@
             </div>
         </div>
     </div>
+    <!-- Documents Window -->
+    <div class="window" id="documents-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Documents</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('documents-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Your documents will appear here.</p>
+        </div>
+    </div>
+
+    <!-- Settings Window -->
+    <div class="window" id="settings-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Settings</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('settings-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Your settings options will appear here.</p>
+        </div>
+    </div>
+
+    <!-- Help and Support Window -->
+    <div class="window" id="help-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Help and Support</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('help-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Your help and support information will appear here.</p>
+        </div>
+    </div>
+
     
     <div class="taskbar">
         <div class="start-button" onclick="toggleDropUp()">
@@ -751,21 +940,21 @@
             <div class="window-body">
                 <ul>
                     <li>
-                        <button class="button">
+                        <button class="button" onclick="openWindow('documents-window')">
                             <img src="images/doc.png" alt="Documents">
                             Documents
                             <span class="arrow">▶</span>
                         </button>
                     </li>
                     <li>
-                        <button class="button">
+                        <button class="button" onclick="openWindow('settings-window')">
                             <img src="images/settings.png" alt="Settings">
                             Settings
                             <span class="arrow">▶</span>
                         </button>
                     </li>
                     <li>
-                        <button class="button">
+                        <button class="button" onclick="openWindow('help-window')">
                             <img src="images/help.png" alt="Help">
                             Help and Support
                             <span class="arrow">▶</span>
@@ -782,25 +971,25 @@
         </div>
     </div>
 
-    <!-- JavaScript for Window Functionality -->
     <script>
+        // Functions for login and logout
         function login() {
             document.getElementById('login-overlay').style.display = 'none';
         }
+    
         function logOut() {
             // Hide all windows
             const windows = document.querySelectorAll('.window');
             windows.forEach(window => {
                 window.style.display = 'none';
             });
-
+    
             // Show the login overlay
             document.getElementById('login-overlay').style.display = 'flex';
         }
-
-
+    
         let highestZIndex = 1; // Start with a base z-index
-
+    
         function openWindow(id) {
             if (id === 'tree-window') {
                 openTreeWindow();
@@ -809,12 +998,11 @@
                 runOpenWindowLogic(id);
             }
         }
-
+    
         function openTreeWindow() {
-            // Run the core logic twice
             runOpenWindowLogic('tree-window');
             runOpenWindowLogic('tree-window');
-            
+    
             // Fetch the text file and display a random line
             fetch('quotes.txt')
                 .then(response => response.text())
@@ -824,113 +1012,97 @@
                     document.getElementById('tree-content').textContent = randomLine;
                 })
                 .catch(error => console.error('Error fetching the quotes:', error));
-
+    
             // Display a random image from the image bank
             const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
             const randomImage = images[Math.floor(Math.random() * images.length)];
             document.getElementById('tree-image').src = `image-bank/${randomImage}`;
         }
-
+    
         function runOpenWindowLogic(id) {
             const windowElement = document.getElementById(id);
-
-            // Get the dimensions of the viewport (browser window)
+    
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
-
-            // Define individual margins
-            const leftMargin = 100;   // More stringent left margin
-            const rightMargin = 100;  // More stringent right margin
-            const topMargin = 20;     // More relaxed top margin
-            const bottomMargin = 50;  // Custom bottom margin
-
-            // Calculate constrained positions
+    
+            const leftMargin = 100;
+            const rightMargin = 100;
+            const topMargin = 20;
+            const bottomMargin = 50;
+    
             const maxLeft = viewportWidth - windowElement.offsetWidth - rightMargin;
             const maxTop = viewportHeight - windowElement.offsetHeight - bottomMargin;
-
-            // Generate random positions ensuring they stay within the viewport with individual margins
+    
             const randomLeft = Math.floor(Math.random() * (maxLeft - leftMargin + 1)) + leftMargin;
             const randomTop = Math.floor(Math.random() * (maxTop - topMargin + 1)) + topMargin;
-
-            // Apply the positions
+    
             windowElement.style.left = `${randomLeft}px`;
             windowElement.style.top = `${randomTop}px`;
-
-            // Set the window's z-index to be higher than any other window
+    
             highestZIndex++;
             windowElement.style.zIndex = highestZIndex;
-
-            // Display the window
+    
             windowElement.style.display = 'block';
-
-            // Add an event listener to bring the window to the top when clicked
+    
             windowElement.addEventListener('mousedown', () => {
                 highestZIndex++;
                 windowElement.style.zIndex = highestZIndex;
             });
         }
-
+    
         function closeWindow(id) {
             document.getElementById(id).style.display = 'none';
         }
-
+    
         function toggleDropUp() {
             const menu = document.getElementById('start-menu');
-            
+    
             if (menu.style.display === 'none' || menu.style.display === '') {
-                // Open the start menu
                 menu.style.display = 'block';
-
-                // Bring the start menu and taskbar to the highest layer
+    
                 highestZIndex++;
                 menu.style.zIndex = highestZIndex;
                 document.querySelector('.taskbar').style.zIndex = highestZIndex;
-
-                // Add an event listener to close the start menu if clicked outside
+    
                 document.addEventListener('click', closeStartMenuOnClickOutside);
             } else {
-                // Close the start menu
                 menu.style.display = 'none';
-
-                // Remove the event listener
+    
                 document.removeEventListener('click', closeStartMenuOnClickOutside);
             }
         }
-
+    
         function closeStartMenuOnClickOutside(event) {
             const menu = document.getElementById('start-menu');
             const startButton = document.querySelector('.start-button');
-            
+    
             if (!menu.contains(event.target) && !startButton.contains(event.target)) {
                 menu.style.display = 'none';
                 document.removeEventListener('click', closeStartMenuOnClickOutside);
             }
         }
-
+    
         function updateTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const month = String(now.getMonth() + 1).padStart(2, '0');
             const year = now.getFullYear();
-
-            // Format time and date
+    
             const timeString = `${hours}:${minutes}`;
             const dateString = `${month}/${day}/${year}`;
-
-            // Display time and date
+    
             document.getElementById('taskbar-time').textContent = `${dateString} ${timeString} `;
         }
-
-        // Update time and date every minute
+    
         setInterval(updateTime, 1000);
-        updateTime(); // Initial call to display time and date immediately
-
+        updateTime();
+    
         function dragElement(elmnt) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             elmnt.onmousedown = dragMouseDown;
-
+    
             function dragMouseDown(e) {
                 e = e || window.event;
                 e.preventDefault();
@@ -939,7 +1111,7 @@
                 document.onmouseup = closeDragElement;
                 document.onmousemove = elementDrag;
             }
-
+    
             function elementDrag(e) {
                 e = e || window.event;
                 e.preventDefault();
@@ -950,56 +1122,21 @@
                 elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
                 elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
             }
-
+    
             function closeDragElement() {
                 document.onmouseup = null;
                 document.onmousemove = null;
             }
         }
-
-        document.getElementById('play-button').addEventListener('click', function() {
-            this.style.display = 'none';
-            document.getElementById('pause-button').style.display = 'block';
-            // Add play functionality here
-        });
-
-        document.getElementById('pause-button').addEventListener('click', function() {
-            this.style.display = 'none';
-            document.getElementById('play-button').style.display = 'block';
-            // Add pause functionality here
-        });
-
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const icons = document.querySelectorAll('.desktop-icon');
-            const desktop = document.body; // Treat the entire body as the desktop
-
-            icons.forEach(icon => {
-                icon.addEventListener('click', function (event) {
-                    // Prevent the desktop click from firing
-                    event.stopPropagation();
-
-                    // Remove the 'selected' class from all icons
-                    icons.forEach(i => i.classList.remove('selected'));
-
-                    // Add the 'selected' class to the clicked icon
-                    icon.classList.add('selected');
-                });
-            });
-
-            // Unselect all icons when clicking on the desktop
-            desktop.addEventListener('click', function () {
-                icons.forEach(i => i.classList.remove('selected'));
-            });
-        });
-
+    
+        // Music Player
         document.addEventListener('DOMContentLoaded', function() {
             const playButton = document.getElementById('play-button');
             const pauseButton = document.getElementById('pause-button');
             const audioPlayer = document.getElementById('audio-player');
             const audioSource = document.getElementById('audio-source');
             let currentSongButton = null;
-
+    
             const songs = {
                 'song-clouds': {
                     name: 'CLOUDS',
@@ -1022,79 +1159,190 @@
                     button: document.getElementById('song-embrace')
                 }
             };
-
+    
             function loadSong(songId) {
                 const song = songs[songId];
                 if (audioSource.getAttribute('data-src') !== song.src) {
                     audioSource.setAttribute('data-src', song.src);
                     audioSource.src = song.src;
-                    audioPlayer.load(); // Load the new audio source
+                    audioPlayer.load();
                 }
-
+    
                 if (currentSongButton) {
                     currentSongButton.classList.remove('pressed');
                 }
-
+    
                 currentSongButton = song.button;
                 currentSongButton.classList.add('pressed');
             }
-
+    
             function playAudio() {
                 audioPlayer.play();
                 playButton.style.display = 'none';
                 pauseButton.style.display = 'block';
-
+    
                 if (currentSongButton) {
-                    currentSongButton.classList.add('pressed'); // Keep the button pressed
+                    currentSongButton.classList.add('pressed');
                 }
             }
-
+    
             function pauseAudio() {
                 audioPlayer.pause();
                 pauseButton.style.display = 'none';
                 playButton.style.display = 'block';
-
+    
                 if (currentSongButton) {
-                    currentSongButton.classList.add('pressed'); // Keep the button pressed
+                    currentSongButton.classList.add('pressed');
                 }
             }
-
+    
             document.getElementById('song-clouds').addEventListener('click', function() {
                 loadSong('song-clouds');
                 playAudio();
             });
-
+    
             document.getElementById('song-dark-beach').addEventListener('click', function() {
                 loadSong('song-dark-beach');
                 playAudio();
             });
-
+    
             document.getElementById('song-home').addEventListener('click', function() {
                 loadSong('song-home');
                 playAudio();
             });
-
+    
             document.getElementById('song-embrace').addEventListener('click', function() {
                 loadSong('song-embrace');
                 playAudio();
             });
-
-            // Unhighlight the song button when the audio finishes playing
+    
             audioPlayer.addEventListener('ended', function() {
                 if (currentSongButton) {
                     currentSongButton.classList.remove('pressed');
                 }
-        playButton.style.display = 'block';
-        pauseButton.style.display = 'none';
-    });
-
+                playButton.style.display = 'block';
+                pauseButton.style.display = 'none';
+            });
+    
             playButton.addEventListener('click', playAudio);
             pauseButton.addEventListener('click', pauseAudio);
         });
-
-
-
-
+    
+        // Functionality for icons (ML and UI Projects)
+        document.querySelectorAll('.ml-icon, .ui-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                console.log(`${this.querySelector('p').textContent} clicked`);
+                // Add functionality to open corresponding project details
+            });
+        });
+    
+        function showProjectDetail(projectName) {
+            const projectDetails = {
+                'SkinMNIST': {
+                    title: 'SkinMNIST',
+                    image: 'images/ml_icon1.png',
+                    info: 'This project is about classifying skin lesions using deep learning.',
+                    repo: 'https://github.com/your-repo/skinmnist'
+                },
+                'ML Project 2': {
+                    title: 'ML Project 2',
+                    image: 'images/ml_icon2.png',
+                    info: 'Description of ML Project 2.',
+                    repo: 'https://github.com/your-repo/ml-project-2'
+                },
+                'ML Project 3': {
+                    title: 'ML Project 3',
+                    image: 'images/ml_icon3.png',
+                    info: 'Description of ML Project 3.',
+                    repo: 'https://github.com/your-repo/ml-project-3'
+                },
+                'ML Project 4': {
+                    title: 'ML Project 4',
+                    image: 'images/ml_icon4.png',
+                    info: 'Description of ML Project 4.',
+                    repo: 'https://github.com/your-repo/ml-project-4'
+                },
+                'ML Project 5': {
+                    title: 'ML Project 5',
+                    image: 'images/ml_icon5.png',
+                    info: 'Description of ML Project 5.',
+                    repo: 'https://github.com/your-repo/ml-project-5'
+                },
+                'ML Project 6': {
+                    title: 'ML Project 6',
+                    image: 'images/ml_icon6.png',
+                    info: 'Description of ML Project 6.',
+                    repo: 'https://github.com/your-repo/ml-project-6'
+                },
+                'ML Project 7': {
+                    title: 'ML Project 7',
+                    image: 'images/ml_icon7.png',
+                    info: 'Description of ML Project 7.',
+                    repo: 'https://github.com/your-repo/ml-project-7'
+                },
+                'Weave': {
+                    title: 'Weave',
+                    image: 'images/weave.png',
+                    info: 'A project focused on a UI design for weaving complex patterns.',
+                    repo: 'https://github.com/your-repo/weave'
+                },
+                'JakeLingo': {
+                    title: 'JakeLingo',
+                    image: 'images/jakelingo.png',
+                    info: 'A language learning application with flashcards and verb practice.',
+                    repo: 'https://github.com/your-repo/jakelingo'
+                },
+                'Sprague Eye': {
+                    title: 'Sprague Eye',
+                    image: 'images/raticon.png',
+                    info: 'A UI project for a laboratory experiment analysis tool.',
+                    repo: 'https://github.com/your-repo/sprague-eye'
+                },
+                'Baratta Lab Website': {
+                    title: 'Baratta Lab Website',
+                    image: 'images/buff.png',
+                    info: 'A website project for the Baratta Lab at the University of Colorado.',
+                    repo: 'https://github.com/your-repo/baratta-lab'
+                },
+                'Horchata OS': {
+                    title: 'Horchata OS',
+                    image: 'images/start_button.png',
+                    info: 'An operating system with a retro user interface.',
+                    repo: 'https://github.com/your-repo/horchata-os'
+                }
+            };
+    
+            const detail = projectDetails[projectName];
+    
+            if (detail) {
+                if (projectName.startsWith('ML')) {
+                    document.getElementById('ml-icons-page').style.display = 'none';
+                    document.getElementById('ml-project-detail').style.display = 'block';
+                    document.getElementById('ml-project-title').textContent = detail.title;
+                    document.getElementById('ml-project-image').src = detail.image;
+                    document.getElementById('ml-project-info').textContent = detail.info;
+                    document.getElementById('ml-project-repo').href = detail.repo;
+                } else {
+                    document.getElementById('ui-icons-page').style.display = 'none';
+                    document.getElementById('ui-project-detail').style.display = 'block';
+                    document.getElementById('ui-project-title').textContent = detail.title;
+                    document.getElementById('ui-project-image').src = detail.image;
+                    document.getElementById('ui-project-info').textContent = detail.info;
+                    document.getElementById('ui-project-repo').href = detail.repo;
+                }
+            }
+        }
+    
+        function showIconsPage(pageId) {
+            if (pageId === 'ml-projects') {
+                document.getElementById('ml-project-detail').style.display = 'none';
+                document.getElementById('ml-icons-page').style.display = 'flex';
+            } else if (pageId === 'ui-projects') {
+                document.getElementById('ui-project-detail').style.display = 'none';
+                document.getElementById('ui-icons-page').style.display = 'flex';
+            }
+        }
     </script>
+    
 </body>
 </html>
