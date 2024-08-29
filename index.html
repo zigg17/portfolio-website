@@ -499,90 +499,86 @@
             border: 2px inset #fff; /* Creates a pressed-in effect */
         }
         .ml-icon-container, .ui-icon-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start; /* Aligns items to the start of the row */
-    align-items: flex-start; /* Ensures all icons align at the top */
-    padding: 10px;
-}
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Aligns items to the start of the row */
+            align-items: flex-start; /* Ensures all icons align at the top */
+            padding: 10px;
+        }
 
-.ml-icon, .ui-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px; /* Adjust the vertical margin */
-    margin-left: 25px;  /* Adjust the left margin for horizontal spacing */
-    margin-right: 25px; /* Adjust the right margin for horizontal spacing */
-    cursor: pointer;
-}
-
-
-.ml-icon img, .ui-icon img {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 5px;
-}
-
-.ml-icon p, .ui-icon p {
-    margin: 0;
-    color: black;
-    font-size: 12px;
-    text-align: center;
-}
-
-#ui-project-detail,
-#ml-project-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%; /* Ensure the container takes up the full height */
-    text-align: center; /* Center text inside the container */
-    margin: 0 auto; /* Center the container itself horizontally */
-}
-
-#ui-project-detail .window-body,
-#ml-project-detail .window-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100%; /* Take up the full height */
-    box-sizing: border-box; /* Ensure padding doesn't affect sizing */
-}
-
-/* Image styling specific to UI and ML project detail windows */
-#ui-project-detail img,
-#ml-project-detail img {
-    max-width: 200px;
-    height: auto;
-    margin-bottom: 70px;
-}
-
-/* Title and paragraph styling */
-#ui-project-detail h2,
-#ml-project-detail h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-#ui-project-detail .window-body p,
-#ml-project-detail .window-body p {
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-/* Button styling */
-#ui-project-detail .window-body a button,
-#ml-project-detail .window-body a button {
-    padding: 10px 20px;
-    font-size: 14px;
-    cursor: pointer;
-}
+        .ml-icon, .ui-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px; /* Adjust the vertical margin */
+            margin-left: 25px;  /* Adjust the left margin for horizontal spacing */
+            margin-right: 25px; /* Adjust the right margin for horizontal spacing */
+            cursor: pointer;
+        }
 
 
+        .ml-icon img, .ui-icon img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 5px;
+        }
 
-        
+        .ml-icon p, .ui-icon p {
+            margin: 0;
+            color: black;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        #ui-project-detail,
+        #ml-project-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%; /* Ensure the container takes up the full height */
+            text-align: center; /* Center text inside the container */
+            margin: 0 auto; /* Center the container itself horizontally */
+        }
+
+        #ui-project-detail .window-body,
+        #ml-project-detail .window-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100%; /* Take up the full height */
+            box-sizing: border-box; /* Ensure padding doesn't affect sizing */
+        }
+
+        /* Image styling specific to UI and ML project detail windows */
+        #ui-project-detail img,
+        #ml-project-detail img {
+            max-width: 350px;
+            margin-bottom: 20px;
+        }
+
+        /* Title and paragraph styling */
+        #ui-project-detail h2,
+        #ml-project-detail h2 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        #ml-project-detail p,
+        #ui-project-detail  p {
+            font-size: 13px;
+            margin-bottom: 10px; /* Increase the space below the description text */
+        }
+
+        #ml-project-detail a button,
+        #ui-project-detail  a button {
+            padding: 10px 20px;
+            font-size: 13px;
+            margin-top: 10px; /* Increase the space above the button */
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -609,6 +605,11 @@
             <p>UI Projects</p>
         </div>
 
+        <div class="desktop-icon" onclick="openWindow('github')">
+            <img src="images/github.png" alt="GitHub">
+            <p>GitHub Stats</p>
+        </div>
+
         <div class="desktop-icon" onclick="openWindow('contact')">
             <img src="images/contact.png" alt="Contact">
             <p>Contact Me</p>
@@ -629,6 +630,9 @@
             <img src="images/wastebins.png" alt="Waste Bin">
             <p>Waste Bin</p>
         </div>
+
+         <!-- Additional Desktop Icons -->
+    
 
     </div>
 
@@ -699,10 +703,6 @@
                 <div class="ml-icon" onclick="showProjectDetail('ML Project 6', 'ml')">
                     <img src="images/sprague_vision.png" alt="ML Project 6">
                     <p>Sprague Eye</p>
-                </div>
-                <div class="ml-icon" onclick="showProjectDetail('ML Project 7', 'ml')">
-                    <img src="images/ml_icon7.png" alt="ML Project 7">
-                    <p>ML Project 7</p>
                 </div>
             </div>
             
@@ -1104,6 +1104,31 @@
     
         setInterval(updateTime, 1000);
         updateTime();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const desktopIcons = document.querySelectorAll('.desktop-icon');
+
+            desktopIcons.forEach(icon => {
+                icon.addEventListener('click', function(event) {
+                    // Remove the 'selected' class from all icons
+                    desktopIcons.forEach(i => i.classList.remove('selected'));
+
+                    // Add the 'selected' class to the clicked icon
+                    this.classList.add('selected');
+
+                    // Stop propagation so the document click listener doesn't remove the class immediately
+                    event.stopPropagation();
+                });
+            });
+
+            // Listen for clicks anywhere on the document
+            document.addEventListener('click', function() {
+                // Remove the 'selected' class from all icons
+                desktopIcons.forEach(i => i.classList.remove('selected'));
+            });
+});
+
+
     
         function dragElement(elmnt) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -1243,67 +1268,85 @@
         });
 
         function showProjectDetail(projectName, projectType) {
-    const projectDetails = {
-        'SkinMNIST': {
-            title: 'SkinMNIST',
-            image: 'images/skinMNIST-pic.png',
-            info: 'This project is about classifying skin lesions using deep learning.',
-            repo: 'https://github.com/your-repo/skinmnist'
-        },
-        'ML Project 2': {
-            title: 'ML Project 2',
-            image: 'images/ml_icon2.png',
-            info: 'Description of ML Project 2.',
-            repo: 'https://github.com/your-repo/ml-project-2'
-        },
-        'Weave': {
-            title: 'Weave',
-            image: 'images/weave.png',
-            info: 'A project focused on a UI design for weaving complex patterns.',
-            repo: 'https://github.com/your-repo/weave'
-        },
-        'Sprague Eye': {
-            title: 'Sprague Eye',
-            image: 'images/jakelingo.png',
-            info: '',
-            repo: 'https://github.com/your-repo/jakelingo'
-        },
-        'JakeLingo': {
-            title: 'JakeLingo',
-            image: 'images/jakelingo.png',
-            info: 'A language learning application with flashcards and verb practice.',
-            repo: 'https://github.com/your-repo/jakelingo'
-        },
-        'JakeLingo': {
-            title: 'JakeLingo',
-            image: 'images/jakelingo.png',
-            info: 'A language learning application with flashcards and verb practice.',
-            repo: 'https://github.com/your-repo/jakelingo'
+            const projectDetails = {
+                'SkinMNIST': {
+                    title: 'SkinMNIST',
+                    image: 'images/skinMNIST-pic.png',
+                    info: 'This project uses a series of CNNs to classify various skin lesions. The goal is to improve accuracy in identifying skin conditions through deep learning, which could aid early detection and better treatment decisions.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/health/skin-MNIST'
+                },
+                'ML Project 2': {
+                    title: 'Peruvian Housing',
+                    image: 'images/peru.png',
+                    info: 'This project focuses on analyzing housing data in Peru. It includes data cleaning, exploratory data analysis (EDA), and modeling to uncover insights and patterns in the Peruvian housing market.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/commercial/peruvian-housing'
+                },
+                'ML Project 3': {
+                    title: 'Pneumonia Classification',
+                    image: 'images/x-ray.png',
+                    info: 'This project involves a binary classification model to distinguish between pneumonia and non-pneumonia cases. Using deep learning, the model aims to accurately identify the presence of pneumonia from medical images.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/health/chest-xray-pneumonia'
+                },
+                'ML Project 4': {
+                    title: 'Image Cassification Pipeline',
+                    image: 'images/pipester.png',
+                    info: 'This pipeline is designed for image classification problems, leveraging Convolutional Neural Networks (CNNs). It streamlines the process from data preprocessing to model training, making it adaptable for various image classification tasks.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
+                },
+                'ML Project 5': {
+                    title: 'Housing Inequality Modeling',
+                    image: 'images/housing-inequality.png',
+                    info: 'This project looks into the disparities in property tax by employing exploratory data analysis (EDA) and advanced modeling techniques. The goal was to assess the predictive powers of an existing model and develop an improved model that provided a more nuanced property tax calculations.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
+                },
+                'Weave': {
+                    title: 'Weave',
+                    image: 'images/weave.png',
+                    info: 'A project focused on a UI design for weaving complex patterns.',
+                    repo: 'https://github.com/your-repo/weave'
+                },
+                'Sprague Eye': {
+                    title: 'Sprague Eye',
+                    image: 'images/jakelingo.png',
+                    info: '',
+                    repo: 'https://github.com/your-repo/jakelingo'
+                },
+                'JakeLingo': {
+                    title: 'JakeLingo',
+                    image: 'images/jakelingo.png',
+                    info: 'A language learning application with flashcards and verb practice.',
+                    repo: 'https://github.com/your-repo/jakelingo'
+                },
+                'JakeLingo': {
+                    title: 'JakeLingo',
+                    image: 'images/jakelingo.png',
+                    info: 'A language learning application with flashcards and verb practice.',
+                    repo: 'https://github.com/your-repo/jakelingo'
+                }
+            };
+
+            const detail = projectDetails[projectName];
+
+            if (detail) {
+                if (projectType === 'ml') {
+                    document.getElementById('ml-icons-page').style.display = 'none';
+                    document.getElementById('ml-project-detail').style.display = 'block';
+                    document.getElementById('ml-project-title').textContent = detail.title;
+                    document.getElementById('ml-project-image').src = detail.image;
+                    document.getElementById('ml-project-info').textContent = detail.info;
+                    document.getElementById('ml-project-repo').href = detail.repo;
+                }
+                else if (projectType === 'ui') {
+                    document.getElementById('ui-icons-page').style.display = 'none';
+                    document.getElementById('ui-project-detail').style.display = 'block';
+                    document.getElementById('ui-project-title').textContent = detail.title;
+                    document.getElementById('ui-project-image').src = detail.image;
+                    document.getElementById('ui-project-info').textContent = detail.info;
+                    document.getElementById('ui-project-repo').href = detail.repo;
+                }
+            }
         }
-    };
 
-    const detail = projectDetails[projectName];
-
-    if (detail) {
-        if (projectType === 'ml') {
-            document.getElementById('ml-icons-page').style.display = 'none';
-            document.getElementById('ml-project-detail').style.display = 'block';
-            document.getElementById('ml-project-title').textContent = detail.title;
-            document.getElementById('ml-project-image').src = detail.image;
-            document.getElementById('ml-project-info').textContent = detail.info;
-            document.getElementById('ml-project-repo').href = detail.repo;
-        } else if (projectType === 'ui') {
-            document.getElementById('ui-icons-page').style.display = 'none';
-            document.getElementById('ui-project-detail').style.display = 'block';
-            document.getElementById('ui-project-title').textContent = detail.title;
-            document.getElementById('ui-project-image').src = detail.image;
-            document.getElementById('ui-project-info').textContent = detail.info;
-            document.getElementById('ui-project-repo').href = detail.repo;
-        }
-    }
-}
-
-    
         function showIconsPage(pageId) {
             if (pageId === 'ml-projects') {
                 document.getElementById('ml-project-detail').style.display = 'none';
