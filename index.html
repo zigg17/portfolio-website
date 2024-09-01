@@ -495,7 +495,7 @@
             color: white;
             border: 2px inset #fff; /* Creates a pressed-in effect */
         }
-        .ml-icon-container, .ui-icon-container {
+        .ml-icon-container, .ui-icon-container, .waste-container{
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start; /* Aligns items to the start of the row */
@@ -503,7 +503,7 @@
             padding: 10px;
         }
 
-        .ml-icon, .ui-icon {
+        .ml-icon, .ui-icon, .waste-container{
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -514,13 +514,13 @@
         }
 
 
-        .ml-icon img, .ui-icon img {
+        .ml-icon img, .ui-icon img, .waste-icon img{
             width: 64px;
             height: 64px;
             margin-bottom: 5px;
         }
 
-        .ml-icon p, .ui-icon p {
+        .ml-icon p, .ui-icon p, .waste-icon p{
             margin: 0;
             color: black;
             font-size: 12px;
@@ -528,7 +528,7 @@
         }
 
         #ui-project-detail,
-        #ml-project-detail {
+        #ml-project-detail{
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -768,6 +768,12 @@
             </div>
         </div>
         <div class="window-body">
+            <div class="waste-container" id="waste-icons-page">
+                <div class="ui-icon" onclick="showProjectDetail('Weave', 'ui')">
+                    <img src="images/weave.png" alt="Weave">
+                    <p>Weave</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -876,6 +882,7 @@
             </div>
         </div>
     </div>
+
     <!-- Documents Window -->
     <div class="window" id="documents-window">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
@@ -1367,6 +1374,9 @@
                 document.getElementById('ml-icons-page').style.display = 'flex';
             } else if (pageId === 'ui-projects') {
                 document.getElementById('ui-project-detail').style.display = 'none';
+                document.getElementById('ui-icons-page').style.display = 'flex';
+            }
+            else if (pageId === ''){
                 document.getElementById('ui-icons-page').style.display = 'flex';
             }
         }
