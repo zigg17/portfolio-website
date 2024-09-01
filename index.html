@@ -284,7 +284,7 @@
             margin-left: 9px; /* Spacing between icons */
             cursor: pointer;
         }
-
+        
 
 
         /* Start Button Styling */
@@ -623,14 +623,10 @@
             <p>c_vitae.pdf</p>
         </div>
 
-        <div class="desktop-icon waste-bin-icon">
+        <div class="desktop-icon waste-bin-icon" onclick="openWindow('waste-bin-window')">
             <img src="images/wastebins.png" alt="Waste Bin">
             <p>Waste Bin</p>
         </div>
-
-         <!-- Additional Desktop Icons -->
-    
-
     </div>
 
     <div class="window" id="about-me">
@@ -640,6 +636,7 @@
                 <button aria-label="Close" onclick="closeWindow('about-me')">x</button>
             </div>
         </div>
+
         <div class="window-body">
             <div class="about-me-content">
                 <img src="images/me.jpeg" alt="Your Photo" class="about-me-photo">
@@ -674,6 +671,7 @@
                 <button aria-label="Close" onclick="closeWindow('ml-projects')">x</button>
             </div>
         </div>
+
         <div class="window-body">
             <!-- Icon Container -->
             <div class="ml-icon-container" id="ml-icons-page">
@@ -714,8 +712,6 @@
             </div>
         </div>
     </div>
-    
-    
 
     <div class="window" id="ui-projects">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
@@ -762,6 +758,19 @@
             </div>
         </div>
     </div>
+
+    <!-- Waste Bin Window -->
+    <div class="window" id="waste-bin-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Waste Bin</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('waste-bin-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+        </div>
+    </div>
+
     
 
     <div class="window" id="contact">
@@ -829,15 +838,12 @@
                 <button aria-label="Close" onclick="closeWindow('music-player-window')">x</button>
             </div>
         </div>
-       
         <div class="window-body music-player-body">
             <!-- Play-Pause Button -->
             <div class="play-pause-container">
                 <img src="images/play.png" alt="Play" id="play-button" class="play-pause-button">
                 <img src="images/pause.png" alt="Pause" id="pause-button" class="play-pause-button" style="display: none;">
             </div>
-            
-            
             <!-- Corner Buttons -->
             <button class="song-button top-left" id="song-clouds">CLOUDS</button>
             <button class="song-button top-right" id="song-dark-beach">DARK BEACH</button>
@@ -850,7 +856,6 @@
             </audio>
         </div>
     </div>
-    
 
     <div class="window" id="tree-window">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
@@ -1285,7 +1290,7 @@
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/health/chest-xray-pneumonia'
                 },
                 'ML Project 4': {
-                    title: 'Image Cassification Pipeline',
+                    title: 'Image Classification Pipeline',
                     image: 'images/pipester.png',
                     info: 'This pipeline is designed for image classification problems, leveraging Convolutional Neural Networks (CNNs). It streamlines the process from data preprocessing to model training, making it adaptable for various image classification tasks.',
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
@@ -1295,6 +1300,12 @@
                     image: 'images/housing-inequality.png',
                     info: 'This project looks into the disparities in property tax by employing exploratory data analysis (EDA) and advanced modeling techniques. The goal was to assess the predictive powers of an existing model and develop an improved model that provided a more nuanced property tax calculations.',
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
+                },
+                'ML Project 6': {
+                    title: 'Sprague Eye',
+                    image: 'images/rat_swipe.png',
+                    info: 'An ML pipeline specifically developed for video behavioral scoring, utilizing image classification to accurately identify and analyze behaviors in video datasets. This tool automates the labeling process, making it ideal for research and studies that require precise behavioral analysis over time.',
+                    repo: 'https://github.com/zigg17/sprague-eye'
                 },
                 'Weave': {
                     title: 'Weave',
@@ -1324,7 +1335,7 @@
                     title: 'Baratta Lab Website',
                     image: 'images/barattapng.png',
                     info: "A lab overview website designed to showcase the Baratta Lab's work and research, tailored for grant writers and collaborators.",
-                    repo: 'https://github.com/your-repo/jakelingo'
+                    repo: 'https://github.com/zigg17/classes-learning-smallprojects/blob/main/gui-projects/BarattaLab/readme.md'
                 },
             };
 
