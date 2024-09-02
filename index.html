@@ -237,6 +237,28 @@
             font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        .virus-window {
+            position: fixed;
+            width: 350px;
+            height: 260px;
+            background-color: #c0c0c0; /* Ensure the window has a background color */
+            border: 2px solid black; /* Border to make the window visible */
+            display: block; /* Ensures the window is displayed */
+            z-index: 1000; /* Ensures the window is above other content */
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for a raised effect */
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+        .virus-window-body {
+            padding: 5px;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff; /* White background to contrast with the text */
+            color: black; /* Ensures the text is visible */
+            box-sizing: border-box; /* Includes padding in the width/height calculation */
+            overflow-y: auto; /* Allows scrolling if the content exceeds the height */
+        }
+
         .text-content {
             flex: 1; /* Allows the text content to take up as much space as needed */
         }
@@ -503,7 +525,7 @@
             padding: 10px;
         }
 
-        .ml-icon, .ui-icon, .waste-container{
+        .ml-icon, .ui-icon, .waste-icon{
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -602,26 +624,30 @@
             <p>UI Projects</p>
         </div>
 
-        <div class="desktop-icon" onclick="openWindow('github')">
+        <div class="desktop-icon" onclick="openWindow('github-window')">
             <img src="images/github.png" alt="GitHub">
             <p>GitHub Stats</p>
-        </div>
+        </div>        
 
         <div class="desktop-icon" onclick="openWindow('contact')">
             <img src="images/contact.png" alt="Contact">
             <p>Contact Me</p>
         </div>
 
-        <!-- Additional Desktop Icons -->
-        <div class="desktop-icon resume-icon" onclick="openWindow('resume')">
-            <img src="images/pdf.png" alt="Resume">
-            <p>resume.pdf</p>
-        </div>
+        <a href="path/to/your/resume.pdf" download="resume.pdf">
+            <div class="desktop-icon resume-icon">
+                <img src="images/pdf.png" alt="Resume">
+                <p>resume.pdf</p>
+            </div>
+        </a>
 
-        <div class="desktop-icon cv-icon" onclick="openWindow('resume')">
-            <img src="images/pdf.png" alt="Resume">
-            <p>c_vitae.pdf</p>
-        </div>
+       <!-- C Vitae Icon -->
+        <a href="path/to/your/c_vitae.pdf" download="c_vitae.pdf">
+            <div class="desktop-icon cv-icon">
+                <img src="images/pdf.png" alt="C Vitae">
+                <p>c_vitae.pdf</p>
+            </div>
+        </a>
 
         <div class="desktop-icon waste-bin-icon" onclick="openWindow('waste-bin-window')">
             <img src="images/wastebins.png" alt="Waste Bin">
@@ -769,9 +795,9 @@
         </div>
         <div class="window-body">
             <div class="waste-container" id="waste-icons-page">
-                <div class="ui-icon" onclick="showProjectDetail('Weave', 'ui')">
-                    <img src="images/weave.png" alt="Weave">
-                    <p>Weave</p>
+                <div class="waste-icon" onclick="openGiftCardWindows()">
+                    <img src="images/corruption.png" alt="corruption">
+                    <p>AMAZON FREE<br>GIFT CARD</p>
                 </div>
             </div>
         </div>
@@ -795,33 +821,20 @@
         </div>
     </div>
 
-    <!-- C Vitae Window -->
-    <div class="window" id="c-vitae">
+    <div class="window" id="github-window">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
-            <div class="title-bar-text">C Vitae</div>
+            <div class="title-bar-text">GitHub Stats</div>
             <div class="title-bar-controls">
-                <button aria-label="Close" onclick="closeWindow('c-vitae')">x</button>
+                <button aria-label="Close" onclick="closeWindow('github-window')">x</button>
             </div>
         </div>
         <div class="window-body">
-            <!-- Embed or link to your C Vitae PDF -->
-            <iframe src="c_vitae.pdf" width="100%" height="100%"></iframe>
+            <!-- This is where the content will be displayed -->
+            <pre id="ascii-art-content" style="white-space: pre-wrap;"></pre>
         </div>
     </div>
-
-    <!-- Resume Window -->
-    <div class="window" id="resume">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
-            <div class="title-bar-text">Resume</div>
-            <div class="title-bar-controls">
-                <button aria-label="Close" onclick="closeWindow('resume')">x</button>
-            </div>
-        </div>
-        <div class="window-body">
-            <!-- Embed or link to your resume -->
-            <iframe src="resume.pdf" width="100%" height="100%"></iframe>
-        </div>
-    </div>
+    
+    
 
     <!-- Explorer Window -->
     <div class="window" id="explorer-window">
@@ -1006,13 +1019,27 @@
         let highestZIndex = 1; // Start with a base z-index
     
         function openWindow(id) {
-            if (id === 'tree-window') {
-                openTreeWindow();
-            } else {
+            const windowElement = document.getElementById(id);
+            if (windowElement) {
+                // Set position and visibility
                 runOpenWindowLogic(id);
                 runOpenWindowLogic(id);
+
+                // Ensure it's visible
+                windowElement.style.display = 'block';
+
+                // Bring the window to the front
+                highestZIndex++;
+                windowElement.style.zIndex = highestZIndex;
+
+                // Attach mousedown listener to bring to front when clicked
+                windowElement.addEventListener('mousedown', () => {
+                    highestZIndex++;
+                    windowElement.style.zIndex = highestZIndex;
+                });
             }
         }
+
     
         function openTreeWindow() {
             runOpenWindowLogic('tree-window');
@@ -1066,8 +1093,16 @@
         }
     
         function closeWindow(id) {
-            document.getElementById(id).style.display = 'none';
+            const windowElement = document.getElementById(id);
+            if (windowElement) {
+                console.log(`Closing window with ID: ${id}`);
+                windowElement.style.display = 'none'; // Hide the window but keep it in the DOM
+            } else {
+                console.error(`Window with ID: ${id} not found!`);
+            }
         }
+
+
     
         function toggleDropUp() {
             const menu = document.getElementById('start-menu');
@@ -1380,6 +1415,125 @@
                 document.getElementById('ui-icons-page').style.display = 'flex';
             }
         }
+
+        function openGiftCardWindows() {
+    // Clear any existing virus windows
+    const oldVirusWindows = document.querySelectorAll('.virus-window');
+    oldVirusWindows.forEach(window => window.remove());
+
+    const numWindows = 5; // Set the number of windows to open
+    openMultipleRandomWindows(numWindows);
+
+    // Close the waste bin window after generating the virus windows
+    closeWindow('waste-bin-window');
+}
+
+function openMultipleRandomWindows(numWindows) {
+    for (let i = 0; i < numWindows; i++) {
+        const windowId = `random-window-${i}-${Date.now()}`; // Ensure unique IDs with timestamp
+        createRandomWindow(windowId);
+    }
+}
+
+function createRandomWindow(id) {
+    // Define a list of phony ads
+    const ads = [
+    { title: "Win a Free iPhone!", content: `<a href="https://horchata.dev" target="_blank">Click here</a> to claim your brand new iPhone! Limited time offer!` },
+    { title: "Congratulations, You’ve Won!", content: `<a href="https://horchata.dev" target="_blank">Claim your $1000 Walmart gift card now!</a>` },
+    { title: "You’re Our 1,000,000th Visitor!", content: `<a href="https://horchata.dev" target="_blank">Click here</a> to win a free vacation to the Bahamas!` },
+    { title: "Exclusive Offer!", content: `<a href="https://horchata.dev" target="_blank">Get a $500 Amazon gift card</a> just by signing up!` },
+    { title: "Your Computer is Infected!", content: `<a href="https://horchata.dev" target="_blank">Download our software</a> to remove the virus now!` },
+    { title: "Hot Singles in Your Area!", content: `<a href="https://horchata.dev" target="_blank">Meet attractive singles near you.</a> Click here!` },
+    { title: "Free Bitcoin!", content: `<a href="https://horchata.dev" target="_blank">Claim your free Bitcoin now</a> before it’s too late!` },
+    { title: "You Have 1 New Message!", content: `<a href="https://horchata.dev" target="_blank">Click to read your new message!</a>` },
+    { title: "Update Required!", content: `<a href="https://horchata.dev" target="_blank">Click here</a> to install the latest update to your system.` },
+    { title: "Congratulations, You’re a Winner!", content: `<a href="https://horchata.dev" target="_blank">Spin the wheel</a> to see what you've won!` },
+];
+
+
+    // Randomly select an ad
+    const randomAd = ads[Math.floor(Math.random() * ads.length)];
+
+    // Create a new div element for the virus window
+    const newWindow = document.createElement('div');
+    newWindow.className = 'virus-window';
+    newWindow.id = id;
+
+    // Create the title bar
+    const titleBar = document.createElement('div');
+    titleBar.className = 'title-bar';
+    titleBar.innerHTML = `
+        <div class="title-bar-text">${randomAd.title}</div>
+        <div class="title-bar-controls">
+            <button aria-label="Close" onclick="closeWindow('${id}')">x</button>
+        </div>`;
+    newWindow.appendChild(titleBar);
+
+    // Create the window body
+    const windowBody = document.createElement('div');
+    windowBody.className = 'virus-window-body';
+    windowBody.innerHTML = `<p>${randomAd.content}</p>`;
+    newWindow.appendChild(windowBody);
+
+    // Append the new window to the body
+    document.body.appendChild(newWindow);
+
+    // Position and display the window
+    runOpenWindowLogic(id);
+
+    // Make the window draggable
+    dragElement(newWindow);
+}
+
+function runOpenWindowLogic(id) {
+    const windowElement = document.getElementById(id);
+
+    if (windowElement) {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        const leftMargin = 100;
+        const rightMargin = 100;
+        const topMargin = 20;
+        const bottomMargin = 50;
+
+        const maxLeft = viewportWidth - windowElement.offsetWidth - rightMargin;
+        const maxTop = viewportHeight - windowElement.offsetHeight - bottomMargin;
+
+        const randomLeft = Math.floor(Math.random() * (maxLeft - leftMargin + 1)) + leftMargin;
+        const randomTop = Math.floor(Math.random() * (maxTop - topMargin + 1)) + topMargin;
+
+        windowElement.style.left = `${randomLeft}px`;
+        windowElement.style.top = `${randomTop}px`;
+
+        highestZIndex++;
+        windowElement.style.zIndex = highestZIndex;
+
+        windowElement.style.display = 'block';
+
+        windowElement.addEventListener('mousedown', () => {
+            highestZIndex++;
+            windowElement.style.zIndex = highestZIndex;
+        });
+    }
+}
+
+function openGitHubStatsWindow() {
+    const windowId = 'github-window';
+    runOpenWindowLogic(windowId); // Use your existing logic to position and display the window
+
+    fetch('asciicopy.txt')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('ascii-art-content').textContent = data;
+        })
+        .catch(error => console.error('Error fetching the ASCII art:', error));
+}
+
+
+
+
+
     </script> 
 </body>
 </html>
