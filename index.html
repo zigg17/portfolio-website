@@ -1082,7 +1082,7 @@
     treeImage.src = ''; // Clear image
 
     // Fetch and display a random line from the quotes file
-    fetch('quotes.txt')
+    fetch('txt-files/quotes.txt')
         .then(response => response.text())
         .then(data => {
             const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter out empty lines
@@ -1566,7 +1566,7 @@ function openGitHubStatsWindow() {
     runOpenWindowLogic(windowId); 
     runOpenWindowLogic(windowId); 
 
-    fetch('ascii.txt')  
+    fetch('txt-files/ascii.txt')  
         .then(response => response.text())
         .then(data => {
             document.getElementById('ascii-art-content').textContent = data;
