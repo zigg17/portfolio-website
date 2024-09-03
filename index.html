@@ -113,8 +113,6 @@
             white-space: normal; /* Allows the text to wrap normally */
         }
 
-
-        /* Music Player Window Specific Styling */
         .music-player-body {
             position: relative;
             width: 100%;
@@ -216,8 +214,6 @@
             background-color: #c0c0c0; /* Optional: Change background color on selection */
         }
 
-
-        /* Window Styling */
         .window {
             position:fixed;
             width: 650px;
@@ -823,8 +819,6 @@
         </div>
     </div>
 
-    
-
     <div class="window" id="contact">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">Contact</div>
@@ -1061,45 +1055,45 @@
         }
 
         function openTreeWindow() {
-    // Run the window logic twice as per your approach
-    runOpenWindowLogic('tree-window');
-    runOpenWindowLogic('tree-window');
+            // Run the window logic twice as per your approach
+            runOpenWindowLogic('tree-window');
+            runOpenWindowLogic('tree-window');
 
-    // Ensure the tree window is brought to the front
-    const treeWindow = document.getElementById('tree-window');
-    highestZIndex++;
-    treeWindow.style.zIndex = highestZIndex;
-    treeWindow.focus();
+            // Ensure the tree window is brought to the front
+            const treeWindow = document.getElementById('tree-window');
+            highestZIndex++;
+            treeWindow.style.zIndex = highestZIndex;
+            treeWindow.focus();
 
-    // Clear previous content to force re-render
-    const treeContent = document.getElementById('tree-content');
-    const treeImage = document.getElementById('tree-image');
+            // Clear previous content to force re-render
+            const treeContent = document.getElementById('tree-content');
+            const treeImage = document.getElementById('tree-image');
 
-    treeContent.textContent = ''; // Clear content
-    treeImage.src = ''; // Clear image
+            treeContent.textContent = ''; // Clear content
+            treeImage.src = ''; // Clear image
 
-    // Fetch and display a random line from the quotes file
-    fetch('txt-files/quotes.txt')
-        .then(response => response.text())
-        .then(data => {
-            const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter out empty lines
-            if (lines.length > 0) {
-                const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
-                treeContent.textContent = randomLine;
-            } else {
-                treeContent.textContent = "No quotes available.";
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching the quotes:', error);
-            treeContent.textContent = "Error loading quotes.";
-        });
+            // Fetch and display a random line from the quotes file
+            fetch('txt-files/quotes.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter out empty lines
+                    if (lines.length > 0) {
+                        const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
+                        treeContent.textContent = randomLine;
+                    } else {
+                        treeContent.textContent = "No quotes available.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the quotes:', error);
+                    treeContent.textContent = "Error loading quotes.";
+                });
 
-    // Display a random image from the image bank
-    const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    treeImage.src = `image-bank/${randomImage}`;
-}
+            // Display a random image from the image bank
+            const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
+            const randomImage = images[Math.floor(Math.random() * images.length)];
+            treeImage.src = `image-bank/${randomImage}`;
+        }
     
         function runOpenWindowLogic(id) {
             const windowElement = document.getElementById(id);

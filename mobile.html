@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Favicon for most browsers -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horchata OS</title>
+    <link rel="stylesheet" href="98.css-main/style.css">
+    <style>
+        /* Font Definitions */
+        @font-face {
+            font-family: 'MS Sans Serif';
+            src: url('fonts/converted/ms_sans_serif.woff2') format('woff2'),
+                 url('fonts/converted/ms_sans_serif.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* Basic Body Styling */
+        body {
+            background-image: url('images/hill.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Login Overlay Styling */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/login-background.png'); /* Background image for the login page */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999; /* Ensure it covers everything */
+        }
+
+        .login-text {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .login-button {
+            padding: 10px 30px;
+            background-color: #004e98;
+            color: white;
+            border: 2px outset #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-button:active {
+            border: 2px inset #fff;
+        }
+
+        #tree-window-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            height: 100%; /* Ensure the content takes up the full height of the window */
+            box-sizing: border-box;
+        }
+
+        #tree-image {
+            width: auto;
+            height: auto;
+            max-width: 80%; /* Ensure the image doesn’t exceed the window’s max width *//* Ensure the image doesn’t exceed the window’s max height */
+            object-fit: cover; /* Maintain aspect ratio while covering the area */
+        }
+
+
+        #quote-container {
+            max-width: 100%; /* Ensure the text doesn't overflow horizontally */
+            text-align: center; /* Center the text */
+            word-wrap: break-word; /* Break long words if necessary */
+            overflow-y: auto; /* Add a scrollbar if the text is too long */
+        }
+
+
+        #quote-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            max-height: 60px; /* Adjust based on the height you want for the quote section */
+            padding: 0 60px; /* Adds padding to the sides */
+            box-sizing: border-box; /* Ensures padding is included in the width */
+            overflow-y: auto; /* Adds a scrollbar if the text overflows */
+            text-align: center; /* Center the text horizontally */
+        }
+
+        #tree-content {
+            margin: 0;
+            padding: 0;
+            word-wrap: break-word; /* Allows long words to wrap to the next line */
+            overflow: hidden; /* Hides overflowing text */
+            text-overflow: ellipsis; /* Adds ellipsis (...) if the text is too long */
+            white-space: normal; /* Allows the text to wrap normally */
+        }
+
+
+        /* Music Player Window Specific Styling */
+        .music-player-body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .play-pause-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 44%;
+            left: 46.5%;
+            transform: translate(-50%, -50%);
+        }
+
+        .play-pause-button {
+            width: 50px; /* Adjust size as needed */
+            height: 50px;
+            cursor: pointer;
+        }
+
+        /* Song Buttons in Corners */
+        .song-button {
+            position: absolute;
+            width: 80px; /* Adjust size as needed */
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .top-left {
+            top: 10px;
+            left: 10px;
+        }
+
+        .top-right {
+            top: 10px;
+            right: 60px;
+        }
+
+        .bottom-left {
+            bottom: 80px;
+            left: 10px;
+        }
+
+        .bottom-right {
+            bottom: 80px;
+            right: 60px;
+        }
+
+
+
+        .desktop-icon-container {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 20px; /* Adjust this value to move the icons down */
+            left: 20px; /* Adjust this value to move the icons right or left */
+            gap: 20px; /* Adjust the spacing between the icons */
+        }
+
+        .desktop-icon img {
+            width: 72px;
+        }
+
+        /* Positioning for Resume and Waste Bin */
+        .resume-icon, .waste-bin-icon, .cv-icon{
+            position: fixed;
+        }
+
+        .cv-icon {
+            right: 20px; /* Positioning the resume icon from the right */
+            bottom: 310px; /* Positioning the resume icon from the bottom */
+        }
+
+        .resume-icon {
+            right: 20px; /* Positioning the resume icon from the right */
+            bottom: 200px; /* Positioning the resume icon from the bottom */
+        }
+
+        .waste-bin-icon {
+            right: 20px; /* Positioning the waste bin icon from the right */
+            bottom: 80px; /* Positioning the waste bin icon from the bottom */
+        }
+
+        .desktop-icon p {
+            margin: 0;
+            color: white;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .desktop-icon.selected {
+            border: 2px dashed black; /* Adds a dashed border around the selected icon */
+            padding: 2px; /* Adjust padding to ensure the border doesn't overlap with the icon */
+            background-color: #c0c0c0; /* Optional: Change background color on selection */
+        }
+
+
+        .window {
+            width: 95%; /* Window is 90% of the screen width */
+            height: 80%;
+            left: 2%; /* Center the window horizontally */
+            top: 5%; /* Add some top margin */
+            position: fixed; /* Ensure it's fixed on the screen */
+            display: none;
+        }
+
+
+        .window-body {
+            display: flex;
+            justify-content: space-between; /* Ensures content and GIF are spaced out */
+            align-items: flex-start; /* Aligns the items at the top of the container */
+            gap: 20px; /* Adds some space between the text and the GIF */
+            padding: 15px;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .virus-window {
+            position: fixed;
+            width: 350px;
+            height: 260px;
+            background-color: #c0c0c0; /* Ensure the window has a background color */
+            border: 2px solid black; /* Border to make the window visible */
+            display: block; /* Ensures the window is displayed */
+            z-index: 1000; /* Ensures the window is above other content */
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for a raised effect */
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+        .virus-window-body {
+            padding: 5px;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff; /* White background to contrast with the text */
+            color: black; /* Ensures the text is visible */
+            box-sizing: border-box; /* Includes padding in the width/height calculation */
+            overflow-y: auto; /* Allows scrolling if the content exceeds the height */
+        }
+
+        .text-content {
+            flex: 1; /* Allows the text content to take up as much space as needed */
+        }
+
+        .gif-content {
+            flex-shrink: 0; /* Prevents the GIF from shrinking */
+            margin-left: 20px; /* Adds some space between the text and the GIF */
+        }
+
+
+        h1, h2, h3, h4, p {
+            margin: 5px 0; /* Adjust as necessary */
+            padding: 0;
+        }
+
+        .container {
+            padding: 10px; /* Adjust as needed to reduce spacing */
+        }
+
+
+        .title-bar-text {
+            font-family: 'MS Sans Serif Bold', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Taskbar Styling */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #c0c0c0;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+            box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #000;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #000;
+            border-right: 2px solid #000;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .taskbar-app {
+            margin-left: 9px; /* Spacing between icons */
+            cursor: pointer;
+        }
+        
+
+
+        /* Start Button Styling */
+        .start-button {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border: 2px outset #fff;
+            background-color: #c0c0c0;
+            cursor: pointer;
+        }
+
+        .taskbar-time {
+            color: black;
+            padding: 6px 15px;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            margin-left: auto;
+            margin-right: 8px;
+            margin-left: auto; /* Ensures the time is on the far right */
+            background-color: #c0c0c0;
+            border: 2px inset #fff; /* Creates the depressed effect */
+            box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff;
+            display: inline-block;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .taskbar-spacer {
+            flex-grow: 1; /* This makes the spacer take up any remaining space */
+        }
+
+
+        .raised-bar {
+            width: 2px;
+            height: 30px; /* Adjust this height as necessary */
+            background: linear-gradient(to bottom, #f0f0f0, #c0c0c0);
+            border-left: 1px solid #fff;
+            border-right: 1px solid #808080;
+            margin-left: 4px; /* Small space after the Start button */
+            margin-right: 2px; /* Larger space before the raised bars */
+        }
+
+        .indented-bar {
+            width: 1.5px;
+            height: 37px; /* Adjust this height as necessary */
+            background-color: #808080; /* A medium gray color for the bar */
+            box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #000; /* Creates the indented effect */
+            margin-left: 7px; /* Small space after the Start button */
+            margin-right: .2px; /* Larger space before the raised bars */
+        }
+
+        .about-me-photo {
+            position: absolute; /* Allows manual positioning */
+            top: 105px;          /* Adjust this value to move the image up or down */
+            right: 40px;        /* Adjust this value to move the image left or right */
+            width: 320px;       /* Adjust the width as necessary */
+            height: auto;       /* Maintains the aspect ratio */
+            border: 2px solid #000; /* Optional: Adds a border around the photo */
+        }
+
+        .contact-link {
+            font-size: 18px; /* Makes the text larger */
+            color: #0066cc; /* Link color */
+            text-decoration: none; /* Removes underline */
+        }
+
+        .contact-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .phone-photo {
+            position: absolute; /* Allows manual positioning */
+            bottom: 180px;          /* Adjust this value to move the image up or down */
+            right: 470px;        /* Adjust this value to move the image left or right */
+            width: 60px;       /* Adjust the width as necessary */
+            height: auto;       /* Maintains the aspect ratio */
+        }
+
+        .email-photo {
+            position: absolute; /* Allows manual positioning */
+            bottom: 197px;          /* Adjust this value to move the image up or down */
+            right: 140px;        /* Adjust this value to move the image left or right */
+            width: 90px;       /* Adjust the width as necessary */
+            height: auto;       /* Maintains the aspect ratio */
+        }
+
+        .phone-text {
+            position: absolute;
+            top: 330px; /* Adjust based on where you want the text */
+            left: 95px; /* Adjust based on where you want the text */
+        }
+
+        /* Specific positioning for the email text field */
+        .email-text {
+            position: absolute;
+            top: 330px; /* Adjust based on where you want the text */
+            left: 370px; /* Adjust based on where you want the text */
+        }
+
+        .start-button:active {
+            border: 2px inset #fff;
+        }
+
+        .start-button img {
+            margin-right: 5px;
+        }
+
+        /* Drop-Up Menu Styling */
+        .drop-up-menu {
+            position: fixed;
+            top: calc(100% - 252px); /* Adjust this value to align with the taskbar */
+            left: 0;
+            display: none;
+            width: 260px;
+            height: auto;
+            box-sizing: border-box;
+            padding: 0; /* Remove extra padding */
+            margin: 0;
+            overflow: hidden; /* Ensure no content overflows */
+        }
+
+        .menu-container {
+            display: flex;
+            align-items: stretch;
+        }
+
+        /* Windows Label Styling */
+        .windows-label {
+            background-color: #004e98;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            border-right: 2px solid #c0c0c0;
+            border-top: 2px solid #fff; /* Top border to create a 3D effect */
+            border-left: 2px solid #fff; /* Left border to create a 3D effect */
+            border-bottom: 2px solid #000; /* Bottom border to create a shadow effect */
+            border-right: 2px solid #000; /* Right border to create a shadow effect */
+            box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff; /* Inner shadow to add depth */
+        }
+
+        /* Start Menu Buttons Styling */
+        #start-menu .button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 8px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+        #start-menu .button img {
+            width: 16px;  /* Adjust the width as needed */
+            height: 16px; /* Adjust the height as needed */
+            margin-right: 10px; /* Ensure there's some space between the image and text */
+        }
+        
+        #start-menu .window-body {
+            padding: 10px;
+            background-color: #c0c0c0;
+            width: 250px;
+        }
+
+        #start-menu ul {
+            list-style-type: none; /* Removes bullet points */
+            padding: 0; /* Removes default padding */
+            margin: 0; /* Removes default margin */
+        }
+
+        #start-menu ul li {
+            margin-bottom: 10px;
+        }
+
+        #start-menu .arrow {
+            margin-left: auto;
+            font-size: 12px;
+            color: #000;
+        }
+
+        .contact-info {
+    position: relative; /* Set the parent element as relative so child elements can be positioned absolutely */
+    width: 100%;
+    height: 100%;
+}
+
+.contact-item {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-item.phone {
+    top: 200px;  /* Adjust the top position to move the phone section */
+    left: 50px; /* Adjust the left position to move the phone section */
+}
+
+.contact-item.email {
+    top: 150px;  /* Adjust the top position to move the email section */
+    left: 250px; /* Adjust the left position to move the email section */
+}
+
+.contact-icon {
+    width: 40px; /* Adjust the size of the icon */
+    height: auto;
+    margin-bottom: 5px; /* Adds space between the icon and the text */
+}
+
+.contact-link {
+    font-size: 18px; /* Makes the text larger */
+    color: #0066cc; /* Link color */
+    text-decoration: none; /* Removes underline */
+}
+
+.contact-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+        .song-button.pressed {
+            background-color: #004e98;
+            color: white;
+            border: 2px inset #fff; /* Creates a pressed-in effect */
+        }
+        .ml-icon-container, .ui-icon-container, .waste-container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Aligns items to the start of the row */
+            align-items: flex-start; /* Ensures all icons align at the top */
+            padding: 10px;
+        }
+
+        .ml-icon, .ui-icon, .waste-icon{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px; /* Adjust the vertical margin */
+            margin-left: 25px;  /* Adjust the left margin for horizontal spacing */
+            margin-right: 25px; /* Adjust the right margin for horizontal spacing */
+            cursor: pointer;
+        }
+
+
+        .ml-icon img, .ui-icon img, .waste-icon img{
+            width: 64px;
+            height: 64px;
+            margin-bottom: 5px;
+        }
+
+        .ml-icon p, .ui-icon p, .waste-icon p{
+            margin: 0;
+            color: black;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        #ui-project-detail,
+        #ml-project-detail{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%; /* Ensure the container takes up the full height */
+            text-align: center; /* Center text inside the container */
+            margin: 0 auto; /* Center the container itself horizontally */
+        }
+
+        #ui-project-detail .window-body,
+        #ml-project-detail .window-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100%; /* Take up the full height */
+            box-sizing: border-box; /* Ensure padding doesn't affect sizing */
+        }
+
+        /* Image styling specific to UI and ML project detail windows */
+        #ui-project-detail img,
+        #ml-project-detail img {
+            max-width: 350px;
+            margin-bottom: 20px;
+        }
+
+        /* Title and paragraph styling */
+        #ui-project-detail h2,
+        #ml-project-detail h2 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        #ml-project-detail p,
+        #ui-project-detail  p {
+            font-size: 13px;
+            margin-bottom: 10px; /* Increase the space below the description text */
+        }
+
+        #ml-project-detail a button,
+        #ui-project-detail  a button {
+            padding: 10px 20px;
+            font-size: 13px;
+            margin-top: 10px; /* Increase the space above the button */
+            cursor: pointer;
+        }
+
+        #github-window {
+            width: 300px;  /* Adjust the width to fit the content */
+            height: auto;  /* Set height to auto to fit content dynamically */
+            min-height: 150px; /* Ensure there's a minimum height */
+            padding: 10px; /* Add some padding around the content */
+            display: none;
+            box-sizing: border-box;
+        }
+
+        #ascii-art-content {
+            white-space: pre-wrap; /* Keep pre-wrap to maintain formatting */
+            background-color: #fff; /* White background for readability */
+            padding: 5px; /* Add padding inside the ASCII art box */
+            border: 1px solid #000; /* Add a border for better visibility */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow for effect */
+            width: 100%; /* Take up full width of parent */
+            height: auto; /* Adjust height to fit content */
+            font-size: 14px; /* Slightly larger font size for readability */
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="login-overlay">
+        <div class="login-text">Welcome to Horchata OS</div>
+        <button class="login-button" onclick="login()">Log In</button>
+    </div>
+
+    <!-- Desktop Icons -->
+    <div class="desktop-icon-container">
+        <div class="desktop-icon" onclick="openWindow('about-me')">
+            <img src="images/about-me.png" alt="About Me">
+            <p>About Me</p>
+        </div>
+
+        <div class="desktop-icon" onclick="openWindow('ml-projects')">
+            <img src="images/data.png" alt="ML Projects">
+            <p>Data Projects</p>
+        </div>
+
+        <div class="desktop-icon" onclick="openWindow('ui-projects')">
+            <img src="images/ui.png" alt="UI Projects">
+            <p>UI Projects</p>
+        </div>
+
+        <div class="desktop-icon" onclick="openGitHubStatsWindow()">
+            <img src="images/github.png" alt="GitHub">
+            <p>GitHub Stats</p>
+        </div>
+        
+        
+
+        <div class="desktop-icon" onclick="openWindow('contact')">
+            <img src="images/contact.png" alt="Contact">
+            <p>Contact Me</p>
+        </div>
+
+        <a href="path/to/your/resume.pdf" download="resume.pdf">
+            <div class="desktop-icon resume-icon">
+                <img src="images/pdf.png" alt="Resume">
+                <p>resume.pdf</p>
+            </div>
+        </a>
+
+       <!-- C Vitae Icon -->
+        <a href="path/to/your/c_vitae.pdf" download="c_vitae.pdf">
+            <div class="desktop-icon cv-icon">
+                <img src="images/pdf.png" alt="C Vitae">
+                <p>c_vitae.pdf</p>
+            </div>
+        </a>
+
+        <div class="desktop-icon waste-bin-icon" onclick="openWindow('waste-bin-window')">
+            <img src="images/wastebins.png" alt="Waste Bin">
+            <p>Waste Bin</p>
+        </div>
+    </div>
+
+    <div class="window" id="about-me">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">About Me</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('about-me')">x</button>
+            </div>
+        </div>
+
+        <div class="window-body">
+            <div class="about-me-content">
+                <img src="images/me.jpeg" alt="Your Photo" class="about-me-photo">
+                <div class="text-content">
+                    <h4>Education</h4>
+                        Bachelor's, Double Major: Neuroscience <br>and Psychology
+                        <li>University of Colorado, 2020 - 2024</li>
+                        <br>Minor in Computer Science
+                        <li>University of Colorado, 2020 - 2024</li>
+    
+                    <h4><br>Work Experience</h4>
+                    <p>Maier-Watkins-Baratta Lab, <i>Undergraduate <br>Researcher</i><br>
+                       <li>2022 - Present</li>
+                       <li>Recipient of UROP funding, $1500</li></p>
+    
+                    <h4><br>Volunteering</h4>
+                    <p>Digital Nexus Project, <i>Founder</i>
+                       <li>2024 - Present</li>
+                    <br>Habitat for Humanity, <i>Volunteer</i>
+                       <li>2024 - Present</li></p>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="window" id="ml-projects">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">ML Projects</div>
+            <div class="title-bar-controls">
+                <button class="nav-button" id="back-button" onclick="showIconsPage('ml-projects')"><</button>
+                <button class="nav-button" id="forward-button" onclick="navigateProjects('forward')">></button>
+                <button aria-label="Close" onclick="closeWindow('ml-projects')">x</button>
+            </div>
+        </div>
+
+        <div class="window-body">
+            <!-- Icon Container -->
+            <div class="ml-icon-container" id="ml-icons-page">
+                <div class="ml-icon" onclick="showProjectDetail('SkinMNIST', 'ml')">
+                    <img src="images/skinMNIST.png" alt="SkinMNIST">
+                    <p>SkinMNIST</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 2', 'ml')">
+                    <img src="images/peru_housing.png" alt="ML Project 2">
+                    <p>Peruvian<br>Housing</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 3', 'ml')">
+                    <img src="images/lung.png" alt="ML Project 3">
+                    <p>Pneumonia<br>Classification</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 4', 'ml')">
+                    <img src="images/pipeline.png" alt="ML Project 4">
+                    <p>Image<br>Classification<br>Pipeline</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 5', 'ml')">
+                    <img src="images/housing.png" alt="ML Project 5">
+                    <p>Housing<br>Inequality</p>
+                </div>
+                <div class="ml-icon" onclick="showProjectDetail('ML Project 6', 'ml')">
+                    <img src="images/sprague_vision.png" alt="ML Project 6">
+                    <p>Sprague Eye</p>
+                </div>
+            </div>
+            
+            <!-- Project Detail Container (Initially Hidden) -->
+            <div id="ml-project-detail" style="display: none;">
+                <img src="" alt="Project Image" id="ml-project-image" style="width: 100%; height: auto;">
+                <h2 id="ml-project-title">Project Title</h2>
+                <p id="ml-project-info">Project information will go here.</p>
+                <a href="" id="ml-project-repo" target="_blank">
+                    <button>Go to Repository</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="window" id="ui-projects">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">UI Projects</div>
+            <div class="title-bar-controls">
+                <button class="nav-button" id="back-button" onclick="showIconsPage('ui-projects')"><</button>
+                <button class="nav-button" id="forward-button" onclick="navigateProjects('forward')">></button>
+                <button aria-label="Close" onclick="closeWindow('ui-projects')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <!-- Icon Container -->
+            <div class="ui-icon-container" id="ui-icons-page">
+                <div class="ui-icon" onclick="showProjectDetail('Weave', 'ui')">
+                    <img src="images/weave.png" alt="Weave">
+                    <p>Weave</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('JakeLingo', 'ui')">
+                    <img src="images/jakelingo.png" alt="JakeLingo">
+                    <p>JakeLingo</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('Sprague Eye', 'ui')">
+                    <img src="images/raticon.png" alt="Sprague Eye">
+                    <p>Sprague Eye</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('Baratta Lab Website', 'ui')">
+                    <img src="images/buff.png" alt="Baratta Lab Website">
+                    <p>Baratta Lab<br>Website</p>
+                </div>
+                <div class="ui-icon" onclick="showProjectDetail('Horchata OS', 'ui')">
+                    <img src="images/start_button.png" alt="Horchata OS">
+                    <p>Horchata OS</p>
+                </div>
+            </div>
+            
+            <!-- Project Detail Container (Initially Hidden) -->
+            <div id="ui-project-detail" style="display: none;">
+                <img src="" alt="Project Image" id="ui-project-image" style="width: 100%; height: auto;">
+                <h2 id="ui-project-title">Project Title</h2>
+                <p id="ui-project-info">Project information will go here.</p>
+                <a href="" id="ui-project-repo" target="_blank">
+                    <button>Go to Repository</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waste Bin Window -->
+    <div class="window" id="waste-bin-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Waste Bin</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('waste-bin-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div class="waste-container" id="waste-icons-page">
+                <div class="waste-icon" onclick="openGiftCardWindows()">
+                    <img src="images/corruption.png" alt="corruption">
+                    <p>AMAZON FREE<br>GIFT CARD</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="window" id="contact">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Contact</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('contact')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <h4>Contact Information</h4>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <img src="images/phoney.png" alt="Phone Icon" class="contact-icon">
+                    <a href="tel:+13039055526" class="contact-link">(303)905-5526</a>
+                </div>
+                <div class="contact-item">
+                    <img src="images/mail.png" alt="Email Icon" class="contact-icon">
+                    <a href="mailto:your.email@example.com" class="contact-link">your.email@example.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="window" id="github-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">GitHub Stats</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('github-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <pre id="ascii-art-content"></pre>
+        </div>
+    </div>
+    
+    
+
+    <!-- Explorer Window -->
+    <div class="window" id="explorer-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Explorer</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('explorer-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <!-- Content related to your Explorer functionality -->
+            <p>File Explorer would go here.</p>
+        </div>
+    </div>
+
+    <div class="window" id="music-player-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Music Player</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('music-player-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body music-player-body">
+            <!-- Play-Pause Button -->
+            <div class="play-pause-container">
+                <img src="images/play.png" alt="Play" id="play-button" class="play-pause-button">
+                <img src="images/pause.png" alt="Pause" id="pause-button" class="play-pause-button" style="display: none;">
+            </div>
+            <!-- Corner Buttons -->
+            <button class="song-button top-left" id="song-clouds">CLOUDS</button>
+            <button class="song-button top-right" id="song-dark-beach">DARK BEACH</button>
+            <button class="song-button bottom-left" id="song-home">HOME</button>
+            <button class="song-button bottom-right" id="song-embrace">EMBRACE</button>
+            <!-- Audio Element -->
+            <audio id="audio-player">
+                <source id="audio-source" src="" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <div class="window" id="tree-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Tree</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('tree-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body" id="tree-window-body">
+            <!-- Image with fixed dimensions -->
+            <img id="tree-image" src="image-bank/forest.jpg" alt="Forest Image" style="width: 400px; height: 300px; object-fit: cover;">
+
+            <!-- Quote section -->
+            <div id="quote-container">
+                <p id="tree-content">
+                    Your random forest message will appear here.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents Window -->
+    <div class="window" id="documents-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Documents</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('documents-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Your documents will appear here.</p>
+        </div>
+    </div>
+
+    <!-- Settings Window -->
+    <div class="window" id="settings-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Settings</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('settings-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Your settings options will appear here.</p>
+        </div>
+    </div>
+
+    <!-- Help and Support Window -->
+    <div class="window" id="help-window">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+            <div class="title-bar-text">Help and Support</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeWindow('help-window')">x</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>Your help and support information will appear here.</p>
+        </div>
+    </div>
+
+    
+    <div class="taskbar">
+        <div class="start-button" onclick="toggleDropUp()">
+            <img src="images/start_button.png" alt="Start" width="20" height="20">
+            <span>Start</span>
+        </div>
+        <div class="indented-bar"></div>
+        <div class="raised-bar"></div>
+        <div class="taskbar-app" onclick="openWindow('explorer-window')">
+            <img src="images/explorer.png" alt="Explorer" width="20" height="20">
+        </div>
+        <div class="taskbar-app" onclick="openWindow('music-player-window')">
+            <img src="images/note.png" alt="Music Player" width="20" height="20">
+        </div>
+        <div class="taskbar-app" onclick="openTreeWindow()">
+            <img src="images/tree-0.png" alt="Tree" width="20" height="20">
+        </div>
+        
+        
+        <div class="taskbar-spacer"></div>
+        <div class="indented-bar"></div>
+        <div class="raised-bar"></div>
+        <div class="taskbar-time" id="taskbar-time"></div>
+        
+    </div>
+
+    <div id="start-menu" class="window drop-up-menu">
+        <div class="menu-container">
+            <div class="windows-label">
+                <span>Horchata OS</span>
+            </div>
+            <div class="window-body">
+                <ul>
+                    <li>
+                        <button class="button" onclick="window.open('https://www.linkedin.com/in/jacob-ziegler-7244b9231/', '_blank')">
+                            <img src="images/linkedin.png" alt="linkedin">
+                            Linkedin
+                            <span class="arrow">▶</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button" onclick="window.open('https://github.com/zigg17', '_blank')">
+                            <img src="images/doc.png" alt="Github">
+                            Github
+                            <span class="arrow">▶</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button" onclick="openWindow('help-window')">
+                            <img src="images/help.png" alt="Help">
+                            Help and Support
+                            <span class="arrow">▶</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button" onclick="logOut()">
+                            <img src="images/onoff.png" alt="Log Off">
+                            Log Off
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Functions for login and logout
+        function login() {
+            document.getElementById('login-overlay').style.display = 'none';
+        }
+    
+        function logOut() {
+            // Hide all windows
+            const windows = document.querySelectorAll('.window');
+            windows.forEach(window => {
+                window.style.display = 'none';
+            });
+    
+            // Show the login overlay
+            document.getElementById('login-overlay').style.display = 'flex';
+        }
+    
+        let highestZIndex = 1; // Start with a base z-index
+    
+        function openWindow(id) {
+            const windowElement = document.getElementById(id);
+            if (windowElement) {
+                windowElement.style.display = 'block';
+
+                // Bring the window to the front
+                highestZIndex++;
+                windowElement.style.zIndex = highestZIndex;
+
+                // Attach mousedown listener to bring to front when clicked
+                windowElement.addEventListener('mousedown', () => {
+                    highestZIndex++;
+                    windowElement.style.zIndex = highestZIndex;
+                });
+            }
+        }
+
+
+        function openTreeWindow() {
+            // Run the window logic twice as per your approach
+            runOpenWindowLogic('tree-window');
+            runOpenWindowLogic('tree-window');
+
+            // Ensure the tree window is brought to the front
+            const treeWindow = document.getElementById('tree-window');
+            highestZIndex++;
+            treeWindow.style.zIndex = highestZIndex;
+            treeWindow.focus();
+
+            // Clear previous content to force re-render
+            const treeContent = document.getElementById('tree-content');
+            const treeImage = document.getElementById('tree-image');
+
+            treeContent.textContent = ''; // Clear content
+            treeImage.src = ''; // Clear image
+
+            // Fetch and display a random line from the quotes file
+            fetch('txt-files/quotes.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter out empty lines
+                    if (lines.length > 0) {
+                        const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
+                        treeContent.textContent = randomLine;
+                    } else {
+                        treeContent.textContent = "No quotes available.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the quotes:', error);
+                    treeContent.textContent = "Error loading quotes.";
+                });
+
+            // Display a random image from the image bank
+            const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
+            const randomImage = images[Math.floor(Math.random() * images.length)];
+            treeImage.src = `image-bank/${randomImage}`;
+        }
+    
+        function runOpenWindowLogic(id) {
+            const windowElement = document.getElementById(id);
+
+            // Set fixed positions for the window
+            const fixedLeft = 50; // Adjust this value to control the horizontal position
+            const fixedTop = 50;  // Adjust this value to control the vertical position
+
+            // Apply the fixed positions
+            windowElement.style.left = `${fixedLeft}px`;
+            windowElement.style.top = `${fixedTop}px`;
+
+            // Bring the window to the front
+            highestZIndex++;
+            windowElement.style.zIndex = highestZIndex;
+
+            // Ensure the window is visible
+            windowElement.style.display = 'block';
+
+            // Attach mousedown listener to bring to front when clicked
+            windowElement.addEventListener('mousedown', () => {
+                highestZIndex++;
+                windowElement.style.zIndex = highestZIndex;
+            });
+        }
+
+    
+        function closeWindow(id) {
+            const windowElement = document.getElementById(id);
+            if (windowElement) {
+                console.log(`Closing window with ID: ${id}`);
+                windowElement.style.display = 'none'; // Hide the window but keep it in the DOM
+            } else {
+                console.error(`Window with ID: ${id} not found!`);
+            }
+        }
+
+
+    
+        function toggleDropUp() {
+            const menu = document.getElementById('start-menu');
+    
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+    
+                highestZIndex++;
+                menu.style.zIndex = highestZIndex;
+                document.querySelector('.taskbar').style.zIndex = highestZIndex;
+    
+                document.addEventListener('click', closeStartMenuOnClickOutside);
+            } else {
+                menu.style.display = 'none';
+    
+                document.removeEventListener('click', closeStartMenuOnClickOutside);
+            }
+        }
+    
+        function closeStartMenuOnClickOutside(event) {
+            const menu = document.getElementById('start-menu');
+            const startButton = document.querySelector('.start-button');
+    
+            if (!menu.contains(event.target) && !startButton.contains(event.target)) {
+                menu.style.display = 'none';
+                document.removeEventListener('click', closeStartMenuOnClickOutside);
+            }
+        }
+    
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+    
+            const timeString = `${hours}:${minutes}`;
+            const dateString = `${month}/${day}/${year}`;
+    
+            document.getElementById('taskbar-time').textContent = `${dateString} ${timeString} `;
+        }
+    
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const desktopIcons = document.querySelectorAll('.desktop-icon');
+
+            desktopIcons.forEach(icon => {
+                icon.addEventListener('click', function(event) {
+                    // Remove the 'selected' class from all icons
+                    desktopIcons.forEach(i => i.classList.remove('selected'));
+
+                    // Add the 'selected' class to the clicked icon
+                    this.classList.add('selected');
+
+                    // Stop propagation so the document click listener doesn't remove the class immediately
+                    event.stopPropagation();
+                });
+            });
+
+            // Listen for clicks anywhere on the document
+            document.addEventListener('click', function() {
+                // Remove the 'selected' class from all icons
+                desktopIcons.forEach(i => i.classList.remove('selected'));
+            });
+});
+
+
+    
+        function dragElement(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            elmnt.onmousedown = dragMouseDown;
+    
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+    
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+    
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+    
+        // Music Player
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.getElementById('play-button');
+            const pauseButton = document.getElementById('pause-button');
+            const audioPlayer = document.getElementById('audio-player');
+            const audioSource = document.getElementById('audio-source');
+            let currentSongButton = null;
+    
+            const songs = {
+                'song-clouds': {
+                    name: 'CLOUDS',
+                    src: 'music/CLOUDS.mp3',
+                    button: document.getElementById('song-clouds')
+                },
+                'song-dark-beach': {
+                    name: 'DARK BEACH',
+                    src: 'music/DARKBEACH.mp3',
+                    button: document.getElementById('song-dark-beach')
+                },
+                'song-home': {
+                    name: 'HOME',
+                    src: 'music/HOME.mp3',
+                    button: document.getElementById('song-home')
+                },
+                'song-embrace': {
+                    name: 'EMBRACE',
+                    src: 'music/EMBRACE.mp3',
+                    button: document.getElementById('song-embrace')
+                }
+            };
+    
+            function loadSong(songId) {
+                const song = songs[songId];
+                if (audioSource.getAttribute('data-src') !== song.src) {
+                    audioSource.setAttribute('data-src', song.src);
+                    audioSource.src = song.src;
+                    audioPlayer.load();
+                }
+    
+                if (currentSongButton) {
+                    currentSongButton.classList.remove('pressed');
+                }
+    
+                currentSongButton = song.button;
+                currentSongButton.classList.add('pressed');
+            }
+    
+            function playAudio() {
+                audioPlayer.play();
+                playButton.style.display = 'none';
+                pauseButton.style.display = 'block';
+    
+                if (currentSongButton) {
+                    currentSongButton.classList.add('pressed');
+                }
+            }
+    
+            function pauseAudio() {
+                audioPlayer.pause();
+                pauseButton.style.display = 'none';
+                playButton.style.display = 'block';
+    
+                if (currentSongButton) {
+                    currentSongButton.classList.add('pressed');
+                }
+            }
+    
+            document.getElementById('song-clouds').addEventListener('click', function() {
+                loadSong('song-clouds');
+                playAudio();
+            });
+    
+            document.getElementById('song-dark-beach').addEventListener('click', function() {
+                loadSong('song-dark-beach');
+                playAudio();
+            });
+    
+            document.getElementById('song-home').addEventListener('click', function() {
+                loadSong('song-home');
+                playAudio();
+            });
+    
+            document.getElementById('song-embrace').addEventListener('click', function() {
+                loadSong('song-embrace');
+                playAudio();
+            });
+    
+            audioPlayer.addEventListener('ended', function() {
+                if (currentSongButton) {
+                    currentSongButton.classList.remove('pressed');
+                }
+                playButton.style.display = 'block';
+                pauseButton.style.display = 'none';
+            });
+    
+            playButton.addEventListener('click', playAudio);
+            pauseButton.addEventListener('click', pauseAudio);
+        });
+    
+        // Functionality for icons (ML and UI Projects)
+        document.querySelectorAll('.ml-icon, .ui-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                console.log(`${this.querySelector('p').textContent} clicked`);
+                // Add functionality to open corresponding project details
+            });
+        });
+
+        function showProjectDetail(projectName, projectType) {
+            const projectDetails = {
+                'SkinMNIST': {
+                    title: 'SkinMNIST',
+                    image: 'images/skinMNIST-pic.png',
+                    info: 'This project uses a series of CNNs to classify various skin lesions. The goal is to improve accuracy in identifying skin conditions through deep learning, which could aid early detection and better treatment decisions.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/health/skin-MNIST'
+                },
+                'ML Project 2': {
+                    title: 'Peruvian Housing',
+                    image: 'images/peru.png',
+                    info: 'This project focuses on analyzing housing data in Peru. It includes data cleaning, exploratory data analysis (EDA), and modeling to uncover insights and patterns in the Peruvian housing market.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/commercial/peruvian-housing'
+                },
+                'ML Project 3': {
+                    title: 'Pneumonia Classification',
+                    image: 'images/x-ray.png',
+                    info: 'This project involves a binary classification model to distinguish between pneumonia and non-pneumonia cases. Using deep learning pipeline I created, the model aims to accurately identify the presence of pneumonia from medical images.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/health/chest-xray-pneumonia'
+                },
+                'ML Project 4': {
+                    title: 'Image Classification Pipeline',
+                    image: 'images/pipester.png',
+                    info: 'This pipeline is designed for image classification problems, leveraging Convolutional Neural Networks (CNNs). It streamlines the process from data preprocessing to model training, making it adaptable for various image classification tasks.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
+                },
+                'ML Project 5': {
+                    title: 'Housing Inequality Modeling',
+                    image: 'images/housing-inequality.png',
+                    info: 'This project looks into the disparities in property tax by employing exploratory data analysis (EDA) and advanced modeling techniques. The goal was to assess the predictive powers of an existing model and develop an improved model that provided a more nuanced property tax calculations.',
+                    repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
+                },
+                'ML Project 6': {
+                    title: 'Sprague Eye',
+                    image: 'images/rat_swipe.png',
+                    info: 'An ML pipeline specifically developed for video behavioral scoring, utilizing image classification to accurately identify and analyze behaviors in video datasets. This tool automates the labeling process, making it ideal for research and studies that require precise behavioral analysis over time.',
+                    repo: 'https://github.com/zigg17/sprague-eye'
+                },
+                'Weave': {
+                    title: 'Weave',
+                    image: 'images/weave-shot.png',
+                    info: 'A meditation app with journaling, stat tracking, research tools, and interactive animations.',
+                    repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/weave'
+                },
+                'Sprague Eye': {
+                    title: 'Sprague Eye',
+                    image: 'images/rat_swipe.png',
+                    info: 'This GUI speeds up the process of generating a labeled training dataset for either a binary or multi-class classification task. Users can easily manage and organize their data by selecting folders for processing, creating directories for labeled images, and splicing videos to label frames.',
+                    repo: 'https://github.com/zigg17/sprague-eye'
+                },
+                'JakeLingo': {
+                    title: 'JakeLingo',
+                    image: 'images/jakelingo-shot.png',
+                    info: 'A language learning application with flashcards, writing, reading, and verb practice.',
+                    repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/jakelingo'
+                },
+                'Horchata OS': {
+                    title: 'Horchata OS',
+                    image: 'images/horchataOS.png',
+                    info: 'A retro-themed portfolio powered by Python and 98.css.',
+                    repo: 'https://github.com/zigg17/portfolio-website'
+                },
+                'Baratta Lab Website': {
+                    title: 'Baratta Lab Website',
+                    image: 'images/barattapng.png',
+                    info: "A lab overview website designed to showcase the Baratta Lab's work and research, tailored for grant writers and collaborators.",
+                    repo: 'https://github.com/zigg17/classes-learning-smallprojects/blob/main/gui-projects/BarattaLab/readme.md'
+                },
+            };
+
+            const detail = projectDetails[projectName];
+
+            if (detail) {
+                if (projectType === 'ml') {
+                    document.getElementById('ml-icons-page').style.display = 'none';
+                    document.getElementById('ml-project-detail').style.display = 'block';
+                    document.getElementById('ml-project-title').textContent = detail.title;
+                    document.getElementById('ml-project-image').src = detail.image;
+                    document.getElementById('ml-project-info').textContent = detail.info;
+                    document.getElementById('ml-project-repo').href = detail.repo;
+                }
+                else if (projectType === 'ui') {
+                    document.getElementById('ui-icons-page').style.display = 'none';
+                    document.getElementById('ui-project-detail').style.display = 'block';
+                    document.getElementById('ui-project-title').textContent = detail.title;
+                    document.getElementById('ui-project-image').src = detail.image;
+                    document.getElementById('ui-project-info').textContent = detail.info;
+                    document.getElementById('ui-project-repo').href = detail.repo;
+                }
+            }
+        }
+
+        function showIconsPage(pageId) {
+            if (pageId === 'ml-projects') {
+                document.getElementById('ml-project-detail').style.display = 'none';
+                document.getElementById('ml-icons-page').style.display = 'flex';
+            } else if (pageId === 'ui-projects') {
+                document.getElementById('ui-project-detail').style.display = 'none';
+                document.getElementById('ui-icons-page').style.display = 'flex';
+            }
+            else if (pageId === ''){
+                document.getElementById('ui-icons-page').style.display = 'flex';
+            }
+        }
+
+        function openGiftCardWindows() {
+    // Clear any existing virus windows
+    const oldVirusWindows = document.querySelectorAll('.virus-window');
+    oldVirusWindows.forEach(window => window.remove());
+
+    const numWindows = 5; // Set the number of windows to open
+    openMultipleRandomWindows(numWindows);
+
+    // Close the waste bin window after generating the virus windows
+    closeWindow('waste-bin-window');
+}
+
+function openMultipleRandomWindows(numWindows) {
+    for (let i = 0; i < numWindows; i++) {
+        const windowId = `random-window-${i}-${Date.now()}`; // Ensure unique IDs with timestamp
+        createRandomWindow(windowId);
+    }
+}
+
+function createRandomWindow(id) {
+    // Define a list of phony ads
+    const ads = [
+    { title: "Win a Free iPhone!", content: `<a href="https://horchata.dev" target="_blank">Click here</a> to claim your brand new iPhone! Limited time offer!` },
+    { title: "Congratulations, You’ve Won!", content: `<a href="https://horchata.dev" target="_blank">Claim your $1000 Walmart gift card now!</a>` },
+    { title: "You’re Our 1,000,000th Visitor!", content: `<a href="https://horchata.dev" target="_blank">Click here</a> to win a free vacation to the Bahamas!` },
+    { title: "Exclusive Offer!", content: `<a href="https://horchata.dev" target="_blank">Get a $500 Amazon gift card</a> just by signing up!` },
+    { title: "Your Computer is Infected!", content: `<a href="https://horchata.dev" target="_blank">Download our software</a> to remove the virus now!` },
+    { title: "Hot Singles in Your Area!", content: `<a href="https://horchata.dev" target="_blank">Meet attractive singles near you.</a> Click here!` },
+    { title: "Free Bitcoin!", content: `<a href="https://horchata.dev" target="_blank">Claim your free Bitcoin now</a> before it’s too late!` },
+    { title: "You Have 1 New Message!", content: `<a href="https://horchata.dev" target="_blank">Click to read your new message!</a>` },
+    { title: "Update Required!", content: `<a href="https://horchata.dev" target="_blank">Click here</a> to install the latest update to your system.` },
+    { title: "Congratulations, You’re a Winner!", content: `<a href="https://horchata.dev" target="_blank">Spin the wheel</a> to see what you've won!` },
+];
+
+
+    // Randomly select an ad
+    const randomAd = ads[Math.floor(Math.random() * ads.length)];
+
+    // Create a new div element for the virus window
+    const newWindow = document.createElement('div');
+    newWindow.className = 'virus-window';
+    newWindow.id = id;
+
+    // Create the title bar
+    const titleBar = document.createElement('div');
+    titleBar.className = 'title-bar';
+    titleBar.innerHTML = `
+        <div class="title-bar-text">${randomAd.title}</div>
+        <div class="title-bar-controls">
+            <button aria-label="Close" onclick="closeWindow('${id}')">x</button>
+        </div>`;
+    newWindow.appendChild(titleBar);
+
+    // Create the window body
+    const windowBody = document.createElement('div');
+    windowBody.className = 'virus-window-body';
+    windowBody.innerHTML = `<p>${randomAd.content}</p>`;
+    newWindow.appendChild(windowBody);
+
+    // Append the new window to the body
+    document.body.appendChild(newWindow);
+
+    // Position and display the window
+    runOpenWindowLogic(id);
+
+    // Make the window draggable
+    dragElement(newWindow);
+}
+
+function openGitHubStatsWindow() {
+    const windowId = 'github-window';
+    runOpenWindowLogic(windowId); 
+    runOpenWindowLogic(windowId); 
+
+    fetch('txt-files/ascii.txt')  
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('ascii-art-content').textContent = data;
+        })
+        .catch(error => console.error('Error fetching the ASCII art:', error));
+}
+
+    </script> 
+</body>
+</html>
