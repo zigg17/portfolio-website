@@ -1,85 +1,123 @@
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-from github import Github
+import os
+import json
+from github import Github, GithubException
 
-# Function to calculate age in years, months, and days
-def calculate_age(birth_date):
-    birth_date = datetime.strptime(birth_date, "%Y-%m-%d")
-    current_date = datetime.now()
-    age_difference = relativedelta(current_date, birth_date)
-    return age_difference.years, age_difference.months, age_difference.days
+def count_lines_in_notebook(file_content):
+    lines = 0
+    try:
+        notebook_json = json.loads(file_content.decoded_content.decode('utf-8'))
+        for cell in notebook_json['cells']:
+            if cell['cell_type'] == 'code':
+                lines += len(cell['source'])
+    except Exception as e:
+        print(f"Error processing notebook file: {e}")
+    return lines
 
-# Function to fetch stats from GitHub
-def fetch_github_stats(github_token):
+def count_lines_by_language(repo, languages, excluded_dirs=None, excluded_extensions=None, max_files=1000, max_depth=3):
+    if excluded_dirs is None:
+        excluded_dirs = ['venv', 'node_modules', '__pycache__']
+    if excluded_extensions is None:
+        excluded_extensions = ['.png', '.jpg', '.gif', '.zip', '.exe']
+
+    lines_by_language = {lang: 0 for lang in languages}
+    file_count = 0
+    total_lines = 0
+
+    try:
+        contents = repo.get_contents("")
+        while contents:
+            if file_count >= max_files:
+                print(f"Reached maximum file limit of {max_files} for repository '{repo.name}'.")
+                break
+            file_content = contents.pop(0)
+            current_depth = file_content.path.count('/') 
+            if current_depth > max_depth:
+                print(f"Skipping {file_content.path} due to exceeding depth limit.")
+                continue
+            file_count += 1
+            if file_content.type == "dir":
+                if any(excluded_dir in file_content.path for excluded_dir in excluded_dirs):
+                    print(f"Skipping directory: {file_content.path}")
+                    continue  
+                print(f"Entering directory: {file_content.path}")
+                try:
+                    contents.extend(repo.get_contents(file_content.path))
+                except GithubException as e:
+                    print(f"Error entering directory {file_content.path}: {e}")
+                    continue
+            else:
+                file_extension = os.path.splitext(file_content.path)[1]
+                if file_extension in excluded_extensions:
+                    print(f"Skipping file with excluded extension: {file_content.path}")
+                    continue  
+                for lang, extensions in languages.items():
+                    if file_extension in extensions:
+                        try:
+                            if file_extension == ".ipynb":
+                                lines = count_lines_in_notebook(file_content)
+                            else:
+                                lines = len(file_content.decoded_content.decode('utf-8').splitlines())
+                            lines_by_language[lang] += lines
+                            total_lines += lines
+                        except UnicodeDecodeError:
+                            print(f"Skipping file due to encoding issues: {file_content.path}")
+                        except Exception as e:
+                            print(f"Error processing file {file_content.path}: {e}")
+    except GithubException as e:
+        print(f"Error counting lines in {repo.name}: {e}")
+    
+    for lang, lines in lines_by_language.items():
+        print(f"Repository '{repo.name}' has {lines} lines of code in {lang}.")
+    
+    return lines_by_language, total_lines
+
+def fetch_github_stats(github_token, languages, max_files_per_repo=1000, max_depth=3):
     g = Github(github_token)
     user = g.get_user()
 
-    # Get the number of repositories
-    repositories = user.get_repos().totalCount
+    repositories = 0
+    total_lines_of_code = 0
+    total_commits = 0
+    lines_by_language_total = {lang: 0 for lang in languages}
 
-    # Initialize counters
-    commits = 0
-    lines_written = 0  # This would typically require additional work
-    pull_requests = 0
-
-    # Loop through repositories
     for repo in user.get_repos():
-        commits += repo.get_commits().totalCount
-        pull_requests += repo.get_pulls().totalCount
-        
-        # Example of how you might count lines of code (not supported directly by GitHub API)
-        # You'd typically need to clone the repo and count the lines using a script.
+        if not repo.fork:
+            repositories += 1
+            print(f"Processing repository {repositories}: '{repo.name}'...")
+            total_commits += repo.get_commits().totalCount  # Count total commits
+            repo_lines_by_language, repo_total_lines = count_lines_by_language(repo, languages, max_files=max_files_per_repo, max_depth=max_depth)
+            total_lines_of_code += repo_total_lines
+            for lang in languages:
+                lines_by_language_total[lang] += repo_lines_by_language[lang]
 
-    # Return the fetched data
-    return repositories, commits, lines_written, pull_requests
+    lines_by_language_total = dict(sorted(lines_by_language_total.items(), key=lambda item: item[1], reverse=True))
 
-# Function to update the stats file
-def update_stats_file(file_path, birth_date, repositories, commits, lines_written, pull_requests, programming_languages, natural_languages):
-    years, months, days = calculate_age(birth_date)
+    return repositories, total_commits, total_lines_of_code, lines_by_language_total
+
+def update_stats_file(file_path, repositories, total_commits, total_lines_of_code, lines_by_language_total):
+    content = f"Total Repositories: {repositories}\n"
+    content += f"Total Commits: {total_commits}\n"
+    content += f"Total Lines Committed: {total_lines_of_code}\n"
+    content += "Lines Committed by Language:\n"
+    for lang, lines in lines_by_language_total.items():
+        content += f" - {lang}: {lines} lines\n"
     
-    # Prepare the content
-    content = f"""
- __   __  _  _____   ___ _ ___ __ _   ___ ___ 
-|_ \ /  \| |/ / __| |_  | | __/ _] | | __| _ \
- _\ | /\ |   <| _|   / /| | _| [/\ |_| _|| v /
-/___|_||_|_|\_\___| |___|_|___\__/___|___|_|_\
-
---------------------------------------------------
- Time in Existence: {years} years, {months} months, {days} days.
---------------------------------------------------
- Repositories: {repositories}
---------------------------------------------------
- Commits: {commits}
---------------------------------------------------
- Lines Written: {lines_written}
---------------------------------------------------
- Pull Requests: {pull_requests}
---------------------------------------------------
- Programming Languages: {', '.join(programming_languages)}
---------------------------------------------------
- Natural Languages: {', '.join(natural_languages)}
---------------------------------------------------
-"""
-
-    # Write the content to the file
     with open(file_path, 'w') as file:
         file.write(content)
 
-# Example usage
-birth_date = "2000-05-16"
 file_path = "ascii.txt"
 
-# Your GitHub personal access token
-github_token = "your_github_token_here"
+github_token = os.getenv("GITHUB_TOKEN")
 
-# Fetch stats from GitHub
-repositories, commits, lines_written, pull_requests = fetch_github_stats(github_token)
+languages = {
+    "Python": [".py"],
+    "HTML": [".html", ".htm"],
+    "Shell": [".sh"],
+    "IPython": [".ipynb"],
+    "C++": [".cpp", ".h", ".hpp"],
+    "Markdown": [".md"] 
+}
 
-# Placeholder programming and natural languages
-programming_languages = ["Python", "Shell"]
-natural_languages = ["English", "Spanish"]
+repositories, total_commits, total_lines_of_code, lines_by_language_total = fetch_github_stats(github_token, languages, max_files_per_repo=1000, max_depth=3)
 
-# Update the stats file
-update_stats_file(file_path, birth_date, repositories, commits, lines_written, pull_requests, programming_languages, natural_languages)
-
-
+update_stats_file(file_path, repositories, total_commits, total_lines_of_code, lines_by_language_total)
