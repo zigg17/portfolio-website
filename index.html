@@ -598,6 +598,27 @@
             cursor: pointer;
         }
 
+        #github-window {
+            width: 300px;  /* Adjust the width to fit the content */
+            height: auto;  /* Set height to auto to fit content dynamically */
+            min-height: 150px; /* Ensure there's a minimum height */
+            padding: 10px; /* Add some padding around the content */
+            display: none;
+            box-sizing: border-box;
+        }
+
+        #ascii-art-content {
+            white-space: pre-wrap; /* Keep pre-wrap to maintain formatting */
+            background-color: #fff; /* White background for readability */
+            padding: 5px; /* Add padding inside the ASCII art box */
+            border: 1px solid #000; /* Add a border for better visibility */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow for effect */
+            width: 100%; /* Take up full width of parent */
+            height: auto; /* Adjust height to fit content */
+            font-size: 14px; /* Slightly larger font size for readability */
+        }
+
+
     </style>
 </head>
 <body>
@@ -624,10 +645,12 @@
             <p>UI Projects</p>
         </div>
 
-        <div class="desktop-icon" onclick="openWindow('github-window')">
+        <div class="desktop-icon" onclick="openGitHubStatsWindow()">
             <img src="images/github.png" alt="GitHub">
             <p>GitHub Stats</p>
-        </div>        
+        </div>
+        
+        
 
         <div class="desktop-icon" onclick="openWindow('contact')">
             <img src="images/contact.png" alt="Contact">
@@ -829,8 +852,7 @@
             </div>
         </div>
         <div class="window-body">
-            <!-- This is where the content will be displayed -->
-            <pre id="ascii-art-content" style="white-space: pre-wrap;"></pre>
+            <pre id="ascii-art-content"></pre>
         </div>
     </div>
     
@@ -968,16 +990,16 @@
             <div class="window-body">
                 <ul>
                     <li>
-                        <button class="button" onclick="openWindow('documents-window')">
-                            <img src="images/doc.png" alt="Documents">
-                            Documents
+                        <button class="button" onclick="window.open('https://www.linkedin.com/in/jacob-ziegler-7244b9231/', '_blank')">
+                            <img src="images/linkedin.png" alt="linkedin">
+                            Linkedin
                             <span class="arrow">▶</span>
                         </button>
                     </li>
                     <li>
-                        <button class="button" onclick="openWindow('settings-window')">
-                            <img src="images/settings.png" alt="Settings">
-                            Settings
+                        <button class="button" onclick="window.open('https://github.com/zigg17', '_blank')">
+                            <img src="images/doc.png" alt="Github">
+                            Github
                             <span class="arrow">▶</span>
                         </button>
                     </li>
@@ -1042,24 +1064,32 @@
 
     
         function openTreeWindow() {
-            runOpenWindowLogic('tree-window');
-            runOpenWindowLogic('tree-window');
-    
-            // Fetch the text file and display a random line
-            fetch('quotes.txt')
-                .then(response => response.text())
-                .then(data => {
-                    const lines = data.split('\n');
-                    const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
-                    document.getElementById('tree-content').textContent = randomLine;
-                })
-                .catch(error => console.error('Error fetching the quotes:', error));
-    
-            // Display a random image from the image bank
-            const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
-            const randomImage = images[Math.floor(Math.random() * images.length)];
-            document.getElementById('tree-image').src = `image-bank/${randomImage}`;
-        }
+    runOpenWindowLogic('tree-window');
+    runOpenWindowLogic('tree-window');
+
+    // Fetch the text file and display a random line
+    fetch('quotes.txt')
+        .then(response => response.text())
+        .then(data => {
+            const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter out empty lines
+            if (lines.length > 0) {
+                const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
+                document.getElementById('tree-content').textContent = randomLine;
+            } else {
+                document.getElementById('tree-content').textContent = "No quotes available.";
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching the quotes:', error);
+            document.getElementById('tree-content').textContent = "Error loading quotes.";
+        });
+
+    // Display a random image from the image bank
+    const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    document.getElementById('tree-image').src = `image-bank/${randomImage}`;
+}
+
     
         function runOpenWindowLogic(id) {
             const windowElement = document.getElementById(id);
@@ -1070,7 +1100,7 @@
             const leftMargin = 100;
             const rightMargin = 100;
             const topMargin = 20;
-            const bottomMargin = 50;
+            const bottomMargin = 90;
     
             const maxLeft = viewportWidth - windowElement.offsetWidth - rightMargin;
             const maxTop = viewportHeight - windowElement.offsetHeight - bottomMargin;
@@ -1520,15 +1550,17 @@ function runOpenWindowLogic(id) {
 
 function openGitHubStatsWindow() {
     const windowId = 'github-window';
-    runOpenWindowLogic(windowId); // Use your existing logic to position and display the window
+    runOpenWindowLogic(windowId); 
+    runOpenWindowLogic(windowId); 
 
-    fetch('asciicopy.txt')
+    fetch('ascii.txt')  
         .then(response => response.text())
         .then(data => {
             document.getElementById('ascii-art-content').textContent = data;
         })
         .catch(error => console.error('Error fetching the ASCII art:', error));
 }
+
 
 
 
