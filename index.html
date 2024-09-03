@@ -900,7 +900,7 @@
 
     <div class="window" id="tree-window">
         <div class="title-bar" onmousedown="dragElement(this.parentElement)">
-            <div class="title-bar-text">A Moment...</div>
+            <div class="title-bar-text">Tree</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('tree-window')">x</button>
             </div>
@@ -908,7 +908,7 @@
         <div class="window-body" id="tree-window-body">
             <!-- Image with fixed dimensions -->
             <img id="tree-image" src="image-bank/forest.jpg" alt="Forest Image" style="width: 400px; height: 300px; object-fit: cover;">
-            
+
             <!-- Quote section -->
             <div id="quote-container">
                 <p id="tree-content">
@@ -971,9 +971,10 @@
         <div class="taskbar-app" onclick="openWindow('music-player-window')">
             <img src="images/note.png" alt="Music Player" width="20" height="20">
         </div>
-        <div class="taskbar-app" onclick="openWindow('tree-window')">
+        <div class="taskbar-app" onclick="openTreeWindow()">
             <img src="images/tree-0.png" alt="Tree" width="20" height="20">
         </div>
+        
         
         <div class="taskbar-spacer"></div>
         <div class="indented-bar"></div>
@@ -1062,34 +1063,46 @@
             }
         }
 
-    
         function openTreeWindow() {
+    // Run the window logic twice as per your approach
     runOpenWindowLogic('tree-window');
     runOpenWindowLogic('tree-window');
 
-    // Fetch the text file and display a random line
+    // Ensure the tree window is brought to the front
+    const treeWindow = document.getElementById('tree-window');
+    highestZIndex++;
+    treeWindow.style.zIndex = highestZIndex;
+    treeWindow.focus();
+
+    // Clear previous content to force re-render
+    const treeContent = document.getElementById('tree-content');
+    const treeImage = document.getElementById('tree-image');
+
+    treeContent.textContent = ''; // Clear content
+    treeImage.src = ''; // Clear image
+
+    // Fetch and display a random line from the quotes file
     fetch('quotes.txt')
         .then(response => response.text())
         .then(data => {
             const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter out empty lines
             if (lines.length > 0) {
                 const randomLine = lines[Math.floor(Math.random() * lines.length)].trim();
-                document.getElementById('tree-content').textContent = randomLine;
+                treeContent.textContent = randomLine;
             } else {
-                document.getElementById('tree-content').textContent = "No quotes available.";
+                treeContent.textContent = "No quotes available.";
             }
         })
         .catch(error => {
             console.error('Error fetching the quotes:', error);
-            document.getElementById('tree-content').textContent = "Error loading quotes.";
+            treeContent.textContent = "Error loading quotes.";
         });
 
     // Display a random image from the image bank
     const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
     const randomImage = images[Math.floor(Math.random() * images.length)];
-    document.getElementById('tree-image').src = `image-bank/${randomImage}`;
+    treeImage.src = `image-bank/${randomImage}`;
 }
-
     
         function runOpenWindowLogic(id) {
             const windowElement = document.getElementById(id);
@@ -1560,11 +1573,6 @@ function openGitHubStatsWindow() {
         })
         .catch(error => console.error('Error fetching the ASCII art:', error));
 }
-
-
-
-
-
 
     </script> 
 </body>
