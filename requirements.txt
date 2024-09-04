@@ -1,3 +1,4 @@
+python-3.10.12
 ua-parser==0.16.1
 Cython==0.29.36
 setuptools==58.0.4
