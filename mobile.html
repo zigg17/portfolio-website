@@ -82,24 +82,27 @@
         #tree-image {
             width: auto;
             height: auto;
-            max-width: 80%; /* Ensure the image doesn’t exceed the window’s max width *//* Ensure the image doesn’t exceed the window’s max height */
+            max-width: 80%; /* Ensure the image doesn’t exceed the window’s max width */
+            max-height: 80%; /* Ensure the image doesn’t exceed the window’s max height */
             object-fit: cover; /* Maintain aspect ratio while covering the area */
+            margin-top: -30%; /* Adjust this value to move the image higher up */
         }
 
-
-        #quote-container {
-            max-width: 100%; /* Ensure the text doesn't overflow horizontally */
-            text-align: center; /* Center the text */
-            word-wrap: break-word; /* Break long words if necessary */
-            overflow-y: auto; /* Add a scrollbar if the text is too long */
-        }
+        #tree-window {
+    width: 80%;
+    height: 68%;
+    position: fixed;
+    left: 10% !important; /* Adjust this value */
+    top: 10% !important;  /* Adjust this value */
+    display: none;
+}
 
 
         #quote-container {
             position: absolute;
             bottom: 20px;
             width: 100%;
-            max-height: 60px; /* Adjust based on the height you want for the quote section */
+            max-height: 70px; /* Adjust based on the height you want for the quote section */
             padding: 0 60px; /* Adds padding to the sides */
             box-sizing: border-box; /* Ensures padding is included in the width */
             overflow-y: auto; /* Adds a scrollbar if the text overflows */
@@ -221,7 +224,7 @@
 
         .window {
             width: 95%; /* Window is 90% of the screen width */
-            height: 80%;
+            height: 86%;
             left: 2%; /* Center the window horizontally */
             top: 5%; /* Add some top margin */
             position: fixed; /* Ensure it's fixed on the screen */
@@ -360,14 +363,25 @@
             margin-right: .2px; /* Larger space before the raised bars */
         }
 
-        .about-me-photo {
-            position: absolute; /* Allows manual positioning */
-            top: 105px;          /* Adjust this value to move the image up or down */
-            right: 40px;        /* Adjust this value to move the image left or right */
-            width: 320px;       /* Adjust the width as necessary */
-            height: auto;       /* Maintains the aspect ratio */
-            border: 2px solid #000; /* Optional: Adds a border around the photo */
-        }
+        /* Hide the image by default */
+/* Center the image */
+.about-me-photo {
+    max-width: 100%; /* Ensure the image scales down if necessary */
+    max-height: 100%; /* Ensure the image scales down if necessary */
+    height: auto; /* Maintain aspect ratio */
+    width: auto; /* Maintain aspect ratio */
+    border: 2px solid #000; /* Optional: Add a border around the photo */
+    display: none;
+}
+
+/* Media query to show and position the image when the height exceeds 800px */
+@media (min-height: 800px) {
+    .about-me-photo {
+        display: block; /* Image is shown */
+        top: auto; /* Remove top positioning */
+        bottom: 7%; /* Position the image 20px from the bottom */
+    }
+}
 
         .contact-link {
             font-size: 18px; /* Makes the text larger */
@@ -493,43 +507,24 @@
         }
 
         .contact-info {
-    position: relative; /* Set the parent element as relative so child elements can be positioned absolutely */
-    width: 100%;
-    height: 100%;
-}
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+        }
 
-.contact-item {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            text-align: center;
+        }
 
-.contact-item.phone {
-    top: 200px;  /* Adjust the top position to move the phone section */
-    left: 50px; /* Adjust the left position to move the phone section */
-}
-
-.contact-item.email {
-    top: 150px;  /* Adjust the top position to move the email section */
-    left: 250px; /* Adjust the left position to move the email section */
-}
-
-.contact-icon {
-    width: 40px; /* Adjust the size of the icon */
-    height: auto;
-    margin-bottom: 5px; /* Adds space between the icon and the text */
-}
-
-.contact-link {
-    font-size: 18px; /* Makes the text larger */
-    color: #0066cc; /* Link color */
-    text-decoration: none; /* Removes underline */
-}
-
-.contact-link:hover {
-    text-decoration: underline; /* Underline on hover */
-}
+        .contact-icon {
+            width: 40px; 
+            height: auto;
+            margin-bottom: 5px; 
+        }
 
 
         .song-button.pressed {
@@ -540,20 +535,22 @@
         .ml-icon-container, .ui-icon-container, .waste-container{
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start; /* Aligns items to the start of the row */
-            align-items: flex-start; /* Ensures all icons align at the top */
+            justify-content: space-around; /* Ensures equal spacing between items */
+            align-items: flex-start;
             padding: 10px;
+            box-sizing: border-box;
+
         }
 
-        .ml-icon, .ui-icon, .waste-icon{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 10px; /* Adjust the vertical margin */
-            margin-left: 25px;  /* Adjust the left margin for horizontal spacing */
-            margin-right: 25px; /* Adjust the right margin for horizontal spacing */
-            cursor: pointer;
-        }
+        .ml-icon, .ui-icon, .waste-icon {
+    flex: 0 0 32%; /* Each icon takes up approximately 32% to allow for gaps */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; /* Space between rows */
+    box-sizing: border-box;
+    cursor: pointer;
+}
 
 
         .ml-icon img, .ui-icon img, .waste-icon img{
@@ -569,54 +566,60 @@
             text-align: center;
         }
 
-        #ui-project-detail,
-        #ml-project-detail{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%; /* Ensure the container takes up the full height */
-            text-align: center; /* Center text inside the container */
-            margin: 0 auto; /* Center the container itself horizontally */
-        }
+        #ml-project-detail, #ui-project-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Take up the full viewport height */
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    transform: translateY(15%) !important; 
+}
 
-        #ui-project-detail .window-body,
-        #ml-project-detail .window-body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100%; /* Take up the full height */
-            box-sizing: border-box; /* Ensure padding doesn't affect sizing */
-        }
+#ml-project-detail .window-body,
+#ui-project-detail .window-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Take up the full height of the parent container */
+    width: 100%; /* Ensure full width */
+    box-sizing: border-box;
+}
 
-        /* Image styling specific to UI and ML project detail windows */
-        #ui-project-detail img,
-        #ml-project-detail img {
-            max-width: 350px;
-            margin-bottom: 20px;
-        }
+#ml-project-detail img,
+#ui-project-detail img {
+    max-width: 80%; /* Adjust the max-width to ensure the image fits well */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Space below the image */
+}
 
-        /* Title and paragraph styling */
-        #ui-project-detail h2,
-        #ml-project-detail h2 {
-            font-size: 17px;
-            margin-bottom: 10px;
-        }
+#ml-project-detail h2,
+#ui-project-detail h2 {
+    font-size: 18px; /* Adjust the title font size */
+    margin-bottom: 10px;
+    text-align: center; /* Center the title text */
+}
 
-        #ml-project-detail p,
-        #ui-project-detail  p {
-            font-size: 13px;
-            margin-bottom: 10px; /* Increase the space below the description text */
-        }
+#ml-project-detail p,
+#ui-project-detail p {
+    font-size: 14px; /* Adjust the paragraph font size */
+    margin-bottom: 20px; /* Space below the description text */
+    text-align: center; /* Center the paragraph text */
+}
 
-        #ml-project-detail a button,
-        #ui-project-detail  a button {
-            padding: 10px 20px;
-            font-size: 13px;
-            margin-top: 10px; /* Increase the space above the button */
-            cursor: pointer;
-        }
+#ml-project-detail a button,
+#ui-project-detail a button {
+    padding: 10px 20px;
+    font-size: 14px;
+    margin-top: 10px; /* Space above the button */
+    cursor: pointer;
+    text-align: center;
+}
+
 
         #github-window {
             width: 300px;  /* Adjust the width to fit the content */
@@ -699,7 +702,7 @@
     </div>
 
     <div class="window" id="about-me">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">About Me</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('about-me')">x</button>
@@ -732,7 +735,7 @@
     </div> 
 
     <div class="window" id="ml-projects">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">ML Projects</div>
             <div class="title-bar-controls">
                 <button class="nav-button" id="back-button" onclick="showIconsPage('ml-projects')"><</button>
@@ -783,7 +786,7 @@
     </div>
 
     <div class="window" id="ui-projects">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar" >
             <div class="title-bar-text">UI Projects</div>
             <div class="title-bar-controls">
                 <button class="nav-button" id="back-button" onclick="showIconsPage('ui-projects')"><</button>
@@ -830,7 +833,7 @@
 
     <!-- Waste Bin Window -->
     <div class="window" id="waste-bin-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">Waste Bin</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('waste-bin-window')">x</button>
@@ -847,7 +850,7 @@
     </div>
 
     <div class="window" id="contact">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">Contact</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('contact')">x</button>
@@ -856,11 +859,11 @@
         <div class="window-body">
             <h4>Contact Information</h4>
             <div class="contact-info">
-                <div class="contact-item">
+                <div class="contact-item phone-photo">
                     <img src="images/phoney.png" alt="Phone Icon" class="contact-icon">
                     <a href="tel:+13039055526" class="contact-link">(303)905-5526</a>
                 </div>
-                <div class="contact-item">
+                <div class="contact-item email-photo">
                     <img src="images/mail.png" alt="Email Icon" class="contact-icon">
                     <a href="mailto:your.email@example.com" class="contact-link">your.email@example.com</a>
                 </div>
@@ -870,7 +873,7 @@
     
 
     <div class="window" id="github-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">GitHub Stats</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('github-window')">x</button>
@@ -885,7 +888,7 @@
 
     <!-- Explorer Window -->
     <div class="window" id="explorer-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">Explorer</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('explorer-window')">x</button>
@@ -898,7 +901,7 @@
     </div>
 
     <div class="window" id="music-player-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">Music Player</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('music-player-window')">x</button>
@@ -924,7 +927,7 @@
     </div>
 
     <div class="window" id="tree-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">Tree</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('tree-window')">x</button>
@@ -933,7 +936,6 @@
         <div class="window-body" id="tree-window-body">
             <!-- Image with fixed dimensions -->
             <img id="tree-image" src="image-bank/forest.jpg" alt="Forest Image" style="width: 400px; height: 300px; object-fit: cover;">
-
             <!-- Quote section -->
             <div id="quote-container">
                 <p id="tree-content">
@@ -942,10 +944,11 @@
             </div>
         </div>
     </div>
+    
 
     <!-- Documents Window -->
     <div class="window" id="documents-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar" >
             <div class="title-bar-text">Documents</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('documents-window')">x</button>
@@ -958,7 +961,7 @@
 
     <!-- Settings Window -->
     <div class="window" id="settings-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar" >
             <div class="title-bar-text">Settings</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('settings-window')">x</button>
@@ -971,7 +974,7 @@
 
     <!-- Help and Support Window -->
     <div class="window" id="help-window">
-        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
+        <div class="title-bar">
             <div class="title-bar-text">Help and Support</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('help-window')">x</button>
@@ -1233,35 +1236,6 @@
 
 
     
-        function dragElement(elmnt) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            elmnt.onmousedown = dragMouseDown;
-    
-            function dragMouseDown(e) {
-                e = e || window.event;
-                e.preventDefault();
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                document.onmousemove = elementDrag;
-            }
-    
-            function elementDrag(e) {
-                e = e || window.event;
-                e.preventDefault();
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            }
-    
-            function closeDragElement() {
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        }
     
         // Music Player
         document.addEventListener('DOMContentLoaded', function() {
@@ -1539,9 +1513,6 @@ function createRandomWindow(id) {
 
     // Position and display the window
     runOpenWindowLogic(id);
-
-    // Make the window draggable
-    dragElement(newWindow);
 }
 
 function openGitHubStatsWindow() {
