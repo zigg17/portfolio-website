@@ -383,44 +383,51 @@
     }
 }
 
-        .contact-link {
-            font-size: 18px; /* Makes the text larger */
-            color: #0066cc; /* Link color */
-            text-decoration: none; /* Removes underline */
-        }
 
-        .contact-link:hover {
-            text-decoration: underline; /* Underline on hover */
-        }
+/* Specific styling for the Contact window */
+#contact .window-body {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important; /* Keep content centered vertically */
+    height: 85vh !important; /* Full viewport height */
+    padding-bottom: 100px !important; /* Add bottom padding to create space between content and bottom */
+    box-sizing: border-box !important;
+    text-align: center !important;
+}
 
-        .phone-photo {
-            position: absolute; /* Allows manual positioning */
-            bottom: 180px;          /* Adjust this value to move the image up or down */
-            right: 470px;        /* Adjust this value to move the image left or right */
-            width: 60px;       /* Adjust the width as necessary */
-            height: auto;       /* Maintains the aspect ratio */
-        }
+#contact .contact-info {
+    display: flex !important;
+    flex-direction: column !important; /* Stack items vertically */
+    align-items: center !important;
+    gap: 85px !important; /* Space between contact items */
+}
 
-        .email-photo {
-            position: absolute; /* Allows manual positioning */
-            bottom: 197px;          /* Adjust this value to move the image up or down */
-            right: 140px;        /* Adjust this value to move the image left or right */
-            width: 90px;       /* Adjust the width as necessary */
-            height: auto;       /* Maintains the aspect ratio */
-        }
+#contact .contact-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Center icon and text within each contact item */
+    justify-content: center !important;
+    margin-top: 20px !important; /* Add a bit of space between the items and the top */
+}
 
-        .phone-text {
-            position: absolute;
-            top: 330px; /* Adjust based on where you want the text */
-            left: 95px; /* Adjust based on where you want the text */
-        }
+#contact .contact-icon {
+    width: 64px !important; /* Adjust the icon size */
+    height: auto !important;
+    margin-bottom: 30px !important; /* Space between icon and text */
+}
 
-        /* Specific positioning for the email text field */
-        .email-text {
-            position: absolute;
-            top: 330px; /* Adjust based on where you want the text */
-            left: 370px; /* Adjust based on where you want the text */
-        }
+#contact .contact-link {
+    font-size: 18px !important; /* Adjust text size */
+    color: #0066cc !important; /* Link color */
+    text-decoration: none !important; /* Remove underline by default */
+}
+
+#contact .contact-link:hover {
+    text-decoration: underline !important; /* Underline on hover */
+}
+
+
 
         .start-button:active {
             border: 2px inset #fff;
@@ -506,25 +513,7 @@
             color: #000;
         }
 
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; 
-            align-items: center; 
-        }
-
-        .contact-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            text-align: center;
-        }
-
-        .contact-icon {
-            width: 40px; 
-            height: auto;
-            margin-bottom: 5px; 
-        }
+        
 
 
         .song-button.pressed {
@@ -857,18 +846,18 @@
             </div>
         </div>
         <div class="window-body">
-            <h4>Contact Information</h4>
             <div class="contact-info">
-                <div class="contact-item phone-photo">
+                <div class="contact-item">
                     <img src="images/phoney.png" alt="Phone Icon" class="contact-icon">
                     <a href="tel:+13039055526" class="contact-link">(303)905-5526</a>
                 </div>
-                <div class="contact-item email-photo">
+                <div class="contact-item">
                     <img src="images/mail.png" alt="Email Icon" class="contact-icon">
                     <a href="mailto:your.email@example.com" class="contact-link">your.email@example.com</a>
                 </div>
             </div>
         </div>
+        
     </div>
     
 
