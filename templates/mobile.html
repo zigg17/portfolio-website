@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <!-- Favicon for most browsers -->
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}"type="image/x-icon">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horchata OS</title>
-    <link rel="stylesheet" href="98.css-main/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='98.css-main/style.css') }}">
     <style>
         /* Font Definitions */
         @font-face {
@@ -20,7 +20,7 @@
 
         /* Basic Body Styling */
         body {
-            background-image: url('images/hill.jpg');
+            background-image: url("{{ url_for('static', filename='images/hill.jpg') }}");
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -512,9 +512,6 @@
             font-size: 12px;
             color: #000;
         }
-
-        
-
 
         .song-button.pressed {
             background-color: #004e98;
