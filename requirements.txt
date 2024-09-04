@@ -1,4 +1,5 @@
 ua-parser==0.16.1
+wheel
 Cython==0.29.36
 setuptools==58.0.4
 Flask==2.3.3
