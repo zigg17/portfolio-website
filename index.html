@@ -700,7 +700,7 @@
     text-align: center;
     border-top: 2px solid #ccc;
     background-color: #f9f9f9;
-    margin-top: -45%; /* Move the section up */
+    margin-top: -48%; /* Move the section up */
     margin-left: 15%; /* Move the section up */
     position: relative;
 }
@@ -962,48 +962,18 @@
                     <button class="explorer-button">Back</button>
                     <button class="explorer-button">Forward</button>
                     <button class="explorer-button">Home</button>
-                    <input type="text" id="explorer-url" value="https://www.oldnews.com" readonly>
+                    <input type="text" id="explorer-url" value="https://www.horchatanews.dev" readonly>
                 </div>
             </div>
             
             <!-- Scrollable News Section -->
             <div id="news-content" class="scrollable-content">
                 <ul id="news-list">
-                    <!-- Static News Articles -->
-                    <li>
-                        <h4><a href="#">News Headline 1</a></h4>
-                        <p>Breaking news: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.</p>
-                    </li>
-                    <li>
-                        <h4><a href="#">News Headline 2</a></h4>
-                        <p>Market update: Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.</p>
-                    </li>
-                    <li>
-                        <h4><a href="#">News Headline 3</a></h4>
-                        <p>Technology: Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
-                    </li>
-                    <li>
-                        <h4><a href="#">News Headline 4</a></h4>
-                        <p>Sports: Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent.</p>
-                    </li>
-                    <li>
-                        <h4><a href="#">News Headline 5</a></h4>
-                        <p>Weather: Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.</p>
-                    </li>
-                    <li>
-                        <h4><a href="#">News Headline 6</a></h4>
-                        <p>Politics: Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor.</p>
-                    </li>
-                    <li>
-                        <h4><a href="#">News Headline 7</a></h4>
-                        <p>Science: Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis.</p>
-                    </li>
+                    <!-- This will be dynamically populated with news articles -->
                 </ul>
             </div>
-
-            
         </div>
-
+    
         <!-- GIF Section -->
         <div id="gif-section">
             <img src="images/explorer.gif" alt="GIF" class="gif-image"> <!-- Replace with your GIF path -->
@@ -1725,6 +1695,38 @@
             }
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // Fetch the JSON data from your headlines.json
+        fetch('txt-files/headlines.json')
+            .then(response => response.json())
+            .then(data => {
+                const newsList = document.getElementById('news-list');
+                newsList.innerHTML = ''; // Clear existing static content
+
+                // Loop through each news article and add it to the list
+                data.forEach(article => {
+                    const li = document.createElement('li');
+
+                    const title = document.createElement('h4');
+                    const link = document.createElement('a');
+                    link.href = article.url;
+                    link.textContent = article.title;
+                    title.appendChild(link);
+
+                    const description = document.createElement('p');
+                    description.textContent = `Published by ${article.author}`;
+
+                    li.appendChild(title);
+                    li.appendChild(description);
+
+                    newsList.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching the news articles:', error);
+            });
+    });
     </script> 
 </body>
 </html>
