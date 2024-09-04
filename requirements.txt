@@ -1,8 +1,3 @@
-python-3.10.12
-ua-parser==0.16.1
-Cython==0.29.36
-setuptools==58.0.4
 Flask==2.3.3
-user-agents==2.2.0
-gunicorn==20.1.0
-pyyaml==5.3.1
+user-agents==2.3.0
+gunicorn==21.2.0
