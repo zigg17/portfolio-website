@@ -1,10 +1,10 @@
 Total Repositories: 34
-Total Commits: 319
-Total Lines Committed: 25323
+Total Commits: 330
+Total Lines Committed: 26940
 Lines Committed by Language:
  - C++: 10881 lines
- - Python: 4958 lines
+ - Python: 5026 lines
+ - HTML: 4723 lines
  - IPython: 3674 lines
- - HTML: 3174 lines
  - Markdown: 2629 lines
  - Shell: 7 lines

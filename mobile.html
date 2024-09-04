@@ -619,6 +619,20 @@
             box-sizing: border-box;
         }
 
+        #github-window .title-bar {
+            background-color: #004e98;
+            color: white;
+            height: 18px; /* Ensure consistent height */
+            padding: 0;
+            margin: 1;
+            position: absolute;
+            top: 1%; /* Align flush with the top */
+            left: 1%;
+            width: 98%;
+            z-index: 9999;
+        }
+
+
         #ascii-art-content {
             white-space: pre-wrap; /* Keep pre-wrap to maintain formatting */
             background-color: #fff; /* White background for readability */
@@ -1517,6 +1531,18 @@ function openGitHubStatsWindow() {
         .catch(error => console.error('Error fetching the ASCII art:', error));
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+            // Detect if the browser is Chrome
+            var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+            if (isChrome) {
+            // If the browser is Chrome, modify the top position of the drop-up menu
+            var dropUpMenu = document.querySelector('.drop-up-menu');
+            if (dropUpMenu) {
+                dropUpMenu.style.top = 'calc(100% - 258px)'; // Adjust this value as needed
+            }
+            }
+        });
     </script> 
 </body>
 </html>
