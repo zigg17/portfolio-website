@@ -38,7 +38,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('images/login-background.png'); /* Background image for the login page */
+            background-image: url("{{ url_for('static', filename='images/background.png') }}"); /* Background image for the login page */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -175,10 +175,12 @@
             top: 20px; /* Adjust this value to move the icons down */
             left: 20px; /* Adjust this value to move the icons right or left */
             gap: 20px; /* Adjust the spacing between the icons */
+            
         }
 
         .desktop-icon img {
             width: 72px;
+            cursor: pointer;
         }
 
         /* Positioning for Resume and Waste Bin */
@@ -644,6 +646,11 @@
     font-size: 12px;
 }
 
+.title-bar-controls button {
+    cursor: pointer;
+}
+
+
 #explorer-url {
     flex-grow: 1;
     background-color: white;
@@ -739,12 +746,6 @@
     </style>
 </head>
 <body>
-    <!-- Login Overlay -->
-    <div class="login-overlay" id="login-overlay">
-        <div class="login-text">Welcome to Horchata OS</div>
-        <button class="login-button" onclick="login()">Log In</button>
-    </div>
-
     <!-- Desktop Icons -->
     <div class="desktop-icon-container">
         <div class="desktop-icon" onclick="openWindow('about-me')">
@@ -1227,7 +1228,9 @@
             // Display a random image from the image bank
             const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
             const randomImage = images[Math.floor(Math.random() * images.length)];
-            treeImage.src = `{{ url_for('static', filename='image-bank/${randomImage}') }}`;
+            const baseUrl = "{{ url_for('static', filename='image-bank/') }}";
+            treeImage.src = `${baseUrl}${randomImage}`;
+
         }
     
         function runOpenWindowLogic(id) {
