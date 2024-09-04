@@ -22,7 +22,6 @@ if top_headlines['status'] == 'ok':
             truncated_description += '...'
 
         print(f"Headline {i}: {title}")
-        print(f"Description: {truncated_description}")
         print(f"URL: {article['url']}")
         print(f"Image URL: {article['urlToImage']}")
         print(f"Published At: {article['publishedAt']}")
