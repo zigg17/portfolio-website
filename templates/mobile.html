@@ -441,12 +441,11 @@
     flex-direction: column !important;
     align-items: center !important; /* Center icon and text within each contact item */
     justify-content: center !important;
-    margin-top: 20px !important;
-    margin-bottom: 40px; /* Add a bit of space between the items and the top */
+    margin-top: 20px !important; /* Add a bit of space between the items and the top */
 }
 
 #contact .contact-icon img {
-    width: 50px; /* Adjust width to a smaller value */
+    width: 32px; /* Adjust width to a smaller value */
     height: auto; /* Adjust height to a smaller value */
     display: block; /* Ensures the icon appears as block-level element */
     margin: 0 auto; /* Centers the icon horizontally */
@@ -902,7 +901,7 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <div class="contact-icon">
-                        <img src="{{ url_for('static', filename='images/phoney.png') }}" alt="Phone Icon">
+                        <img src="{{ url_for('static', filename='images/phoney.png') }}" alt="Phone Icon" style="margin-bottom: 40px;">
                     </div>
                     <a href="tel:+13039055526" class="contact-link phone-text">(303)905-5526</a>
                 </div>
