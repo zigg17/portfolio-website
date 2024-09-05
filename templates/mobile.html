@@ -12,11 +12,13 @@
         /* Font Definitions */
         @font-face {
             font-family: 'MS Sans Serif';
-            src: url('fonts/converted/ms_sans_serif.woff2') format('woff2'),
-                 url('fonts/converted/ms_sans_serif.woff') format('woff');
+            src: url("{{ url_for('static', filename='fonts/converted/ms_sans_serif.woff2') }}") format('woff2'),
+                url("{{ url_for('static', filename='fonts/converted/ms_sans_serif.woff') }}") format('woff');
             font-weight: normal;
             font-style: normal;
         }
+
+
 
         /* Basic Body Styling */
         body {
