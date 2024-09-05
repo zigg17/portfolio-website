@@ -40,7 +40,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('images/login-background.png'); /* Background image for the login page */
+            background-image: url("{{ url_for('static', filename='images/background.png') }}"); /* Background image for the login page */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -654,51 +654,50 @@
     <!-- Desktop Icons -->
     <div class="desktop-icon-container">
         <div class="desktop-icon" onclick="openWindow('about-me')">
-            <img src="images/about-me.png" alt="About Me">
+            <img src="{{ url_for('static', filename='images/about-me.png') }}" alt="About Me">
             <p>About Me</p>
         </div>
-
+        
         <div class="desktop-icon" onclick="openWindow('ml-projects')">
-            <img src="images/data.png" alt="ML Projects">
+            <img src="{{ url_for('static', filename='images/data.png') }}" alt="ML Projects">
             <p>Data Projects</p>
         </div>
-
+        
         <div class="desktop-icon" onclick="openWindow('ui-projects')">
-            <img src="images/ui.png" alt="UI Projects">
+            <img src="{{ url_for('static', filename='images/ui.png') }}" alt="UI Projects">
             <p>UI Projects</p>
         </div>
-
+        
         <div class="desktop-icon" onclick="openGitHubStatsWindow()">
-            <img src="images/github.png" alt="GitHub">
+            <img src="{{ url_for('static', filename='images/github.png') }}" alt="GitHub">
             <p>GitHub Stats</p>
         </div>
         
-        
-
         <div class="desktop-icon" onclick="openWindow('contact')">
-            <img src="images/contact.png" alt="Contact">
+            <img src="{{ url_for('static', filename='images/contact.png') }}" alt="Contact">
             <p>Contact Me</p>
         </div>
+        
 
-        <a href="files/resume.pdf" download="resume.pdf">
+        <a href="{{ url_for('static', filename='files/resume.pdf')}}" download="resume.pdf">
             <div class="desktop-icon resume-icon">
-                <img src="images/pdf.png" alt="Resume">
+                <img src="{{ url_for('static', filename='images/pdf.png') }}" alt="Resume">
                 <p>resume.pdf</p>
             </div>
         </a>
-
-       <!-- C Vitae Icon -->
-        <a href="resume/c_vitae.pdf" download="c_vitae.pdf">
+        
+        <!-- C Vitae Icon -->
+        <a href="{{ url_for('static', filename='files/c_vitae.pdf')}}" download="c_vitae.pdf">
             <div class="desktop-icon cv-icon">
-                <img src="images/pdf.png" alt="C Vitae">
+                <img src="{{ url_for('static', filename='images/pdf.png') }}" alt="C Vitae">
                 <p>c_vitae.pdf</p>
             </div>
         </a>
-
+        
         <div class="desktop-icon waste-bin-icon" onclick="openWindow('waste-bin-window')">
-            <img src="images/wastebins.png" alt="Waste Bin">
+            <img src="{{ url_for('static', filename='images/wastebins.png') }}" alt="Waste Bin">
             <p>Waste Bin</p>
-        </div>
+        </div>   
     </div>
 
     <div class="window" id="about-me">
@@ -711,7 +710,7 @@
 
         <div class="window-body">
             <div class="about-me-content">
-                <img src="images/me.jpeg" alt="Your Photo" class="about-me-photo">
+                <img src="{{ url_for('static', filename='images/me.jpeg') }}" alt="Your Photo" class="about-me-photo">
                 <div class="text-content">
                     <h4>Education</h4>
                         Bachelor's, Double Major: Neuroscience <br>and Psychology
@@ -748,27 +747,27 @@
             <!-- Icon Container -->
             <div class="ml-icon-container" id="ml-icons-page">
                 <div class="ml-icon" onclick="showProjectDetail('SkinMNIST', 'ml')">
-                    <img src="images/skinMNIST.png" alt="SkinMNIST">
+                    <img src="{{ url_for('static', filename='images/skinMNIST.png') }}" alt="SkinMNIST">
                     <p>SkinMNIST</p>
                 </div>
                 <div class="ml-icon" onclick="showProjectDetail('ML Project 2', 'ml')">
-                    <img src="images/peru_housing.png" alt="ML Project 2">
+                    <img src="{{ url_for('static', filename='images/peru_housing.png') }}" alt="ML Project 2">
                     <p>Peruvian<br>Housing</p>
                 </div>
                 <div class="ml-icon" onclick="showProjectDetail('ML Project 3', 'ml')">
-                    <img src="images/lung.png" alt="ML Project 3">
+                    <img src="{{ url_for('static', filename='images/lung.png') }}" alt="ML Project 3">
                     <p>Pneumonia<br>Classification</p>
                 </div>
                 <div class="ml-icon" onclick="showProjectDetail('ML Project 4', 'ml')">
-                    <img src="images/pipeline.png" alt="ML Project 4">
+                    <img src="{{ url_for('static', filename='images/pipeline.png') }}" alt="ML Project 4">
                     <p>Image<br>Classification<br>Pipeline</p>
                 </div>
                 <div class="ml-icon" onclick="showProjectDetail('ML Project 5', 'ml')">
-                    <img src="images/housing.png" alt="ML Project 5">
+                    <img src="{{ url_for('static', filename='images/housing.png') }}" alt="ML Project 5">
                     <p>Housing<br>Inequality</p>
                 </div>
                 <div class="ml-icon" onclick="showProjectDetail('ML Project 6', 'ml')">
-                    <img src="images/sprague_vision.png" alt="ML Project 6">
+                    <img src="{{ url_for('static', filename='images/sprague_vision.png') }}" alt="ML Project 6">
                     <p>Sprague Eye</p>
                 </div>
             </div>
@@ -798,23 +797,23 @@
             <!-- Icon Container -->
             <div class="ui-icon-container" id="ui-icons-page">
                 <div class="ui-icon" onclick="showProjectDetail('Weave', 'ui')">
-                    <img src="images/weave.png" alt="Weave">
+                    <img src="{{ url_for('static', filename='images/weave.png') }}" alt="Weave">
                     <p>Weave</p>
                 </div>
                 <div class="ui-icon" onclick="showProjectDetail('JakeLingo', 'ui')">
-                    <img src="images/jakelingo.png" alt="JakeLingo">
+                    <img src="{{ url_for('static', filename='images/jakelingo.png') }}" alt="JakeLingo">
                     <p>JakeLingo</p>
                 </div>
                 <div class="ui-icon" onclick="showProjectDetail('Sprague Eye', 'ui')">
-                    <img src="images/raticon.png" alt="Sprague Eye">
+                    <img src="{{ url_for('static', filename='images/raticon.png') }}" alt="Sprague Eye">
                     <p>Sprague Eye</p>
                 </div>
                 <div class="ui-icon" onclick="showProjectDetail('Baratta Lab Website', 'ui')">
-                    <img src="images/buff.png" alt="Baratta Lab Website">
+                    <img src="{{ url_for('static', filename='images/buff.png') }}" alt="Baratta Lab Website">
                     <p>Baratta Lab<br>Website</p>
                 </div>
                 <div class="ui-icon" onclick="showProjectDetail('Horchata OS', 'ui')">
-                    <img src="images/start_button.png" alt="Horchata OS">
+                    <img src="{{ url_for('static', filename='images/start_button.png') }}" alt="Horchata OS">
                     <p>Horchata OS</p>
                 </div>
             </div>
@@ -842,7 +841,7 @@
         <div class="window-body">
             <div class="waste-container" id="waste-icons-page">
                 <div class="waste-icon" onclick="openGiftCardWindows()">
-                    <img src="images/corruption.png" alt="corruption">
+                    <img src="{{ url_for('static', filename='images/corruption.png') }}" alt="corruption">
                     <p>AMAZON FREE<br>GIFT CARD</p>
                 </div>
             </div>
@@ -859,12 +858,12 @@
         <div class="window-body">
             <div class="contact-info">
                 <div class="contact-item">
-                    <img src="images/phoney.png" alt="Phone Icon" class="contact-icon">
-                    <a href="tel:+13039055526" class="contact-link">(303)905-5526</a>
+                    <img src="{{ url_for('static', filename='images/phoney.png') }}" alt="phone" class="phone-photo">
+                    <a href="tel:+13039055526" class="contact-link phone-text">(303)905-5526</a>
                 </div>
                 <div class="contact-item">
-                    <img src="images/mail.png" alt="Email Icon" class="contact-icon">
-                    <a href="mailto:your.email@example.com" class="contact-link">your.email@example.com</a>
+                    <img src="{{ url_for('static', filename='images/mail.png') }}" alt="mail" class="email-photo">
+                    <a href="mailto:your.email@example.com" class="contact-link email-text">your.email@example.com</a>
                 </div>
             </div>
         </div>
