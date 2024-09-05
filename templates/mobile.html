@@ -481,7 +481,7 @@
         /* Drop-Up Menu Styling */
         .drop-up-menu {
             position: fixed;
-            top: calc(100% - 252px); /* Adjust this value to align with the taskbar */
+            top: calc(100% - 290px); /* Adjust this value to align with the taskbar */
             left: 0;
             display: none;
             width: 260px;
@@ -686,11 +686,6 @@
     </style>
 </head>
 <body>
-    <!-- Login Overlay -->
-    <div class="login-overlay" id="login-overlay">
-        <div class="login-text">Welcome to Horchata OS</div>
-        <button class="login-button" onclick="login()">Log In</button>
-    </div>
 
     <!-- Desktop Icons -->
     <div class="desktop-icon-container">
@@ -1069,21 +1064,6 @@
     </div>
 
     <script>
-        // Functions for login and logout
-        function login() {
-            document.getElementById('login-overlay').style.display = 'none';
-        }
-    
-        function logOut() {
-            // Hide all windows
-            const windows = document.querySelectorAll('.window');
-            windows.forEach(window => {
-                window.style.display = 'none';
-            });
-    
-            // Show the login overlay
-            document.getElementById('login-overlay').style.display = 'flex';
-        }
     
         let highestZIndex = 1; // Start with a base z-index
     
