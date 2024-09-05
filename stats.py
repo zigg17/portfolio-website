@@ -105,7 +105,7 @@ def update_stats_file(file_path, repositories, total_commits, total_lines_of_cod
     with open(file_path, 'w') as file:
         file.write(content)
 
-file_path = "txt-files/ascii.txt"
+file_path = "static/txt-files/ascii.txt"
 
 github_token = os.getenv("GITHUB_TOKEN")
 
