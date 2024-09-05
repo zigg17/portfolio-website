@@ -1483,74 +1483,76 @@
 
         function showProjectDetail(projectName, projectType) {
             const projectDetails = {
-                'SkinMNIST': {
-                    title: 'SkinMNIST',
-                    image: "{{ url_for('static', filename='images/skinMNIST-pic.png') }}",
-                    info: 'This project uses a series of CNNs to classify various skin lesions. The goal is to improve accuracy in identifying skin conditions through deep learning, which could aid early detection and better treatment decisions.',
-                    repo: 'https://github.com/zigg17/data-analytics/tree/main/health/skin-MNIST'
-                },
-                'ML Project 2': {
-                    title: 'Peruvian Housing',
-                    image: "{{ url_for('static', filename='images/peru.png') }}",
-                    info: 'This project focuses on analyzing housing data in Peru. It includes data cleaning, exploratory data analysis (EDA), and modeling to uncover insights and patterns in the Peruvian housing market.',
-                    repo: 'https://github.com/zigg17/data-analytics/tree/main/commercial/peruvian-housing'
-                },
-                'ML Project 3': {
-                    title: 'Pneumonia Classification',
-                    image: "{{ url_for('static', filename='images/x-ray.png') }}",
-                    info: 'This project involves a binary classification model to distinguish between pneumonia and non-pneumonia cases. Using deep learning pipeline I created, the model aims to accurately identify the presence of pneumonia from medical images.',
-                    repo: 'https://github.com/zigg17/data-analytics/tree/main/health/chest-xray-pneumonia'
-                },
-                'ML Project 4': {
-                    title: 'Image Classification Pipeline',
-                    image: "{{ url_for('static', filename='images/pipester.png') }}",
-                    info: 'This pipeline is designed for image classification problems, leveraging Convolutional Neural Networks (CNNs). It streamlines the process from data preprocessing to model training, making it adaptable for various image classification tasks.',
-                    repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
-                },
-                'ML Project 5': {
-                    title: 'Housing Inequality Modeling',
-                    image: "{{ url_for('static', filename='images/housing-inequality.png') }}",
-                    info: 'This project looks into the disparities in property tax by employing exploratory data analysis (EDA) and advanced modeling techniques. The goal was to assess the predictive powers of an existing model and develop an improved model that provided a more nuanced property tax calculations.',
-                    repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
-                },
-                'ML Project 6': {
-                    title: 'Sprague Eye',
-                    image: "{{ url_for('static', filename='images/rat_swipe.png') }}",
-                    info: 'An ML pipeline specifically developed for video behavioral scoring, utilizing image classification to accurately identify and analyze behaviors in video datasets. This tool automates the labeling process, making it ideal for research and studies that require precise behavioral analysis over time.',
-                    repo: 'https://github.com/zigg17/sprague-eye'
-                },
-                'Weave': {
-                    title: 'Weave',
-                    image: "{{ url_for('static', filename='images/weave-shot.png') }}",
-                    info: 'A meditation app with journaling, stat tracking, research tools, and interactive animations.',
-                    repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/weave'
-                },
-                'Sprague Eye': {
-                    title: 'Sprague Eye',
-                    image: "{{ url_for('static', filename='images/rat_swipe.png') }}",
-                    info: 'This GUI speeds up the process of generating a labeled training dataset for either a binary or multi-class classification task. Users can easily manage and organize their data by selecting folders for processing, creating directories for labeled images, and splicing videos to label frames.',
-                    repo: 'https://github.com/zigg17/sprague-eye'
-                },
-                'JakeLingo': {
-                    title: 'JakeLingo',
-                    image: "{{ url_for('static', filename='images/jakelingo-shot.png') }}",
-                    info: 'A language learning application with flashcards, writing, reading, and verb practice.',
-                    repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/jakelingo'
-                },
-                'Horchata OS': {
-                    title: 'Horchata OS',
-                    image: "{{ url_for('static', filename='images/horchataOS.png') }}",
-                    info: 'A retro-themed portfolio powered by Python and 98.css.',
-                    repo: 'https://github.com/zigg17/portfolio-website'
-                },
-                'Baratta Lab Website': {
-                    title: 'Baratta Lab Website',
-                    image: "{{ url_for('static', filename='images/barattapng.png') }}",
-                    info: "A lab overview website designed to showcase the Baratta Lab's work and research, tailored for grant writers and collaborators.",
-                    repo: 'https://github.com/zigg17/classes-learning-smallprojects/blob/main/gui-projects/BarattaLab/readme.md'
-                },
+                
+                title: 'JakeLingo',
+            'SkinMNIST': {
+                title: 'SkinMNIST',
+                image: "{{ url_for('static', filename='images/skinMNIST-pic.png') }}",
+                info: 'This project uses a series of CNNs to classify various skin lesions.',
+                repo: 'https://github.com/zigg17/data-analytics/tree/main/health/skin-MNIST'
+            },
+            'ML Project 2': {
+                title: 'Peruvian Housing',
+                image: "{{ url_for('static', filename='images/peru.png') }}",
+                info: 'This project focuses on analyzing housing data in Peru, using modeling to uncover insights and patterns in the Peruvian housing market.',
+                repo: 'https://github.com/zigg17/data-analytics/tree/main/commercial/peruvian-housing'
+            },
+            'ML Project 3': {
+                title: 'Pneumonia Classification',
+                image: "{{ url_for('static', filename='images/x-ray.png') }}",
+                info: 'This project involves a binary classification model to distinguish between pneumonia and non-pneumonia cases.',
+                repo: 'https://github.com/zigg17/data-analytics/tree/main/health/chest-xray-pneumonia'
+            },
+            'ML Project 4': {
+                title: 'Image Classification Pipeline',
+                image: "{{ url_for('static', filename='images/pipester.png') }}",
+                info: 'This pipeline is designed for image classification problems, leveraging Convolutional Neural Networks (CNNs).',
+                repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
+            },
+            'ML Project 5': {
+                title: 'Housing Inequality Modeling',
+                image: "{{ url_for('static', filename='images/housing-inequality.png') }}",
+                info: 'This project looks into the disparities in property tax by employing exploratory data analysis (EDA) and advanced modeling techniques.',
+                repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
+            },
+            'ML Project 6': {
+                title: 'Sprague Eye',
+                image: "{{ url_for('static', filename='images/rat_swipe.png') }}",
+                info: 'An ML pipeline specifically developed for video behavioral scoring.',
+                repo: 'https://github.com/zigg17/sprague-eye'
+            },
+            'Weave': {
+                title: 'Weave',
+                image: "{{ url_for('static', filename='images/weave-shot.png') }}",
+                info: 'A meditation app with journaling, stat tracking, research tools, and interactive animations.',
+                repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/weave'
+            },
+            'Sprague Eye': {
+                title: 'Sprague Eye',
+                image: "{{ url_for('static', filename='images/rat_swipe.png') }}",
+                info: 'This GUI speeds up the process of generating a labeled image training dataset for either a binary or multi-class classification task.',
+                repo: 'https://github.com/zigg17/sprague-eye'
+            },
+            'JakeLingo': {
+                title: 'JakeLingo',
+                image: "{{ url_for('static', filename='images/jakelingo-shot.png') }}",
+                info: 'A language learning application with flashcards, writing, reading, and verb practice.',
+                repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/jakelingo'
+            },
+            'Horchata OS': {
+                title: 'Horchata OS',
+                image: "{{ url_for('static', filename='images/horchataOS.png') }}",
+                info: 'A retro-themed portfolio powered by Python and 98.css.',
+                repo: 'https://github.com/zigg17/portfolio-website'
+            },
+            'Baratta Lab Website': {
+                title: 'Baratta Lab Website',
+                image: "{{ url_for('static', filename='images/barattapng.png') }}",
+                info: "A lab overview website designed to showcase the Baratta Lab's work and research, tailored for grant writers and collaborators.",
+                repo: 'https://github.com/zigg17/classes-learning-smallprojects/blob/main/gui-projects/BarattaLab/readme.md'
+            },
 
-            };
+        };
 
             const detail = projectDetails[projectName];
 
