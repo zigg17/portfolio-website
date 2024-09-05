@@ -2,7 +2,7 @@ import os
 from PIL import Image
 
 # Define the paths
-source_folder = 'static/images'  # Folder where the original images are stored
+source_folder = '/Users/jakeziegler/Desktop/images'  # Folder where the original images are stored
 destination_folder = 'static/compressed_images'  # Folder where the optimized images will be saved
 
 # Create destination folder if it doesn't exist
