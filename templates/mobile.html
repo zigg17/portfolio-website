@@ -357,20 +357,20 @@
         
 
         .taskbar-time {
-            color: black;
-            padding: 6px 28px;
-            font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 16px;
-            margin-left: auto;
-            margin-right: 8px;
-            margin-left: auto; /* Ensures the time is on the far right */
-            background-color: #c0c0c0;
-            border: 2px inset #fff; /* Creates the depressed effect */
-            box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff;
-            display: inline-block;
-            text-align: center;
-            white-space: nowrap;
-        }
+    color: black;
+    height: 50px; /* Matches the height of the start button */
+    width: 100px; /* Adjust the width to make it skinnier */
+    font-family: 'MS Sans Serif', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    background-color: #c0c0c0;
+    border: 2px inset #fff; /* Creates the depressed effect */
+    box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff;
+    text-align: center; /* Center the text */
+    white-space: nowrap; /* Prevent the text from wrapping */
+    line-height: 50px; /* Vertically center the text */
+    padding: 0; /* Remove padding to make it skinnier */
+}
+
 
         .taskbar-spacer {
             flex-grow: 1; /* This makes the spacer take up any remaining space */
