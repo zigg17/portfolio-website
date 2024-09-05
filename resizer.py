@@ -39,12 +39,8 @@ for filename in files_to_resize:
     
     # Open the image file
     with Image.open(img_path) as img:
-        # Prompt for resizing
-        resize_choice = input(f"Do you want to resize {filename} to {new_size}? (yes/no): ").strip().lower()
-        
-        if resize_choice == 'yes':
-            # Resize the image
-            img = img.resize(new_size)
+
+        img = img.resize(new_size)
         
         # Save the resized image
         destination_path = os.path.join(destination_folder, filename)
