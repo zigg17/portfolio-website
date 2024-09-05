@@ -909,8 +909,8 @@
         <div class="window-body music-player-body">
             <!-- Play-Pause Button -->
             <div class="play-pause-container">
-                <img src="images/play.png" alt="Play" id="play-button" class="play-pause-button">
-                <img src="images/pause.png" alt="Pause" id="pause-button" class="play-pause-button" style="display: none;">
+                <img src="{{ url_for('static', filename='images/play.png') }}" alt="Play" id="play-button" class="play-pause-button">
+                <img src="{{ url_for('static', filename='images/pause.png') }}" alt="Pause" id="pause-button" class="play-pause-button" style="display: none;">
             </div>
             <!-- Corner Buttons -->
             <button class="song-button top-left" id="song-clouds">CLOUDS</button>
@@ -934,7 +934,7 @@
         </div>
         <div class="window-body" id="tree-window-body">
             <!-- Image with fixed dimensions -->
-            <img id="tree-image" src="image-bank/forest.jpg" alt="Forest Image" style="width: 400px; height: 300px; object-fit: cover;">
+            <img id="tree-image" src="{{ url_for('static', filename='image-bank/forest.jpg') }}" alt="Forest Image" style="width: 400px; height: 300px; object-fit: cover;">
             <!-- Quote section -->
             <div id="quote-container">
                 <p id="tree-content">
@@ -987,19 +987,19 @@
     
     <div class="taskbar">
         <div class="start-button" onclick="toggleDropUp()">
-            <img src="images/start_button.png" alt="Start" width="20" height="20">
+            <img src="{{ url_for('static', filename='images/start_button.png') }}" alt="Start" width="20" height="20">
             <span>Start</span>
         </div>
         <div class="indented-bar"></div>
         <div class="raised-bar"></div>
         <div class="taskbar-app" onclick="openWindow('explorer-window')">
-            <img src="images/explorer.png" alt="Explorer" width="20" height="20">
+            <img src="{{ url_for('static', filename='images/explorer.png') }}" alt="Explorer" width="20" height="20">
         </div>
         <div class="taskbar-app" onclick="openWindow('music-player-window')">
-            <img src="images/note.png" alt="Music Player" width="20" height="20">
+            <img src="{{ url_for('static', filename='images/note.png') }}" alt="Music Player" width="20" height="20">
         </div>
         <div class="taskbar-app" onclick="openTreeWindow()">
-            <img src="images/tree-0.png" alt="Tree" width="20" height="20">
+            <img src="{{ url_for('static', filename='images/tree-0.png') }}" alt="Tree" width="20" height="20">
         </div>
         
         
@@ -1019,28 +1019,28 @@
                 <ul>
                     <li>
                         <button class="button" onclick="window.open('https://www.linkedin.com/in/jacob-ziegler-7244b9231/', '_blank')">
-                            <img src="images/linkedin.png" alt="linkedin">
+                            <img src="{{ url_for('static', filename='images/linkedin.png') }}" alt="linkedin">
                             Linkedin
                             <span class="arrow">▶</span>
                         </button>
                     </li>
                     <li>
                         <button class="button" onclick="window.open('https://github.com/zigg17', '_blank')">
-                            <img src="images/doc.png" alt="Github">
+                            <img src="{{ url_for('static', filename='images/doc.png') }}" alt="Github">
                             Github
                             <span class="arrow">▶</span>
                         </button>
                     </li>
                     <li>
                         <button class="button" onclick="openWindow('help-window')">
-                            <img src="images/help.png" alt="Help">
+                            <img src="{{ url_for('static', filename='images/help.png') }}" alt="Help">
                             Help and Support
                             <span class="arrow">▶</span>
                         </button>
                     </li>
                     <li>
                         <button class="button" onclick="logOut()">
-                            <img src="images/onoff.png" alt="Log Off">
+                            <img src="{{ url_for('static', filename='images/onoff.png') }}" alt="Log Off">
                             Log Off
                         </button>
                     </li>
@@ -1105,7 +1105,7 @@
             treeImage.src = ''; // Clear image
 
             // Fetch and display a random line from the quotes file
-            fetch('txt-files/quotes.txt')
+            fetch("{{ url_for('static', filename='txt-files/quotes.txt') }}")
                 .then(response => response.text())
                 .then(data => {
                     const lines = data.split('\n').filter(line => line.trim() !== ''); // Filter out empty lines
@@ -1124,7 +1124,8 @@
             // Display a random image from the image bank
             const images = ['ethereal.jpg', 'forest.jpg', 'mountains.jpg', 'snow.jpg', 'hybrid.jpg'];
             const randomImage = images[Math.floor(Math.random() * images.length)];
-            treeImage.src = `image-bank/${randomImage}`;
+            const baseUrl = "{{ url_for('static', filename='image-bank/') }}";
+            treeImage.src = `${baseUrl}${randomImage}`;
         }
     
         function runOpenWindowLogic(id) {
@@ -1247,22 +1248,22 @@
             const songs = {
                 'song-clouds': {
                     name: 'CLOUDS',
-                    src: 'music/CLOUDS.mp3',
+                    src: "{{ url_for('static', filename='music/CLOUDS.mp3') }}",
                     button: document.getElementById('song-clouds')
                 },
                 'song-dark-beach': {
                     name: 'DARK BEACH',
-                    src: 'music/DARKBEACH.mp3',
+                    src: "{{ url_for('static', filename='music/DARKBEACH.mp3') }}",
                     button: document.getElementById('song-dark-beach')
                 },
                 'song-home': {
                     name: 'HOME',
-                    src: 'music/HOME.mp3',
+                    src: "{{ url_for('static', filename='music/HOME.mp3') }}",
                     button: document.getElementById('song-home')
                 },
                 'song-embrace': {
                     name: 'EMBRACE',
-                    src: 'music/EMBRACE.mp3',
+                    src: "{{ url_for('static', filename='music/EMBRACE.mp3') }}",
                     button: document.getElementById('song-embrace')
                 }
             };
@@ -1345,72 +1346,75 @@
 
         function showProjectDetail(projectName, projectType) {
             const projectDetails = {
+                
+                    title: 'JakeLingo',
                 'SkinMNIST': {
                     title: 'SkinMNIST',
-                    image: 'images/skinMNIST-pic.png',
+                    image: "{{ url_for('static', filename='images/skinMNIST-pic.png') }}",
                     info: 'This project uses a series of CNNs to classify various skin lesions. The goal is to improve accuracy in identifying skin conditions through deep learning, which could aid early detection and better treatment decisions.',
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/health/skin-MNIST'
                 },
                 'ML Project 2': {
                     title: 'Peruvian Housing',
-                    image: 'images/peru.png',
+                    image: "{{ url_for('static', filename='images/peru.png') }}",
                     info: 'This project focuses on analyzing housing data in Peru. It includes data cleaning, exploratory data analysis (EDA), and modeling to uncover insights and patterns in the Peruvian housing market.',
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/commercial/peruvian-housing'
                 },
                 'ML Project 3': {
                     title: 'Pneumonia Classification',
-                    image: 'images/x-ray.png',
+                    image: "{{ url_for('static', filename='images/x-ray.png') }}",
                     info: 'This project involves a binary classification model to distinguish between pneumonia and non-pneumonia cases. Using deep learning pipeline I created, the model aims to accurately identify the presence of pneumonia from medical images.',
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/health/chest-xray-pneumonia'
                 },
                 'ML Project 4': {
                     title: 'Image Classification Pipeline',
-                    image: 'images/pipester.png',
+                    image: "{{ url_for('static', filename='images/pipester.png') }}",
                     info: 'This pipeline is designed for image classification problems, leveraging Convolutional Neural Networks (CNNs). It streamlines the process from data preprocessing to model training, making it adaptable for various image classification tasks.',
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
                 },
                 'ML Project 5': {
                     title: 'Housing Inequality Modeling',
-                    image: 'images/housing-inequality.png',
+                    image: "{{ url_for('static', filename='images/housing-inequality.png') }}",
                     info: 'This project looks into the disparities in property tax by employing exploratory data analysis (EDA) and advanced modeling techniques. The goal was to assess the predictive powers of an existing model and develop an improved model that provided a more nuanced property tax calculations.',
                     repo: 'https://github.com/zigg17/data-analytics/tree/main/helpers'
                 },
                 'ML Project 6': {
                     title: 'Sprague Eye',
-                    image: 'images/rat_swipe.png',
+                    image: "{{ url_for('static', filename='images/rat_swipe.png') }}",
                     info: 'An ML pipeline specifically developed for video behavioral scoring, utilizing image classification to accurately identify and analyze behaviors in video datasets. This tool automates the labeling process, making it ideal for research and studies that require precise behavioral analysis over time.',
                     repo: 'https://github.com/zigg17/sprague-eye'
                 },
                 'Weave': {
                     title: 'Weave',
-                    image: 'images/weave-shot.png',
+                    image: "{{ url_for('static', filename='images/weave-shot.png') }}",
                     info: 'A meditation app with journaling, stat tracking, research tools, and interactive animations.',
                     repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/weave'
                 },
                 'Sprague Eye': {
                     title: 'Sprague Eye',
-                    image: 'images/rat_swipe.png',
+                    image: "{{ url_for('static', filename='images/rat_swipe.png') }}",
                     info: 'This GUI speeds up the process of generating a labeled training dataset for either a binary or multi-class classification task. Users can easily manage and organize their data by selecting folders for processing, creating directories for labeled images, and splicing videos to label frames.',
                     repo: 'https://github.com/zigg17/sprague-eye'
                 },
                 'JakeLingo': {
                     title: 'JakeLingo',
-                    image: 'images/jakelingo-shot.png',
+                    image: "{{ url_for('static', filename='images/jakelingo-shot.png') }}",
                     info: 'A language learning application with flashcards, writing, reading, and verb practice.',
                     repo: 'https://github.com/zigg17/classes-learning-smallprojects/tree/main/gui-projects/jakelingo'
                 },
                 'Horchata OS': {
                     title: 'Horchata OS',
-                    image: 'images/horchataOS.png',
+                    image: "{{ url_for('static', filename='images/horchataOS.png') }}",
                     info: 'A retro-themed portfolio powered by Python and 98.css.',
                     repo: 'https://github.com/zigg17/portfolio-website'
                 },
                 'Baratta Lab Website': {
                     title: 'Baratta Lab Website',
-                    image: 'images/barattapng.png',
+                    image: "{{ url_for('static', filename='images/barattapng.png') }}",
                     info: "A lab overview website designed to showcase the Baratta Lab's work and research, tailored for grant writers and collaborators.",
                     repo: 'https://github.com/zigg17/classes-learning-smallprojects/blob/main/gui-projects/BarattaLab/readme.md'
                 },
+
             };
 
             const detail = projectDetails[projectName];
@@ -1519,7 +1523,7 @@ function openGitHubStatsWindow() {
     runOpenWindowLogic(windowId); 
     runOpenWindowLogic(windowId); 
 
-    fetch('txt-files/ascii.txt')  
+    fetch("{{ url_for('static', filename='txt-files/ascii.txt') }}")
         .then(response => response.text())
         .then(data => {
             document.getElementById('ascii-art-content').textContent = data;
