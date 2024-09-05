@@ -1033,20 +1033,33 @@
     
     
 
-    <!-- Explorer Window -->
     <div class="window" id="explorer-window">
         <div class="title-bar">
-            <div class="title-bar-text">Explorer</div>
+            <div class="title-bar-text">Explorer - News</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('explorer-window')">x</button>
             </div>
         </div>
         <div class="window-body">
-            <!-- Content related to your Explorer functionality -->
-            <p>File Explorer would go here.</p>
+            <div id="explorer-header">
+                <div class="explorer-toolbar">
+                    <button class="explorer-button">Back</button>
+                    <button class="explorer-button">Forward</button>
+                    <button class="explorer-button">Home</button>
+                    <input type="text" id="explorer-url" value="https://www.horchatanews.dev" readonly>
+                </div>
+            </div>
+            <div id="news-content" class="scrollable-content">
+                <ul id="news-list">
+                    <!-- This will be dynamically populated with news articles -->
+                </ul>
+            </div>
+        </div>
+        <div id="gif-section">
+            <img src="{{ url_for('static', filename='images/explorer.gif') }}" alt="GIF" class="gif-image">
         </div>
     </div>
-
+    
     <div class="window" id="music-player-window">
         <div class="title-bar">
             <div class="title-bar-text">Music Player</div>
