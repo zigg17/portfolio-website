@@ -1131,19 +1131,31 @@
         </div>
     </div>    
 
-    <!-- Help and Support Window -->
     <div class="window" id="help-window">
-        <div class="title-bar">
+        <div class="title-bar" onmousedown="dragElement(this.parentElement)">
             <div class="title-bar-text">Help and Support</div>
             <div class="title-bar-controls">
                 <button aria-label="Close" onclick="closeWindow('help-window')">x</button>
             </div>
         </div>
-        <div class="window-body">
-            <p>Your help and support information will appear here.</p>
+        <div class="window-body help-window-body">
+            <h4>Explorer</h4>
+            <p>This window allows users to explore the internet in a retro-style browser. The current implementation displays daily updated news fetched from an API.</p>
+            
+            <h4>Music Player</h4>
+            <p>A simple interface for listening to select songs. It includes controls for playback and visual feedback for the currently playing song.</p>
+            
+            <h4>Tree</h4>
+            <p>Displays a random image and quote from the collection stored in the system, bringing a sense of calm and reflection.</p>
+            
+            <h4>Waste Bin</h4>
+            <p>Spawns playful "virus" windows with phony ads, similar to retro pop-ups. Part of the fun is closing these windows.</p>
+            
+            <h4>GitHub Stats</h4>
+            <p>Displays your GitHub activity as ASCII art using real-time data fetched with Python, offering a terminal-like experience.</p>
         </div>
+        
     </div>
-
     
     <div class="taskbar">
         <div class="start-button" onclick="toggleDropUp()">
