@@ -1062,14 +1062,16 @@
                     <input type="text" id="explorer-url" value="https://www.horchatanews.dev" readonly>
                 </div>
             </div>
-            <div id="news-content" class="scrollable-content">
-                <ul id="news-list">
-                    <!-- This will be dynamically populated with news articles -->
-                </ul>
-            </div>
+            
         </div>
         <div id="gif-section">
             <img src="{{ url_for('static', filename='images/explorer.gif') }}" alt="GIF" class="gif-image">
+        </div>
+
+        <div id="news-content" class="scrollable-content">
+            <ul id="news-list">
+                <!-- This will be dynamically populated with news articles -->
+            </ul>
         </div>
     </div>
     
