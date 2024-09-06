@@ -742,7 +742,7 @@
     border-bottom: 2px solid #808080;
     background-color: #f0f0f0;
     margin-left: -40%;
-    margin-top: 20%;
+
     border: 2px solid red; /* Temporary border to see if it's there */
     background-color: lightyellow; /* Temporary background to see if it's there */
 }
@@ -1117,17 +1117,19 @@
                 </div>
             </div>
             
-            <!-- Scrollable News Section -->
-            <div id="news-content" class="scrollable-content">
-                <ul id="news-list">
-                    <!-- This will be dynamically populated with news articles -->
-                </ul>
-            </div>
+            
         </div>
     
         <!-- GIF Section -->
         <div id="gif-section">
             <img src="{{ url_for('static', filename='images/explorer.gif') }}" alt="GIF" class="gif-image">
+        </div>
+
+        <!-- Scrollable News Section -->
+        <div id="news-content" class="scrollable-content">
+            <ul id="news-list">
+                <!-- This will be dynamically populated with news articles -->
+            </ul>
         </div>
     </div>    
 
