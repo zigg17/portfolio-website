@@ -1715,6 +1715,39 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // Fetch the JSON data from your headlines.json
+        fetch("{{ url_for('static', filename='txt-files/headlines.json') }}")
+
+            .then(response => response.json())
+            .then(data => {
+                const newsList = document.getElementById('news-list');
+                newsList.innerHTML = ''; // Clear existing static content
+
+                // Loop through each news article and add it to the list
+                data.forEach(article => {
+                    const li = document.createElement('li');
+
+                    const title = document.createElement('h4');
+                    const link = document.createElement('a');
+                    link.href = article.url;
+                    link.textContent = article.title;
+                    title.appendChild(link);
+
+                    const description = document.createElement('p');
+                    description.textContent = `Published by ${article.author}`;
+
+                    li.appendChild(title);
+                    li.appendChild(description);
+
+                    newsList.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching the news articles:', error);
+            });
+    });
     </script> 
 
     <!-- Google tag (gtag.js) -->
