@@ -781,12 +781,13 @@
         </a>
     
         <!-- C Vitae Icon -->
-        <a href="{{ url_for('static', filename='files/c_vitae.pdf')}}" download="c_vitae.pdf">
+        <a href="{{ url_for('static', filename='files/c_vitae.pdf') }}" target="_blank">
             <div class="desktop-icon cv-icon">
                 <img src="{{ url_for('static', filename='images/pdf.png') }}" alt="C Vitae">
                 <p>c_vitae.pdf</p>
             </div>
         </a>
+
         
         <div class="desktop-icon waste-bin-icon" onclick="openWindow('waste-bin-window')">
             <img src="{{ url_for('static', filename='images/wastebins.png') }}" alt="Waste Bin">
